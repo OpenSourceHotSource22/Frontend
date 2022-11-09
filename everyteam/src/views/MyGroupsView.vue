@@ -14,24 +14,28 @@
 <script>
 import axios from "axios";
 import { BASE_URL } from "@/api";
+import { mapState } from "vuex";
 export default {
   data() {
-    return {
-      token: "",
-    };
+    return {};
   },
   mounted() {
     // TODO: 사용자가 속한 그룹들 불러오기..........
-    console.log(localStorage.getItem("token"));
-    this.token = localStorage.getItem("token");
     this.userGroupList();
+    console.log(this.userToken);
+  },
+  computed: {
+    ...mapState("userStore", {
+      userId: "userId",
+      userToken: "userToken",
+    }),
   },
   methods: {
     async userGroupList() {
       try {
         const res = await axios.get(`${BASE_URL}/team`, {
           headers: {
-            "X-AUTH-TOKEN": this.token,
+            "X-AUTH-TOKEN": localStorage.getItem("token"),
           },
         });
         console.log("그룹리스트 불러오기 성공!!");

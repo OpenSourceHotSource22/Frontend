@@ -12,7 +12,7 @@
           clearable
           label="그룹이름을 입력하세요"
           type="text"
-          @click:append-outer="sendMessage"
+          @click:append-outer="createGroup"
           @click:prepend="changeIcon"
           @click:clear="clearMessage"
         ></v-text-field>
@@ -51,14 +51,20 @@ export default {
   methods: {
     async createGroup() {
       try {
-        const res = await axios.post(`${BASE_URL}/team`, {
-          headers: {
-            "X-AUTH-TOKEN": this.token,
+        const res = await axios.post(
+          `${BASE_URL}/team`,
+          {
+            name: this.groupName,
           },
-        });
-        console.log("로그인 성공!!");
-        localStorage.setItem("token", res.data["result"].token);
-        console.log("res:", res.data["result"].token);
+          {
+            headers: {
+              "X-AUTH-TOKEN": localStorage.getItem("token"),
+            },
+          }
+        );
+        console.log("팀생성 성공!!");
+        console.log("res:", res);
+        this.$router.push({ path: "/myGroups" });
       } catch (error) {
         console.log(error);
       }
