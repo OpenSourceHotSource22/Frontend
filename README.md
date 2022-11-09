@@ -4,12 +4,12 @@
 
 ## 팀원별 수정권한 파일
 
-### + 지은
+### 지은
 
 everyteam/src/views/WhenWeMeetView.vue
 everyteam/src/store/modules/whenWeMeetStore.js
 
-### + 성호
+### 성호
 
 everyteam/src/views/RolesView.vue
 everyteam/src/views/RouletteView.vue
