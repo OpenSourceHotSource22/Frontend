@@ -1,22 +1,22 @@
 # Frontend
 
-### 오픈소스소프트웨어 팀 프로젝트 Frontend part
+#### 오픈소스소프트웨어 팀 프로젝트 Frontend part
 
 ## 팀원별 수정권한 파일
 
-### 지은
+### + 지은
 
 everyteam/src/views/WhenWeMeetView.vue
 everyteam/src/store/modules/whenWeMeetStore.js
 
-### 성호
+### + 성호
 
 everyteam/src/views/RolesView.vue
 everyteam/src/views/RouletteView.vue
 everyteam/src/views/GhostLegView.vue
 everyteam/src/store/modules/rolesStore.js
 
-#### 새로운 파일 생성시 아래 경로에서 가능
+#### +새로운 파일 생성시 아래 경로에서 가능
 
 everyteam/src/views/"새로운파일명"
 everyteam/src/components/"새로운파일명"
