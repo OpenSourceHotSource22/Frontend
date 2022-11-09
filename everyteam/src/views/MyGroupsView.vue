@@ -12,12 +12,34 @@
 </template>
 
 <script>
+import axios from "axios";
+import { BASE_URL } from "@/api";
 export default {
   data() {
-    return {};
+    return {
+      token: "",
+    };
   },
-
+  mounted() {
+    // TODO: 사용자가 속한 그룹들 불러오기..........
+    console.log(localStorage.getItem("token"));
+    this.token = localStorage.getItem("token");
+    this.userGroupList();
+  },
   methods: {
+    async userGroupList() {
+      try {
+        const res = await axios.get(`${BASE_URL}/team`, {
+          headers: {
+            "X-AUTH-TOKEN": this.token,
+          },
+        });
+        console.log("그룹리스트 불러오기 성공!!");
+        console.log("res:", res.data);
+      } catch (error) {
+        console.log(error);
+      }
+    },
     goMain() {
       this.$router.push({ path: "/main" });
     },

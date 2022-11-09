@@ -4,8 +4,8 @@
       <v-flex>
         <h1>GreateGroup</h1>
         <v-text-field
-          v-model="message"
-          :append-outer-icon="message ? 'mdi-send' : ''"
+          v-model="groupName"
+          :append-outer-icon="groupName ? 'mdi-send' : ''"
           :prepend-icon="icon"
           filled
           clear-icon="mdi-close-circle"
@@ -22,10 +22,12 @@
 </template>
 
 <script>
+import axios from "axios";
+import { BASE_URL } from "@/api";
 export default {
   data: () => ({
     show: false,
-    message: "",
+    groupName: "",
     marker: true,
     iconIndex: 0,
     icons: [
@@ -47,6 +49,20 @@ export default {
   },
 
   methods: {
+    async createGroup() {
+      try {
+        const res = await axios.post(`${BASE_URL}/team`, {
+          headers: {
+            "X-AUTH-TOKEN": this.token,
+          },
+        });
+        console.log("로그인 성공!!");
+        localStorage.setItem("token", res.data["result"].token);
+        console.log("res:", res.data["result"].token);
+      } catch (error) {
+        console.log(error);
+      }
+    },
     toggleMarker() {
       this.marker = !this.marker;
     },

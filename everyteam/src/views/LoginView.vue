@@ -84,6 +84,7 @@
 <script>
 import axios from "axios";
 import { BASE_URL } from "@/api";
+import { mapState, mapMutations } from "vuex";
 export default {
   data: () => ({
     overlay: false,
@@ -107,8 +108,17 @@ export default {
     ],
     // valid: true,
   }),
-
+  computed: {
+    ...mapState("userStore", {
+      userId: "userId",
+      userToken: "userToken",
+    }),
+  },
   methods: {
+    ...mapMutations("userStore", {
+      updateUserId: "updateUserId",
+      updateUserToken: "updateUserToken",
+    }),
     loginValidateCheck() {
       this.$refs.form.validate();
       if (this.loginValid & this.$refs.form.validate()) {
@@ -127,7 +137,15 @@ export default {
           pwd: this.loginPw,
         });
         console.log("로그인 성공!!");
-        console.log("res:", res);
+        console.log("res:", res.data["result"]);
+        localStorage.setItem("token", res.data["result"].token);
+        this.updateUserId(res.data["result"].id);
+        this.updateUserToken(res.data["result"].token);
+        console.log("store user token: ", this.userToken);
+        console.log("store user id: ", this.userId);
+        this.loginId = "";
+        this.loginPw = "";
+        this.$router.push({ path: "/myGroups" });
       } catch (error) {
         console.log(error);
       }
@@ -140,6 +158,8 @@ export default {
       if (this.signupValid & this.$refs.signupFrom.validate()) {
         this.signup();
         alert("회원가입이 완료되었습니다!");
+        this.signupId = "";
+        this.signupPw = "";
         this.overlay = false;
       }
     },

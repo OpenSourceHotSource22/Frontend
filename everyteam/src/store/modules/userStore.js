@@ -1,14 +1,18 @@
 const userStore = {
   namespaced: true,
   state: {
-    userName: "정지선",
+    userId: "",
+    userToken: "",
   },
   //   getters: {
   //     getUserName: (state) => state.userName,
   //   },
   mutations: {
-    updateUserName(state, value) {
-      state.userName = value;
+    updateUserId(state, value) {
+      state.userId = value;
+    },
+    updateUserToken(state, value) {
+      state.userToken = value;
     },
   },
   //   actions: {

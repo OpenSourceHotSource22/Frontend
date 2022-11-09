@@ -181,7 +181,7 @@ export default {
   },
   computed: {
     ...mapState("userStore", {
-      userName: "userName",
+      userId: "userId",
     }),
     ...mapState("groupStore", {
       groupName: "groupName",
@@ -191,7 +191,7 @@ export default {
   methods: {
     //함수 넣으면 됨
     ...mapMutations("userStore", {
-      updateUserName: "updateUserName",
+      updateUserId: "updateUserId",
     }),
     inviteButtonClick() {
       console.log("초대하기 버튼이 클릭되었습니다");
@@ -203,9 +203,6 @@ export default {
   },
   watch: {
     //값이 바뀔 때 마다 action을 취하기 위해서는 여기 넣어두면 됨!
-    userName: function () {
-      console.log("사용자 이름이 변경되었습니다!");
-    },
   },
 };
 </script>

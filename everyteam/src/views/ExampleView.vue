@@ -3,7 +3,7 @@
     <v-main>
       <v-card>
         <v-card-title class="text-center justify-center py-6">
-          <h1 class="font-weight-bold text-h2 basil--text">{{ userName }}</h1>
+          <h1 class="font-weight-bold text-h2 basil--text">{{ userId }}</h1>
           <h2>{{ reversedMessage }}</h2>
 
           <div class="text-center">
@@ -21,11 +21,7 @@
 
                 <v-card-text>
                   <v-text-field v-model="name"></v-text-field>
-                  <v-btn
-                    color="red lighten-2"
-                    dark
-                    @click="updateUserName(name)"
-                  >
+                  <v-btn color="red lighten-2" dark @click="updateUserId(name)">
                     변경
                   </v-btn>
                 </v-card-text>
@@ -179,20 +175,20 @@ export default {
     //호출할 때 () 사용할 필요가 없고 파라미터를 받을 수 없음
     //return 값을 꼭 넣어주어야됨
     ...mapState("userStore", {
-      userName: "userName",
+      userId: "userId",
     }),
     ...mapState("groupStore", {
       groupList: "groupList",
     }),
-    //이런식으로 만들어주면 됨.. 그럼 userName바뀔때마다 함수가 실행되는것
+    //이런식으로 만들어주면 됨.. 그럼 userId바뀔때마다 함수가 실행되는것
     reversedMessage: function () {
-      return this.userName.split("").reverse().join("");
+      return this.userId.split("").reverse().join("");
     },
   },
   methods: {
     //함수 넣으면 됨
     ...mapMutations("userStore", {
-      updateUserName: "updateUserName",
+      updateUserId: "updateUserId",
     }),
     inviteButtonClick() {
       console.log("초대하기 버튼이 클릭되었습니다");
@@ -204,7 +200,7 @@ export default {
   },
   watch: {
     //값이 바뀔 때 마다 action을 취하기 위해서는 여기 넣어두면 됨!
-    userName: function () {
+    userId: function () {
       console.log("사용자 이름이 변경되었습니다!");
     },
   },
