@@ -2,6 +2,22 @@
 
 #### 오픈소스소프트웨어 팀 프로젝트 Frontend part
 
+#### 프로젝트 초기세팅
+
+```
+git clone ...
+
+//git 사용하는 터미널
+cd FRONTEND
+git checkout "자신의 branch 이름"
+git pull origin main
+
+//다른 터미널 열기
+cd everyteam
+npm install
+npm run serve
+```
+
 ## 커밋 컨벤션
 
 ```
