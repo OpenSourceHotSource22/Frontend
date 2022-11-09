@@ -3,7 +3,7 @@
     <v-main>
       <div class="myGroups">
         <h1>mygroups page</h1>
-        <v-btn @click="login">웅나쓰자</v-btn>
+        <v-btn @click="goMain">웅나쓰자</v-btn>
         <br />
         <v-btn @click="goCreateGroupPage">creategroup</v-btn>
       </div>

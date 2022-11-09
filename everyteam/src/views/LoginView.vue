@@ -30,7 +30,7 @@
           :disabled="!loginValid"
           color="success"
           class="mr-4"
-          @click="validateCheck"
+          @click="loginValidateCheck"
         >
           로그인
         </v-btn>
@@ -72,7 +72,9 @@
               required
             ></v-text-field>
           </v-form>
-          <v-btn color="error" class="mr-4" @click="signup"> 회원가입 </v-btn>
+          <v-btn color="error" class="mr-4" @click="signupValidateCheck">
+            회원가입
+          </v-btn>
         </v-overlay>
       </v-flex>
     </v-layout>
@@ -107,7 +109,7 @@ export default {
   }),
 
   methods: {
-    validateCheck() {
+    loginValidateCheck() {
       this.$refs.form.validate();
       if (this.loginValid & this.$refs.form.validate()) {
         this.login();
@@ -124,8 +126,8 @@ export default {
           id: this.loginId,
           pwd: this.loginPw,
         });
-        console.log("res:", res);
         console.log("로그인 성공!!");
+        console.log("res:", res);
       } catch (error) {
         console.log(error);
       }
@@ -133,11 +135,24 @@ export default {
     openSignup() {
       this.overlay = true;
     },
-    signup() {
+    signupValidateCheck() {
       this.$refs.signupFrom.validate();
       if (this.signupValid & this.$refs.signupFrom.validate()) {
-        alert("회원가입");
+        this.signup();
+        alert("회원가입이 완료되었습니다!");
         this.overlay = false;
+      }
+    },
+    async signup() {
+      try {
+        const res = await axios.post(`${BASE_URL}/join`, {
+          id: this.signupId,
+          pwd: this.signupPw,
+        });
+        console.log("회원가입 성공!!");
+        console.log("res:", res);
+      } catch (error) {
+        console.log(error);
       }
     },
     resetValidation() {
