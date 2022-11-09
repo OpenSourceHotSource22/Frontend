@@ -3,9 +3,14 @@
     <v-main>
       <div class="myGroups">
         <h1>mygroups page</h1>
-        <v-btn @click="goMain">웅나쓰자</v-btn>
-        <br />
-        <v-btn @click="goCreateGroupPage">creategroup</v-btn>
+        <v-col v-for="group in userGroups" @click="goMainPage(group)">
+          <v-btn>
+            {{ group["name"] }}
+          </v-btn>
+        </v-col>
+        <v-col>
+          <v-btn @click="goCreateGroupPage" color="primary">createGroup</v-btn>
+        </v-col>
       </div>
     </v-main>
   </v-app>
@@ -14,24 +19,34 @@
 <script>
 import axios from "axios";
 import { BASE_URL } from "@/api";
-import { mapState } from "vuex";
+import { mapState, mapMutations } from "vuex";
 export default {
   data() {
     return {};
   },
   mounted() {
     // TODO: 사용자가 속한 그룹들 불러오기..........
-    this.userGroupList();
+    this.getUserGroupList();
     console.log(this.userToken);
   },
   computed: {
     ...mapState("userStore", {
       userId: "userId",
       userToken: "userToken",
+      userGroups: "userGroups",
+    }),
+    ...mapState("groupStore", {
+      groupName: "groupName",
     }),
   },
   methods: {
-    async userGroupList() {
+    ...mapMutations("userStore", {
+      updateUserGroups: "updateUserGroups",
+    }),
+    ...mapMutations("groupStore", {
+      updateGroupName: "updateGroupName",
+    }),
+    async getUserGroupList() {
       try {
         const res = await axios.get(`${BASE_URL}/team`, {
           headers: {
@@ -39,14 +54,19 @@ export default {
           },
         });
         console.log("그룹리스트 불러오기 성공!!");
-        console.log("res:", res.data);
+        console.log("res:", res.data["result"].team);
+        this.updateUserGroups(res.data["result"].team);
+        console.log("store usergrouplist:", this.userGroups);
       } catch (error) {
         console.log(error);
       }
     },
-    goMain() {
+    goMainPage(group) {
+      // console.log("gomainpage group", group["name"]);
+      this.updateGroupName(group["name"]);
       this.$router.push({ path: "/main" });
     },
+
     goCreateGroupPage() {
       this.$router.push({ path: "/createGroup" });
     },

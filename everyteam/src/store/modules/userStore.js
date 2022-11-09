@@ -3,6 +3,7 @@ const userStore = {
   state: {
     userId: "",
     userToken: "",
+    userGroups: [],
   },
   //   getters: {
   //     getUserName: (state) => state.userName,
@@ -13,6 +14,9 @@ const userStore = {
     },
     updateUserToken(state, value) {
       state.userToken = value;
+    },
+    updateUserGroups(state, value) {
+      state.userGroups = value;
     },
   },
   //   actions: {

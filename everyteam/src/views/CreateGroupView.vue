@@ -3,19 +3,24 @@
     <v-container>
       <v-flex>
         <h1>GreateGroup</h1>
-        <v-text-field
-          v-model="groupName"
-          :append-outer-icon="groupName ? 'mdi-send' : ''"
-          :prepend-icon="icon"
-          filled
-          clear-icon="mdi-close-circle"
-          clearable
-          label="그룹이름을 입력하세요"
-          type="text"
-          @click:append-outer="createGroup"
-          @click:prepend="changeIcon"
-          @click:clear="clearMessage"
-        ></v-text-field>
+        <v-col>
+          <v-text-field
+            v-model="groupName"
+            :append-outer-icon="groupName ? 'mdi-send' : ''"
+            :prepend-icon="icon"
+            filled
+            clear-icon="mdi-close-circle"
+            clearable
+            label="그룹이름을 입력하세요"
+            type="text"
+            @click:append-outer="createGroup"
+            @click:prepend="changeIcon"
+            @click:clear="clearMessage"
+          ></v-text-field>
+        </v-col>
+        <v-col>
+          <v-btn @click="goMyGroupsPage" color="pink"> Mygroups </v-btn>
+        </v-col>
       </v-flex>
     </v-container>
   </v-app>
@@ -87,6 +92,9 @@ export default {
       this.iconIndex === this.icons.length - 1
         ? (this.iconIndex = 0)
         : this.iconIndex++;
+    },
+    goMyGroupsPage() {
+      this.$router.push({ path: "/myGroups" });
     },
   },
 };

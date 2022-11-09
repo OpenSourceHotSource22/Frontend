@@ -126,7 +126,7 @@ export default {
       }
     },
     async login() {
-      //test data
+      //login test data
       //   {
       //      "id":"user2",
       //      "pwd":"21341234"
