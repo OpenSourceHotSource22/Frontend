@@ -34,24 +34,24 @@ chore : 빌드 업무 수정, 패키지 매니저 수정
 
 ### 지은
 
-everyteam/src/views/WhenWeMeetView.vue
+everyteam/src/views/WhenWeMeetView.vue  
 everyteam/src/store/modules/whenWeMeetStore.js
 
 ### 성호
 
-everyteam/src/views/RolesView.vue
-everyteam/src/views/RouletteView.vue
-everyteam/src/views/GhostLegView.vue
+everyteam/src/views/RolesView.vue  
+everyteam/src/views/RouletteView.vue  
+everyteam/src/views/GhostLegView.vue  
 everyteam/src/store/modules/rolesStore.js
 
 #### +새로운 파일 생성시 아래 경로에서 가능
 
-everyteam/src/views/"새로운파일명"
+everyteam/src/views/"새로운파일명"  
 everyteam/src/components/"새로운파일명"
 
 ## 코드 사용법 예시
 
-### api 사용할 때
+### api 사용
 
 ```
 import { BASE_URL } from "@/api";
@@ -60,10 +60,33 @@ import { BASE_URL } from "@/api";
 `${BASE_URL}/login`
 ```
 
+#### api header, body
+
+```js
+async createGroup() {
+      try {
+        const res = await axios.post(
+          `${BASE_URL}/team`,
+          {
+            name: this.groupName,
+          },
+          {
+            headers: {
+              "X-AUTH-TOKEN": localStorage.getItem("token"),
+            },
+          }
+        );
+        console.log("res:", res);
+      } catch (error) {
+        console.log(error);
+      }
+},
+```
+
 ### store파일 설명
 
-state -> 전역에서 사용할 변수
-getters -> 변수를 불러서 쓸 때
+state -> 전역에서 사용할 변수  
+getters -> 변수를 불러서 쓸 때  
 mutations -> state를 update할 때 사용
 
 ### 다른 파일에서 store사용시
