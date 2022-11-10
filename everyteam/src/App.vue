@@ -50,6 +50,7 @@
             </v-card-actions>
           </v-card>
         </v-dialog>
+        <v-btn @click="logout">로그아웃</v-btn>
       </div>
     </v-app-bar>
 
@@ -66,7 +67,14 @@ export default {
       showAppBar: true,
     };
   },
-  methods: {},
+  methods: {
+    logout() {
+      //localstoreage에 저장된 값을 삭제해줌
+      localStorage.setItem("token", "");
+      localStorage.setItem("userId", "");
+      this.$router.push({ path: "/login" });
+    },
+  },
   computed: {
     routerName() {
       return this.$route.name;
