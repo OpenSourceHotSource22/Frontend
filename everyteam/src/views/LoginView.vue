@@ -108,17 +108,8 @@ export default {
     ],
     // valid: true,
   }),
-  computed: {
-    ...mapState("userStore", {
-      userId: "userId",
-      userToken: "userToken",
-    }),
-  },
+
   methods: {
-    ...mapMutations("userStore", {
-      updateUserId: "updateUserId",
-      updateUserToken: "updateUserToken",
-    }),
     loginValidateCheck() {
       this.$refs.form.validate();
       if (this.loginValid & this.$refs.form.validate()) {
@@ -139,10 +130,13 @@ export default {
         console.log("로그인 성공!!");
         console.log("res:", res.data["result"]);
         localStorage.setItem("token", res.data["result"].token);
-        this.updateUserId(res.data["result"].id);
-        this.updateUserToken(res.data["result"].token);
-        console.log("store user token: ", this.userToken);
-        console.log("store user id: ", this.userId);
+        localStorage.setItem("userId", res.data["result"].id);
+
+        //store에 user정보 update -> 새로고침시 사라짐.. ㅜㅜ localstoreage에 저장하자
+        // this.updateUserId(res.data["result"].id);
+        // this.updateUserToken(res.data["result"].token);
+        // console.log("store user token: ", this.userToken);
+        // console.log("store user id: ", this.userId);
         this.loginId = "";
         this.loginPw = "";
         this.$router.push({ path: "/myGroups" });

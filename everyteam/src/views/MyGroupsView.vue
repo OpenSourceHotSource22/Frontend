@@ -2,7 +2,10 @@
   <v-app>
     <v-main>
       <div class="myGroups">
-        <h1>mygroups page</h1>
+        <v-col>
+          <h1>mygroups page</h1>
+          <h2>{{ userId }}</h2>
+        </v-col>
         <v-col v-for="group in userGroups" @click="goMainPage(group)">
           <v-btn>
             {{ group["name"] }}
@@ -22,7 +25,9 @@ import { BASE_URL } from "@/api";
 import { mapState, mapMutations } from "vuex";
 export default {
   data() {
-    return {};
+    return {
+      userId: localStorage.getItem("userId"),
+    };
   },
   mounted() {
     // TODO: 사용자가 속한 그룹들 불러오기..........
@@ -31,7 +36,7 @@ export default {
   },
   computed: {
     ...mapState("userStore", {
-      userId: "userId",
+      // userId: "userId",
       userToken: "userToken",
       userGroups: "userGroups",
     }),

@@ -12,7 +12,6 @@
               label="title"
               clearable
             ></v-text-field>
-
             <v-textarea
               clearable
               outlined
@@ -20,6 +19,7 @@
               :value="post_Context"
             ></v-textarea>
           </v-container>
+          <v-btn color="primary">제출</v-btn>
         </template>
       </div>
     </v-main>
