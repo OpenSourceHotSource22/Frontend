@@ -19,6 +19,23 @@
           ></v-text-field>
         </v-col>
         <v-col>
+          <v-textarea
+            v-model="description"
+            solo
+            label="그룹 설명"
+            clearable
+          ></v-textarea>
+        </v-col>
+        <v-col>
+          <v-file-input
+            v-model="profileImg"
+            show-size
+            label="그룹의 프로필 사진을 선택해주세요"
+            @change="previewFile(profileImg)"
+          ></v-file-input>
+          <img class="img" :src="preview" />
+        </v-col>
+        <v-col>
           <v-btn @click="goMyGroupsPage" color="pink"> Mygroups </v-btn>
         </v-col>
       </v-flex>
@@ -45,6 +62,9 @@ export default {
       "mdi-emoticon-sad",
       "mdi-emoticon-tongue",
     ],
+    description: "",
+    profileImg: [],
+    preview: "",
   }),
 
   computed: {
@@ -83,7 +103,7 @@ export default {
       alert("완료");
     },
     clearMessage() {
-      this.message = "";
+      this.groupName = "";
     },
     resetIcon() {
       this.iconIndex = 0;
@@ -96,6 +116,38 @@ export default {
     goMyGroupsPage() {
       this.$router.push({ path: "/myGroups" });
     },
+    previewFile(file) {
+      const filedata = (data) => {
+        this.preview = data;
+      };
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.addEventListener(
+        "load",
+        function () {
+          filedata(reader.result);
+        },
+        false
+      );
+    },
+  },
+  watch: {
+    profileImg() {
+      console.log(this.profileImg);
+      const formdata = new FormData();
+      formdata.append("profileImg", this.profileImg);
+      console.log("formdata:", formdata);
+    },
   },
 };
 </script>
+
+<style>
+.img {
+  width: auto;
+  height: auto;
+  max-width: 400px;
+  max-height: 400px;
+  border-radius: 40%;
+}
+</style>
