@@ -117,18 +117,22 @@ export default {
       this.$router.push({ path: "/myGroups" });
     },
     previewFile(file) {
-      const filedata = (data) => {
-        this.preview = data;
-      };
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.addEventListener(
-        "load",
-        function () {
-          filedata(reader.result);
-        },
-        false
-      );
+      if (this.profileImg != undefined) {
+        const filedata = (data) => {
+          this.preview = data;
+        };
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.addEventListener(
+          "load",
+          function () {
+            filedata(reader.result);
+          },
+          false
+        );
+      } else {
+        this.preview = "";
+      }
     },
   },
   watch: {
