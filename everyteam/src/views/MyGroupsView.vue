@@ -59,7 +59,7 @@ export default {
           },
         });
         console.log("그룹리스트 불러오기 성공!!");
-        console.log("res:", res.data["result"].team);
+        console.log("res:", res.data);
         this.updateUserGroups(res.data["result"].team);
         console.log("store usergrouplist:", this.userGroups);
       } catch (error) {
