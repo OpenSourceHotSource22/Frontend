@@ -65,8 +65,14 @@ export default {
     description: "",
     profileImg: [],
     preview: "",
+    teamcode: "jNgxNI",
   }),
 
+  mounted() {
+    this.getUserTeamList();
+    // this.getGroupList();
+    // this.getUser();
+  },
   computed: {
     icon() {
       return this.icons[this.iconIndex];
@@ -77,7 +83,7 @@ export default {
     async createGroup() {
       try {
         const res = await axios.post(
-          `${BASE_URL}/team`,
+          `${BASE_URL}/team/create`,
           {
             name: this.groupName,
           },
@@ -94,6 +100,26 @@ export default {
         console.log(error);
       }
     },
+    async getGroupList() {
+      console.log(localStorage.getItem("token"));
+      try {
+        const res = await axios.get(
+          `${BASE_URL}/role/userList`,
+          {
+            teamCode: this.teamcode,
+          },
+          {
+            headers: {
+              "X-AUTH-TOKEN": localStorage.getItem("token"),
+            },
+          }
+        );
+        console.log("group list:", res);
+      } catch (error) {
+        console.log(error);
+      }
+    },
+
     toggleMarker() {
       this.marker = !this.marker;
     },

@@ -12,7 +12,7 @@
           @click="goMainPage(group)"
         >
           <v-btn>
-            {{ group["name"] }}
+            {{ group["name"].name }}
           </v-btn>
         </v-col>
         <v-col>
@@ -68,6 +68,43 @@ export default {
     return {
       userId: localStorage.getItem("userId"),
       joinGroupClick: false,
+      dummy: {
+        status: 200,
+        message: "joinTeam",
+        result: {
+          user: {
+            id: "user2",
+          },
+          team: [
+            {
+              team: {
+                teamIdx: 1,
+                name: "team1",
+                code: "SEqjXh",
+                imgUrl:
+                  "https://storage.googleapis.com/weave_bucket/everyTeam_SEqjXh",
+                description: "team1생성",
+                topImgUrl: null,
+              },
+              countUser: 3,
+            },
+            {
+              team: {
+                teamIdx: 5,
+                name: "team1",
+                code: "bkQsvL",
+                imgUrl:
+                  "https://storage.googleapis.com/weave_bucket/everyTeam_bkQsvL",
+                description: "team1생성",
+                topImgUrl: null,
+              },
+              countUser: 1,
+            },
+          ],
+        },
+        success: true,
+        userGroups: null,
+      },
     };
   },
   mounted() {
@@ -94,17 +131,19 @@ export default {
     }),
     async getUserGroupList() {
       try {
-        const res = await axios.get(`${BASE_URL}/team`, {
+        const res = await axios.get(`${BASE_URL}/user/teamList`, {
           headers: {
             "X-AUTH-TOKEN": localStorage.getItem("token"),
           },
         });
         console.log("그룹리스트 불러오기 성공!!");
-        console.log("res:", res.data);
+        this.userGroups = res.data["result"]["team"];
+        console.log("res:", res.data["result"]["team"][0]["team"].name);
+        console.log("res:", res.data["result"]["team"]);
 
         //store에 저장... 굳이 해야될까?
-        this.updateUserGroups(res.data["result"].team);
-        console.log("store usergrouplist:", this.userGroups);
+        // this.updateUserGroups(res.data["result"].team);
+        // console.log("store usergrouplist:", this.userGroups);
       } catch (error) {
         // console.log(error);
       }
