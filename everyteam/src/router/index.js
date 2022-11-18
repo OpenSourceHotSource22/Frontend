@@ -11,6 +11,8 @@ import Post from "@/views/PostView.vue";
 import Example from "@/views/ExampleView.vue";
 import Roulette from "@/views/RouletteView.vue";
 import GhostLeg from "@/views/GhostLegView.vue";
+import TimePick from "@/views/TimePick.vue";
+import WWMResult from "@/views/WhenWeMeetResult.vue";
 
 Vue.use(VueRouter);
 
@@ -39,6 +41,16 @@ const routes = [
     path: "/whenWeMeet",
     name: "whenWeMeet",
     component: WhenWeMeet,
+  },
+  {
+    path: "/timePick",
+    name: "timePick",
+    component: TimePick,
+  },
+  {
+    path : "/WhenWeMeetResult",
+    name : "WhenWeMeetResult",
+    component:WWMResult,
   },
   {
     path: "/roles",
