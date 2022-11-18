@@ -9,6 +9,8 @@ import Roles from "@/views/RolesView.vue";
 import CreateGroup from "@/views/CreateGroupView.vue";
 import Post from "@/views/PostView.vue";
 import Example from "@/views/ExampleView.vue";
+import Roulette from "@/views/RouletteView.vue";
+import GhostLeg from "@/views/GhostLegView.vue";
 
 Vue.use(VueRouter);
 
@@ -57,6 +59,16 @@ const routes = [
     path: "/example",
     name: "example",
     component: Example,
+  },
+  {
+    path: "/roulette",
+    name: "roulette",
+    component: Roulette,
+  },
+  {
+    path: "/ghostLeg",
+    name: "ghostLeg",
+    component: GhostLeg,
   },
 ];
 
