@@ -2,38 +2,28 @@
   <v-app>
     <v-main>
       <div id="app">
-        <h1>룰렛</h1>
+        <h1 id="hh">룰렛</h1>
+        <v-btn class="my-5" @click="goRolsPage">선택메뉴 가기</v-btn>
         <div class="roulette-outer">
           <div class="roulette-pin"></div>
           <div class="roulette" v-bind:style="rouletteStyle">
             <!--값 영역-->
             <div class="item-wrapper">
-              <div
-                class="item"
-                v-for="(item, index) in items"
-                v-bind:style="itemStyles[index]"
-              >
+              <div class="item" v-for="(item, index) in items" v-bind:style="itemStyles[index]">
                 {{ item.value }}
               </div>
             </div>
 
             <!--선 영역-->
             <div class="line-wrapper">
-              <div
-                class="line"
-                v-for="(item, index) in items"
-                v-bind:style="lineStyles[index]"
-              ></div>
+              <div class="line" v-for="(item, index) in items" v-bind:style="lineStyles[index]"></div>
             </div>
           </div>
         </div>
-        <button
-          class="play-btn"
-          v-on:click="play"
-          v-bind:disabled="buttonDisable"
-        >
+        <v-btn class="play-btn my-5 mx-5" v-on:click="play" v-bind:disabled="buttonDisable">
           돌려돌려 돌림판~
-        </button>
+        </v-btn>
+        <v-btn color="success">Success</v-btn>
         <hr />
         <ul>
           <li v-for="(h, idx) in history">{{ h }}</li>
@@ -44,6 +34,9 @@
 </template>
 
 <script>
+import { BASE_URL } from "@/api";
+import axios from "axios";
+
 export default {
   data() {
     return {
@@ -59,6 +52,7 @@ export default {
       count: 0,
       history: [],
       buttonDisable: false,
+      teamcode: "jNgxNI",
     };
   },
 
@@ -75,7 +69,7 @@ export default {
       let randomOffset =
         Math.floor(Math.random() * this.segment) - this.offset - 1;
       let cycle = this.count * 360 * 5; //5바퀴
-      return -(temp + randomOffset + cycle); //랜덤변화
+      return (temp + randomOffset + cycle); //랜덤변화
     },
     rouletteStyle() {
       return {
@@ -87,18 +81,42 @@ export default {
     },
   },
   methods: {
+    async getGroupList() {
+      console.log("getgrouplist");
+      try {
+        const res = await axios.get(
+          `http://everyteam.shop/role/userList`,
+          {
+            teamCode: this.teamcode,
+          },
+          {
+            headers: {
+              "X-AUTH-TOKEN": localStorage.getItem("token"),
+            },
+          }
+        );
+        console.log("res:", res);
+      } catch (error) {
+        console.log(error);
+      }
+    },
     play() {
       this.buttonDisable = true;
       this.count++;
       this.current = Math.floor(Math.random() * this.items.length);
       this.history.push(this.currentItem.value);
-      setTimeout(() => {
+      if (count >= 1) {
         this.buttonDisable = false;
-      }, 5000);
+        return;
+      }
+    },
+    goRolsPage() {
+      this.$router.push({ path: "/roles" });
     },
   },
   mounted() {
     //itemStyles정의
+    this.getGroupList();
     this.items.forEach((el, idx) => {
       this.itemStyles.push({
         transform: "rotate(" + this.segment * idx + "deg)",
@@ -134,7 +152,7 @@ body {
   background: #ffeaa7;
 }
 
-.roulette-outer > .roulette {
+.roulette-outer>.roulette {
   position: absolute;
   top: 5%;
   left: 5%;
@@ -144,7 +162,7 @@ body {
   border: 2px solid black;
 }
 
-.roulette-outer > .roulette-pin {
+.roulette-outer>.roulette-pin {
   position: absolute;
   top: 0;
   left: 50%;
@@ -156,7 +174,7 @@ body {
   border-color: #007bff transparent transparent transparent;
 }
 
-.roulette-outer > .roulette > .item-wrapper > .item {
+.roulette-outer>.roulette>.item-wrapper>.item {
   position: absolute;
   top: 0;
   left: 0;
@@ -169,7 +187,7 @@ body {
   justify-content: center;
 }
 
-.roulette-outer > .roulette > .line-wrapper > .line {
+.roulette-outer>.roulette>.line-wrapper>.line {
   position: absolute;
   top: 0;
   bottom: 50%;
@@ -180,7 +198,7 @@ body {
   transform-origin: bottom;
 }
 
-.roulette-outer > .roulette {
+.roulette-outer>.roulette {
   transition: transform 5s ease-in-out;
 }
 </style>

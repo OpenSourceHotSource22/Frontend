@@ -1,11 +1,11 @@
 <template>
   <v-app>
     <v-main>
-      <div class="roles">
-        <h1>roles page</h1>
-        <v-btn @click="goToRoulette"> 룰렛 </v-btn>
-        <v-btn @click="goToGhostLeg"> 사다리타기 </v-btn>
-      </div>
+      <v-container class="roles my-5">
+        <h1>역할고르기</h1>
+        <v-btn class="mx-5 my-5" @click="goToRoulette"> 룰렛 </v-btn>
+        <v-btn class="my-5" @click="goToGhostLeg"> 사다리타기 </v-btn>
+      </v-container>
     </v-main>
   </v-app>
 </template>
@@ -22,3 +22,7 @@ export default {
   },
 };
 </script>
+
+<style>
+
+</style>
