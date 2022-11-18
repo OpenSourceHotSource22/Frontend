@@ -3,6 +3,7 @@
     <v-main>
       <div id="app">
         <h1>룰렛</h1>
+        <v-btn @click="goRolsPage">다시선택하기 </v-btn>
         <div class="roulette-outer">
             <div class="roulette-pin"></div>
             <div class="roulette" v-bind:style="rouletteStyle">
@@ -28,8 +29,14 @@
     </v-main>
   </v-app>
 </template>
-
     <script>
+    export default {
+  methods: {
+    goRolsPage() {
+      this.$router.push({ path: "/roles" });
+    },
+  },
+};
         Vue.createApp({
             data() {
                 return {
