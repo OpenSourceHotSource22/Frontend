@@ -6,7 +6,11 @@
           <h1>mygroups page</h1>
           <h2>{{ userId }}</h2>
         </v-col>
-        <v-col v-for="group in userGroups" @click="goMainPage(group)">
+        <v-col
+          v-for="(group, idx) in userGroups"
+          :key="idx"
+          @click="goMainPage(group)"
+        >
           <v-btn>
             {{ group["name"] }}
           </v-btn>
