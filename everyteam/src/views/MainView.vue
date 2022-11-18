@@ -1,42 +1,68 @@
 <template>
   <v-app>
     <v-main>
-      <v-card>
-        <v-card-title class="text-center justify-center py-6">
-          <h1 class="font-weight-bold text-h2 basil--text">{{ groupName }}</h1>
+      <v-card color="#A3D4A2">
+        <v-img src="@/assets/groupBack.png" max-height="250"></v-img>
 
-          <div class="text-center">
-            <v-dialog v-model="dialog" width="500">
-              <template v-slot:activator="{ on, attrs }">
-                <v-btn color="red lighten-2" dark v-bind="attrs" v-on="on">
-                  +
-                </v-btn>
-              </template>
-
-              <v-card>
-                <v-card-title class="text-h5 grey lighten-2">
-                  선택하시오
-                </v-card-title>
-
-                <v-card-text>
-                  <router-link to="/post">post</router-link>|
-                  <router-link to="/roles">Roles</router-link>|
-                  <router-link to="/whenWeMeet">whenwemmet</router-link>
-                </v-card-text>
-
-                <v-divider></v-divider>
-
-                <v-card-actions>
-                  <v-spacer></v-spacer>
-                  <v-btn color="primary" text @click="dialog = false">
-                    닫기
-                  </v-btn>
-                </v-card-actions>
-              </v-card>
-            </v-dialog>
-          </div>
-        </v-card-title>
         <v-row>
+          <!-- 그룹 정보 -->
+          <v-col cols="3">
+            <v-card color="#FDFFAA" class="group">
+              <v-avatar size="6=90px">
+                <img alt="Avatar" src="@/assets/groupProfile.png" />
+              </v-avatar>
+
+              <v-card-title class="text-h5">
+                {{ groupName }}
+              </v-card-title>
+              <v-card-text> 그룹 설명 </v-card-text>
+              <v-list-item-content>
+                <!-- 그룹 list -->
+                <v-menu open-on-hover top offset-x>
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-btn color="pink" v-on="on">
+                      <v-icon> mdi-account </v-icon>
+                    </v-btn>
+                  </template>
+                  <v-list>
+                    <v-list-item
+                      v-for="(item, index) in groupList"
+                      :key="index"
+                    >
+                      <v-list-item-title>{{ item }}</v-list-item-title>
+                    </v-list-item>
+                  </v-list>
+                </v-menu>
+                <v-dialog v-model="dialog" width="500">
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-btn color="red lighten-2" dark v-bind="attrs" v-on="on">
+                      초대하기
+                    </v-btn>
+                  </template>
+
+                  <v-card>
+                    <v-card-title class="text-h5 grey lighten-2">
+                      선택하시오
+                    </v-card-title>
+
+                    <v-card-text> 초대링크 </v-card-text>
+
+                    <v-divider></v-divider>
+
+                    <v-card-actions>
+                      <v-spacer></v-spacer>
+                      <v-btn color="primary" text @click="dialog = false">
+                        닫기
+                      </v-btn>
+                    </v-card-actions>
+                  </v-card>
+                </v-dialog>
+                <!-- group list -->
+                <v-btn color="primary"> + </v-btn>
+              </v-list-item-content>
+            </v-card>
+          </v-col>
+          <!-- context -->
           <v-col>
             <v-tabs
               v-model="tab"
@@ -67,7 +93,7 @@
                         <v-col>
                           <v-sheet rounded="lg" min-height="268">
                             게시물
-                            <!--  -->
+
                             <v-col v-for="n in 6" :key="n">
                               <v-card height="200"></v-card>
                             </v-col>
@@ -80,7 +106,6 @@
                             <v-col v-for="n in 3" :key="n">
                               <v-card height="200"></v-card>
                             </v-col>
-                            <!--  -->
                           </v-sheet>
                         </v-col>
 
@@ -110,56 +135,6 @@
               </v-tab-item>
             </v-tabs-items>
           </v-col>
-
-          <!-- <v-col cols="3">
-            <v-card outlined>
-              <v-list-item three-line>
-                <v-list-item-content>
-                  <v-list-item-title class="text-h5 mb-1">
-                    사용자
-                  </v-list-item-title>
-                  <div v-for="user in groupList" :key="user">
-                    <v-list-item-subtitle>{{ user }}</v-list-item-subtitle>
-                  </div>
-                </v-list-item-content>
-              </v-list-item>
-
-              <v-card-actions>
-                <div class="text-center">
-                  <v-dialog v-model="invite" width="500">
-                    <template v-slot:activator="{ on, attrs }">
-                      <v-btn
-                        color="green lighten-2"
-                        dark
-                        v-bind="attrs"
-                        v-on="on"
-                        @click="inviteButtonClick"
-                      >
-                        초대하기
-                      </v-btn>
-                    </template>
-
-                    <v-card>
-                      <v-card-title class="text-h5 grey lighten-2">
-                        초대링크
-                      </v-card-title>
-
-                      <v-card-text> 링크 </v-card-text>
-
-                      <v-divider></v-divider>
-
-                      <v-card-actions>
-                        <v-spacer></v-spacer>
-                        <v-btn color="primary" text @click="invite = false">
-                          닫기
-                        </v-btn>
-                      </v-card-actions>
-                    </v-card>
-                  </v-dialog>
-                </div>
-              </v-card-actions>
-            </v-card>
-          </v-col> -->
         </v-row>
       </v-card>
     </v-main>
@@ -206,3 +181,10 @@ export default {
   },
 };
 </script>
+<style>
+.group {
+  padding: 20px;
+  margin-top: 20px;
+  margin-left: 20px;
+}
+</style>

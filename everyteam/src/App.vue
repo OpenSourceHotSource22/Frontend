@@ -14,7 +14,7 @@
         <router-link to="/example">example</router-link>
       </nav>
 
-      <div style="position: absolute; position: fixed; top: 10px; right: 50px">
+      <!-- <div style="position: absolute; position: fixed; top: 10px; right: 50px">
         <v-menu open-on-hover top offset-x>
           <template v-slot:activator="{ on, attrs }">
             <v-btn class="mx-2" fab small color="pink" v-on="on">
@@ -50,6 +50,9 @@
             </v-card-actions>
           </v-card>
         </v-dialog>
+        <v-btn @click="logout">로그아웃</v-btn>
+      </div> -->
+      <div style="position: absolute; position: fixed; top: 10px; right: 50px">
         <v-btn @click="logout">로그아웃</v-btn>
       </div>
     </v-app-bar>
