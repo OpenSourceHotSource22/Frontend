@@ -2,8 +2,8 @@
   <v-app>
     <v-main>
       <div id="app">
-        <h1>룰렛</h1>
-        <v-btn class="my-5" @click="goRolsPage">다시선택하기</v-btn>
+        <h1 id="hh">룰렛</h1>
+        <v-btn class="my-5" @click="goRolsPage">선택메뉴 가기</v-btn>
         <div class="roulette-outer">
           <div class="roulette-pin"></div>
           <div class="roulette" v-bind:style="rouletteStyle">
@@ -107,6 +107,7 @@ export default {
       this.history.push(this.currentItem.value);
       if (count >= 1) {
         this.buttonDisable = false;
+        return;
       }
     },
     goRolsPage() {
