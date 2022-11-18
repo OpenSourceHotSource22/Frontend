@@ -3,7 +3,7 @@
     <v-main>
       <div id="app">
         <h1>룰렛</h1>
-        <v-btn class="my-3" @click="goRolsPage">다시선택하기 </v-btn>
+        <v-btn class="my-5" @click="goRolsPage">다시선택하기</v-btn>
         <div class="roulette-outer">
           <div class="roulette-pin"></div>
           <div class="roulette" v-bind:style="rouletteStyle">
@@ -20,93 +20,114 @@
             </div>
           </div>
         </div>
-        <v-btn class="play-btn mr-5 my-5" v-on:click="play" v-bind:disabled="buttonDisable">
-          돌려돌려 돌림판
+        <v-btn class="play-btn my-5 mx-5" v-on:click="play" v-bind:disabled="buttonDisable">
+          돌려돌려 돌림판~
         </v-btn>
-        <v-btn small color="success" dark>
-          제출하기
-        </v-btn>
+        <v-btn color="success">Success</v-btn>
         <hr />
         <ul>
-          <li v-for="(h, idx) in history">당첨자 : {{ h }}</li>
+          <li v-for="(h, idx) in history">{{ h }}</li>
         </ul>
       </div>
     </v-main>
   </v-app>
 </template>
-    <script>
-    export default {
+
+<script>
+import { BASE_URL } from "@/api";
+import axios from "axios";
+
+export default {
+  data() {
+    return {
+      items: [
+        { value: "100점" },
+        { value: "200점" },
+        { value: "-500점" },
+        { value: "0점" },
+      ],
+      itemStyles: [],
+      lineStyles: [],
+      current: 0, //실제 가리키는 데이터
+      count: 0,
+      history: [],
+      buttonDisable: false,
+      teamcode: "jNgxNI",
+    };
+  },
+
+  computed: {
+    segment() {
+      return 360 / this.items.length;
+    },
+    offset() {
+      return this.segment / 2;
+    },
+    angle() {
+      // return -this.current * this.segment; 각도가 너무일정함.
+      let temp = -this.current * this.segment;
+      let randomOffset =
+        Math.floor(Math.random() * this.segment) - this.offset - 1;
+      let cycle = this.count * 360 * 5; //5바퀴
+      return (temp + randomOffset + cycle); //랜덤변화
+    },
+    rouletteStyle() {
+      return {
+        transform: "rotate(" + this.angle + "deg)",
+      };
+    },
+    currentItem() {
+      return this.items[this.current];
+    },
+  },
   methods: {
+    async getGroupList() {
+      console.log("getgrouplist");
+      try {
+        const res = await axios.get(
+          `http://everyteam.shop/role/userList`,
+          {
+            teamCode: this.teamcode,
+          },
+          {
+            headers: {
+              "X-AUTH-TOKEN": localStorage.getItem("token"),
+            },
+          }
+        );
+        console.log("res:", res);
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    play() {
+      this.buttonDisable = true;
+      this.count++;
+      this.current = Math.floor(Math.random() * this.items.length);
+      this.history.push(this.currentItem.value);
+      if (count >= 1) {
+        this.buttonDisable = false;
+      }
+    },
     goRolsPage() {
       this.$router.push({ path: "/roles" });
     },
   },
+  mounted() {
+    //itemStyles정의
+    this.getGroupList();
+    this.items.forEach((el, idx) => {
+      this.itemStyles.push({
+        transform: "rotate(" + this.segment * idx + "deg)",
+      });
+      //lineStyles정의
+      this.lineStyles.push({
+        transform: "rotate(" + (this.segment * idx + this.offset) + "deg)",
+      });
+    });
+  },
 };
-        Vue.createApp({
-            data() {
-                return {
-                    items: [
-                        { value: "100점" },
-                        { value: "200점" },
-                        { value: "-500점" },
-                        { value: "0점" },
-                    ],
-                    itemStyles: [],
-                    lineStyles: [],
-                    current: 0, //실제 가리키는 데이터
-                    count: 0,
-                    history: [],
-                    buttonDisable: false,
-                };
-            },
-            computed: {
-                segment() {
-                    return 360 / this.items.length;
-                },
-                offset() {
-                    return this.segment / 2;
-                },
-                angle() {
-                    // return -this.current * this.segment; 각도가 너무일정함.
-                    let temp = -this.current * this.segment;
-                    let randomOffset = Math.floor(Math.random() * this.segment) - this.offset - 1;
-                    let cycle = this.count * 360 * 5; //5바퀴
-                    return -(temp + randomOffset + cycle) //랜덤변화
-                },
-                rouletteStyle() {
-                    return {
-                        "transform": "rotate(" + this.angle + "deg)"
-                    };
-                },
-                currentItem() {
-                    return this.items[this.current];
-                },
-            },
-            methods: {
-                play() {
-                    this.buttonDisable = true;
-                    this.count++;
-                    this.current = Math.floor(Math.random() * this.items.length);
-                    this.history.push(this.currentItem.value);
-                    setTimeout(() => {
-                        this.buttonDisable = false;
-                    }, 5000);
-                },
-            },
-            created() {
-                //itemStyles정의
-                this.items.forEach((el, idx) => {
-                    this.itemStyles.push({
-                        "transform": "rotate(" + this.segment * idx + "deg)",
-                    });
-                    //lineStyles정의
-                    this.lineStyles.push({
-                        "transform": "rotate(" + (this.segment * idx + this.offset) + "deg)",
-                    });
-                });
-            },
-        }).mount("#app");
-    </script>
+</script>
 
 <style>
 html,
