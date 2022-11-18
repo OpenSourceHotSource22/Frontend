@@ -3,29 +3,34 @@
     <v-main>
       <div id="app">
         <h1>룰렛</h1>
-        <v-btn @click="goRolsPage">다시선택하기 </v-btn>
+        <v-btn class="my-3" @click="goRolsPage">다시선택하기 </v-btn>
         <div class="roulette-outer">
-            <div class="roulette-pin"></div>
-            <div class="roulette" v-bind:style="rouletteStyle">
-
-                <!--값 영역-->
-                <div class="item-wrapper">
-                    <div class="item" v-for="(item,index) in items" v-bind:style="itemStyles[index]">{{item.value}}
-                    </div>
-                </div>
-
-                <!--선 영역-->
-                <div class="line-wrapper">
-                    <div class="line" v-for="(item,index) in items" v-bind:style="lineStyles[index]"></div>
-                </div>
+          <div class="roulette-pin"></div>
+          <div class="roulette" v-bind:style="rouletteStyle">
+            <!--값 영역-->
+            <div class="item-wrapper">
+              <div class="item" v-for="(item, index) in items" v-bind:style="itemStyles[index]">
+                {{ item.value }}
+              </div>
             </div>
+
+            <!--선 영역-->
+            <div class="line-wrapper">
+              <div class="line" v-for="(item, index) in items" v-bind:style="lineStyles[index]"></div>
+            </div>
+          </div>
         </div>
-        <button class="play-btn" v-on:click="play" v-bind:disabled="buttonDisable">돌려돌려 돌림판~</button>
-        <hr>
+        <v-btn class="play-btn mr-5 my-5" v-on:click="play" v-bind:disabled="buttonDisable">
+          돌려돌려 돌림판
+        </v-btn>
+        <v-btn small color="success" dark>
+          제출하기
+        </v-btn>
+        <hr />
         <ul>
-            <li v-for="(h,idx) in history">{{h}}</li>
+          <li v-for="(h, idx) in history">당첨자 : {{ h }}</li>
         </ul>
-    </div>
+      </div>
     </v-main>
   </v-app>
 </template>
@@ -103,75 +108,75 @@
         }).mount("#app");
     </script>
 
-    <style>
-        html,
-        body {
-            margin: 0;
-            padding: 0;
-        }
+<style>
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
 
-        #app {
-            text-align: center;
-        }
+#app {
+  text-align: center;
+}
 
-        .roulette-outer {
-            position: relative;
-            overflow: hidden;
-            width: 500px;
-            height: 500px;
-            font-size: 30px;
-            margin-left: auto;
-            margin-right: auto;
-            background: #ffeaa7;
-        }
+.roulette-outer {
+  position: relative;
+  overflow: hidden;
+  width: 500px;
+  height: 500px;
+  font-size: 30px;
+  margin-left: auto;
+  margin-right: auto;
+  background: #ffeaa7;
+}
 
-        .roulette-outer>.roulette {
-            position: absolute;
-            top: 5%;
-            left: 5%;
-            right: 5%;
-            bottom: 5%;
-            border-radius: 50%;
-            border: 2px solid black;
-        }
+.roulette-outer>.roulette {
+  position: absolute;
+  top: 5%;
+  left: 5%;
+  right: 5%;
+  bottom: 5%;
+  border-radius: 50%;
+  border: 2px solid black;
+}
 
-        .roulette-outer>.roulette-pin {
-            position: absolute;
-            top: 0;
-            left: 50%;
-            width: 0;
-            height: 0;
-            margin-left: -4px;
-            border-style: solid;
-            border-width: 25px 5px 0 5px;
-            border-color: #007bff transparent transparent transparent;
-        }
+.roulette-outer>.roulette-pin {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 0;
+  height: 0;
+  margin-left: -4px;
+  border-style: solid;
+  border-width: 25px 5px 0 5px;
+  border-color: #007bff transparent transparent transparent;
+}
 
-        .roulette-outer>.roulette>.item-wrapper>.item {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
+.roulette-outer>.roulette>.item-wrapper>.item {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
 
-            padding-top: 10%;
-            text-align: center;
-            display: flex;
-            justify-content: center;
-        }
+  padding-top: 10%;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+}
 
-        .roulette-outer>.roulette>.line-wrapper>.line {
-            position: absolute;
-            top: 0;
-            bottom: 50%;
-            left: 50%;
-            width: 2px;
-            margin-left: -1px;
-            background: black;
-            transform-origin: bottom;
-        }
+.roulette-outer>.roulette>.line-wrapper>.line {
+  position: absolute;
+  top: 0;
+  bottom: 50%;
+  left: 50%;
+  width: 2px;
+  margin-left: -1px;
+  background: black;
+  transform-origin: bottom;
+}
 
-        .roulette-outer>.roulette {
-            transition: transform 5s ease-in-out;
-        }
-    </style>
+.roulette-outer>.roulette {
+  transition: transform 5s ease-in-out;
+}
+</style>
