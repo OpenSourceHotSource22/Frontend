@@ -73,8 +73,14 @@
               :label="switch1 ? `항목별` : `생성일`"
             ></v-switch>
           </v-row>
-          <v-row v-if="!switch1">
-            <v-col v-for="(post, idx) in teamPostList" :key="idx" cols="4">
+          <v-row v-if="!switch1" v-masonry item-selector=".item">
+            <v-col
+              v-for="(post, idx) in teamPostList"
+              :key="idx"
+              cols="4"
+              v-masonry-tile
+              class="item"
+            >
               <v-card>
                 <v-list-item two-line>
                   <v-list-item-content>
@@ -88,7 +94,7 @@
                   </v-list-item-content>
                 </v-list-item>
                 <v-card-text>
-                  <v-list-item>
+                  <!-- <v-list-item>
                     <v-list-item-content>
                       <v-list-item-title>
                         {{ post["content"] }}
@@ -98,7 +104,10 @@
                         {{ post["category"] }}
                       </v-list-item-subtitle>
                     </v-list-item-content>
-                  </v-list-item>
+                  </v-list-item> -->
+                  <v-card-text>
+                    {{ post["content"] }}
+                  </v-card-text>
                   <v-list-item class="grow">
                     <v-row justify="end">
                       <span class="subheading">
