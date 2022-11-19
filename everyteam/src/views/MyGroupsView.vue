@@ -204,7 +204,9 @@ export default {
         this.joinGroupBtn = false;
         this.plusBtnClick = false;
       } catch (error) {
-        console.log(error);
+        alert(error["response"].data["message"]);
+        console.log(error["response"].data["message"]);
+        this.teamCode = "";
       }
     },
     teamCardClick(team) {
