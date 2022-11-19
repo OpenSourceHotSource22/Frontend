@@ -77,7 +77,9 @@
                 <v-card-subtitle>
                   {{ group["team"].description }}
                 </v-card-subtitle>
-                <v-card-subtitle> {{ group.countUser }} </v-card-subtitle>
+                <v-card-subtitle>
+                  {{ group.countUser }}
+                </v-card-subtitle>
               </v-card>
             </v-col>
           </v-row>
@@ -176,12 +178,30 @@ export default {
     goCreateGroupPage() {
       this.$router.push({ path: "/createGroup" });
     },
-    joinGroup() {
+    async joinGroup() {
       //TODO: api joingroup사용해서 그룹에 들어가기...구현
-      alert(`${this.teamCode}그룹에 들어갔습니다`);
-      this.teamCode = "";
-      this.joinGroupBtn = false;
-      this.plusBtnClick = false;
+
+      try {
+        const res = await axios.post(
+          `${BASE_URL}/team/join`,
+          {
+            teamCode: this.teamCode,
+          },
+          {
+            headers: {
+              "X-AUTH-TOKEN": localStorage.getItem("token"),
+            },
+          }
+        );
+        console.log("팀가입 성공!!");
+        console.log("res:", res);
+        alert(`${this.teamCode}그룹에 들어갔습니다`);
+        this.teamCode = "";
+        this.joinGroupBtn = false;
+        this.plusBtnClick = false;
+      } catch (error) {
+        console.log(error);
+      }
     },
   },
 };
