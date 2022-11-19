@@ -42,7 +42,7 @@
                 </v-row>
               </div>
               <v-card-title class="justify-center align-center">
-                <v-btn> 그룹 생성 </v-btn>
+                <v-btn @click="goCreateGroupPage"> 그룹 생성 </v-btn>
               </v-card-title>
 
               <v-card-actions class="justify-center align-center">
@@ -65,7 +65,12 @@
               :key="idx"
             >
               <v-card class="mx-auto" max-width="344">
-                <v-img :src="`${group['team'].imgUrl}`" height="250px"></v-img>
+                <v-img
+                  v-if="group['team'].imgUrl != null"
+                  :src="`${group['team'].imgUrl}`"
+                  height="250px"
+                ></v-img>
+                <v-img v-else src="@/assets/groupProfile.png"> </v-img>
 
                 <v-card-title> {{ group["team"].name }} </v-card-title>
 
