@@ -63,7 +63,7 @@
           </v-card>
         </v-col>
         <!-- context -->
-        <v-col>
+        <v-col class="cardList">
           <!-- <v-select :items="items" label="Standard" v-model="select"></v-select> -->
           <v-row>
             <v-switch
@@ -250,6 +250,9 @@ export default {
 <style>
 .main {
   background-color: #a3d4a2;
+}
+.cardList {
+  margin: 30px;
 }
 .group {
   padding: 20px;
