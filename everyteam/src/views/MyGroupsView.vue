@@ -203,6 +203,8 @@ export default {
         this.teamCode = "";
         this.joinGroupBtn = false;
         this.plusBtnClick = false;
+        //새로고침해줌
+        this.$router.go();
       } catch (error) {
         alert(error["response"].data["message"]);
         console.log(error["response"].data["message"]);
