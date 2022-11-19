@@ -8,14 +8,15 @@
           <!-- 그룹 정보 -->
           <v-col cols="3">
             <v-card color="#FDFFAA" class="group">
-              <v-avatar size="6=90px">
-                <img alt="Avatar" src="@/assets/groupProfile.png" />
+              <v-avatar size="100px">
+                <img alt="Avatar" :src="teamProfileImg" />
               </v-avatar>
 
               <v-card-title class="text-h5">
-                {{ groupName }}
+                {{ teamName }}
               </v-card-title>
-              <v-card-text> 그룹 설명 </v-card-text>
+              <v-card-text> {{ teamDesc }} </v-card-text>
+              <v-card-text> {{ teamUserCount }} 명 </v-card-text>
               <v-list-item-content>
                 <!-- 그룹 list -->
                 <v-menu open-on-hover top offset-x>
@@ -26,7 +27,7 @@
                   </template>
                   <v-list>
                     <v-list-item
-                      v-for="(item, index) in groupList"
+                      v-for="(item, index) in teamUserList"
                       :key="index"
                     >
                       <v-list-item-title>{{ item }}</v-list-item-title>
@@ -42,10 +43,10 @@
 
                   <v-card>
                     <v-card-title class="text-h5 grey lighten-2">
-                      선택하시오
+                      teamCode
                     </v-card-title>
 
-                    <v-card-text> 초대링크 </v-card-text>
+                    <v-card-text> {{ teamCode }} </v-card-text>
 
                     <v-divider></v-divider>
 
@@ -142,16 +143,24 @@
 </template>
 
 <script>
+import axios from "axios";
+import { BASE_URL } from "@/api";
 import { mapState, mapMutations } from "vuex";
 export default {
   data() {
     return {
-      name: "성호",
+      teamName: localStorage.getItem("teamName"),
+      teamCode: localStorage.getItem("teamCode"),
+      teamDesc: localStorage.getItem("teamDesc"),
+      teamProfileImg: localStorage.getItem("teamProfileImg"),
+      teamTopImg: localStorage.getItem("teamTopImg"),
+      teamUserCount: localStorage.getItem("teamUserCount"),
+
       dialog: false,
       invite: false,
       tab: null,
       items: ["생성일", "항목별"],
-      text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+      teamUserList: [],
     };
   },
   computed: {
@@ -171,10 +180,28 @@ export default {
     inviteButtonClick() {
       console.log("초대하기 버튼이 클릭되었습니다");
     },
+    async getTeamUserList() {
+      try {
+        const res = await axios.get(`${BASE_URL}/role/userList`, {
+          params: {
+            teamCode: localStorage.getItem("teamCode"),
+          },
+          headers: {
+            "X-AUTH-TOKEN": localStorage.getItem("token"),
+          },
+        });
+        console.log("팀 유저 불러오기 성공!!");
+        console.log("teamUserList:", res.data["result"]);
+        this.teamUserList = res.data["result"];
+      } catch (error) {
+        console.log(error);
+      }
+    },
   },
   mounted() {
     //페이지가 다시 불릴때 마다 불러짐
     console.log("메인페이지 마운티드");
+    this.getTeamUserList();
   },
   watch: {
     //값이 바뀔 때 마다 action을 취하기 위해서는 여기 넣어두면 됨!

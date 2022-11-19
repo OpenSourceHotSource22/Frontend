@@ -54,7 +54,7 @@
             </v-card>
           </v-dialog>
         </v-row>
-
+        <!-- user team list -->
         <div class="container">
           <v-row>
             <v-col
@@ -64,7 +64,11 @@
               v-for="(group, idx) in userGroups"
               :key="idx"
             >
-              <v-card class="mx-auto" max-width="344">
+              <v-card
+                class="mx-auto"
+                max-width="344"
+                @click="teamCardClick(group)"
+              >
                 <v-img
                   v-if="group['team'].imgUrl != null"
                   :src="`${group['team'].imgUrl}`"
@@ -169,7 +173,7 @@ export default {
         console.log(error);
       }
     },
-    goMainPage(group) {
+    goMainPage() {
       //TODO: group이름 저장해서 넘기기
       // this.updateGroupName(group["name"]);
       this.$router.push({ path: "/main" });
@@ -202,6 +206,25 @@ export default {
       } catch (error) {
         console.log(error);
       }
+    },
+    teamCardClick(team) {
+      localStorage.setItem("teamName", team["team"].name);
+      localStorage.setItem("teamCode", team["team"].code);
+      localStorage.setItem("teamDesc", team["team"].description);
+      localStorage.setItem("teamProfileImg", team["team"].imgUrl);
+      localStorage.setItem("teamTopImg", team["team"].topImgUrl);
+      localStorage.setItem("teamUserCount", team.countUser);
+      // alert(
+      //   team["team"].name +
+      //     team["team"].code +
+      //     team["team"].description +
+      //     team["team"].imgUrl +
+      //     team["team"].topImgUrl +
+      //     team.countUser
+      // );
+      //TODO: 팀코드를 local에 저장하기
+      //라우터로 main페이지로 넘기기
+      this.$router.push({ path: "/main" });
     },
   },
 };
