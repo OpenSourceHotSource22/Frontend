@@ -78,9 +78,10 @@ export default {
         else 
           return 0
         })
-      for(var i=0; i<this.daysLength;i++){  
-        console.log("days array id ",this.days[i])
-      }
+      // for(var i=0; i<this.daysLength;i++){  
+      //   console.log("days array id ",this.days[i])
+      // }
+      console.log("날짜 배열 : ", this.days);
     },
     async nextBtn(){
       console.log("title : ", this.title);
@@ -88,22 +89,23 @@ export default {
       
 
   try{
+
       const res = await axios.post(`${BASE_URL}/meet/createDate`,
       {
-        teamCode : "jNgxNI",
+        teamCode : "pwAYfw",
         title: this.title,
         date : this.days,
       },
       {
       headers: {
-            "X-AUTH-TOKEN": localStorage.getItem("token"),
+            "X-AUTH-TOKEN": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJoYXBweSIsImlhdCI6MTY2ODgxNzY5OCwiZXhwIjoxNjY4ODI4NDk4fQ.JwCb7HGoL2klLArWXaDMIxbwM_szMrr4daJZUEmQnvk"//localStorage.getItem("token"),
           },
       });
       
        
   
     console.log("서버로부터 받은값 : ", res.data);
-    localStorage.setItem("meedCode", res.data["result"].meetCode);
+    localStorage.setItem("meetCode", res.data["result"].meetCode);
 
     this.$router.push({ path: "/timePick" });
   }catch(err){

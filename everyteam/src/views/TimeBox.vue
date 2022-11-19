@@ -1,6 +1,6 @@
 <template>
     <div class="time">
-<div :style="{ width: width + 'px', height: height + 'px',background:bColor}" @click="changeColor"></div>
+<div id="timebox" :style="{ width: width + 'px', height: height + 'px',background:bColor}" @click="changeColor"></div>
     </div>
 </template>
 
@@ -30,7 +30,7 @@ export default {
         this.bColor='green'
 
         this.clicked = !this.clicked
-        console.log(this.userDate,this.userTime, this.bColor)
+        //console.log(this.userDate,this.userTime, this.bColor)
         this.sendTimeToParent()
     },
 
@@ -41,3 +41,9 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+#timebox{
+    border : solid 1px black
+}
+</style>

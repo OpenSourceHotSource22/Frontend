@@ -1,9 +1,8 @@
 <template>
     <v-app>
-        
         <v-main>
             <div class="TimePick">
-                <v-row>
+                <v-row justify="space-around">
                     <table>
                         <th>
                             <td>시간</td>
@@ -14,7 +13,7 @@
                         <th v-for="day in date" :key="day.idx">
                             <td>{{day.date}}</td>
                             <div class="timeBox" v-for="i in 18" :key="i">
-                                <TimeBox :userIdx="day.idx" :userTime="i+6" v-on:timeFromChild="ChildTimeReceived"/>
+                                <TimeBox :userIdx="day.idx" :userTime="i+5" v-on:timeFromChild="ChildTimeReceived"/>
                             </div>
                         </th>
                     </table>
@@ -38,8 +37,9 @@ export default {
     data : () =>({
         dateLength:0,
         //timeLength : 0,
+        
         timeString:[],
-        userTime : [], //서버에 보낼 날짜와 시간이 담긴 배열
+        userTime : [ ], //서버에 보낼 날짜와 시간이 담긴 배열
         times:[], //선택한 시간들 넣는 배열
         date :[], //받아온 날
         time :[
@@ -69,12 +69,16 @@ export default {
        async btnSubmit(){
             for(var j=0; j<this.dateLength; j++){
                  var stringTime = "";
-                 for(i in this.times[j]){
-                    stringTime+=this.times[j].time[i];
-                    stringTime+=",";
+                 
+                 for(var i =0; i<this.times[j].uTime.length;i++){
+                    stringTime+=this.times[j].uTime[i];
+                    if(i<this.times[j].uTime.length-1)
+                       { stringTime+=",";}
                  }
-                 timeString[j].push(stringTime);
                  console.log("스트링으로 변환한 시간",stringTime);
+                 this.timeString.push(stringTime);
+                 console.log("스트링으로 넣은 전체값 : ", this.timeString);
+                 
             }
            
             
@@ -82,40 +86,47 @@ export default {
             //times 배열 string으로 변환 후 서버에 보내기
             for(var i=0; i<this.dateLength;i++){
                 this.userTime.push({
-                    date : date[i].date,
-                    time : timeString[j],
+                    date : this.date[i].date,
+                    time : this.timeString[i],
                 })
             }
                 console.log("선택완료");
+            try{
             const res = await axios.put(`${BASE_URL}/meet/updateTime`,
             {
-                "teamCode" : localStorage.getItem("teamCode"),
+                "teamCode" : "pwAYfw",//localStorage.getItem("teamCode"),
                 "meetCode" : localStorage.getItem("meetCode"),
                 "meet" : this.userTime,
             },
             {
             headers:
                 {
-                    "X-AUTH-TOKEN": localStorage.getItem("token"),
+                    "X-AUTH-TOKEN": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJoYXBweSIsImlhdCI6MTY2ODgxNzY5OCwiZXhwIjoxNjY4ODI4NDk4fQ.JwCb7HGoL2klLArWXaDMIxbwM_szMrr4daJZUEmQnvk",//localStorage.getItem("token"),
                 }
-            })
+            });
+            console.log("put성공하고 받은값",res.data);
+            }catch(err){
+                console.log(err);
+            }
+            
+            
                // this.$router.push({ path: "/WhenWeMeetResult" });
         },
         ChildTimeReceived(usertime,useridx){
             console.log("자식으로부터 받음",usertime,useridx)
-            const idx = this.times[useridx].findIndex(d => d === usertime);
+            const idx = this.times[useridx].uTime.findIndex(d => d === usertime);
             if (idx >= 0) {
-                this.times[useridx].splice(idx, 1);
+                this.times[useridx].uTime.splice(idx, 1);
                 console.log("겹치는 거 삭제");
                 //this.timeLength--;
                 
             } else {
 
-                this.times[useridx].push(usertime);
+                this.times[useridx].uTime.push(usertime);
                 console.log("시간 추가됨",this.times[useridx]);
                 //this.timeLength++;
             }
-            this.times = this.times.sort((a,b)=>a-b)
+            this.times[useridx].uTime = this.times[useridx].uTime.sort((a,b)=>a-b)
             // for(var i=0; i<this.daysLength;i++){  
             //     console.log("days array id ",this.days[i].id)
             // // console.log("days array date ",this.days[i].date)
@@ -125,17 +136,26 @@ export default {
                 console.log("time array ",i,": ",this.times);
             }
             }
-        },
+        ,
 
        async getDate(){
+       
             var code = {
-                teamCode : localStorage.getItem("teamCode"),
+                teamCode : "pwAYfw",//localStorage.getItem("teamCode"),
                 meetCode : localStorage.getItem("meetCode"),
-            }
-            const res = await axios.post(`${BASE_URL}/meet/getDate`, code)
+            }   
+            console.log("code",code);
+            console.log("달력 받아오자");
+            const res = await axios.post(`${BASE_URL}/meet/getDate`, code,{
+                headers:
+                {
+                    "X-AUTH-TOKEN": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJoYXBweSIsImlhdCI6MTY2ODgxNzY5OCwiZXhwIjoxNjY4ODI4NDk4fQ.JwCb7HGoL2klLArWXaDMIxbwM_szMrr4daJZUEmQnvk"//localStorage.getItem("token"),
+                }
+            })
             console.log(res.data);
             //받아온 달력을 배열에 담기
-            for(i in res.data.result.date){
+            for(var i in res.data.result.date){
+                this.times.push({uTime :[]});//findIndex
                 this.date.push({
                     date : res.data.result.date[i].date,
                     idx : i,
@@ -143,11 +163,18 @@ export default {
             }
         
        },
-       beforeMount(){//pageload 전에 실행
+       
+    },
+    mounted(){//pageload 전에 실행
+        console.log("페이지 마운팅 전에 실행")
             this.getDate();
        },
-
-
-    }
+}
 
 </script>
+
+<style scoped>
+#timeBox{
+font-size : 2px;
+}
+</style>
