@@ -1,6 +1,6 @@
 <template>
     <div class="time">
-        <div id="resulttimebox" :style="{ width: width + 'px', height: height + 'px',background:bColor}" @click="changeColor"></div>
+        <div id="resulttimebox" :style="{ width: width + 'px', height: height + 'px',background:bColor }" ></div>
     </div>
 </template>
 
@@ -11,13 +11,35 @@ export default{
     return {
       width: 40, // 넓이
       height: 20, // 높이
-      bColor:"white",
+      //bColor:"white",
     };
+  },
+
+  props:{
+    Color:{},
+  },
+
+  methods:{
+
+  },
+
+  computed:{
+    bColor: function(){
+        console.log("박스에서 ", this.Color)
+        switch(this.Color){
+            case 0:return "white";
+            case 1: return "green";
+        }
+    }
   },
 
 }
 </script>
 
+
+<style>
+
+</style>
 
 <style scoped>
 #resulttimebox{

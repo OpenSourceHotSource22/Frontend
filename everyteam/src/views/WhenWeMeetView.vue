@@ -92,13 +92,13 @@ export default {
 
       const res = await axios.post(`${BASE_URL}/meet/createDate`,
       {
-        teamCode : "pwAYfw",
+        teamCode : localStorage.getItem("teamCode"),
         title: this.title,
         date : this.days,
       },
       {
       headers: {
-            "X-AUTH-TOKEN": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJoYXBweSIsImlhdCI6MTY2ODgxNzY5OCwiZXhwIjoxNjY4ODI4NDk4fQ.JwCb7HGoL2klLArWXaDMIxbwM_szMrr4daJZUEmQnvk"//localStorage.getItem("token"),
+            "X-AUTH-TOKEN": localStorage.getItem("token"),
           },
       });
       
