@@ -4,8 +4,26 @@
             <div class="timeResult">
                 <v-row>
                     <v-col class="userResult">
+                        <p>{{this.userId}}의 가능시간</p> 
                         <table>
-                            <th>
+                            <th style="font-size:13.4px;">
+                                <td>시간</td>
+                                <div class="timeBox" v-for="t in time" :key="t.name" >
+                                    <tr>{{t.name}}</tr>
+                                </div>
+                            </th>
+                            <th v-for="day in userTime" :key="day.idx">
+                                <td>{{day.date}}</td>
+                                <div class="resultTimeBox" v-for="i in 18" :key="i">
+                                    <ResultTimeBox :Color="boxColor[day.idx].time[i-1]"/>
+                                </div>
+                            </th>
+                        </table>
+                    </v-col>
+                    <v-col class="teamResult">  
+                        <p>팀원의 가능시간</p> 
+                        <table>
+                            <th style="font-size:13.4px;">
                                 <td>시간</td>
                                 <div class="timeBox" v-for="t in time" :key="t.name">
                                     <tr>{{t.name}}</tr>
@@ -13,11 +31,8 @@
                             </th>
                             <th v-for="day in userTime" :key="day.idx">
                                 <td>{{day.date}}</td>
-                                <div class="resultTimeBox" v-for="i in 18" :key="i">
-                                    <ResultTimeBox :Color="boxColor[day.idx].time[i-1]"
-                                   
-                                    />
-
+                                <div class="teamresultTimeBox" v-for="i in 18" :key="i">
+                                    <ResultTimeBox :Color="teamTime[day.idx].time[i-1]"/>
                                 </div>
                             </th>
                         </table>
@@ -38,9 +53,11 @@ export default{
     components :{ResultTimeBox},
 
     data : ()=>({
+        userId : localStorage.getItem("userId"),
         userTime:[],
         boxColor:[],
-        
+        teamTime:[],
+        completeUser:[],
         time :[
             {name:'6:00 AM'},
             {name:'7:00 AM'},
@@ -66,15 +83,12 @@ export default{
     methods:{
        async  getUserTime(){
             
-                var code = {
-                teamCode : localStorage.getItem("teamCode"),
-                meetCode : localStorage.getItem("meetCode"),
-            }   
-            const res = await axios.post(`${BASE_URL}/meet/getDate`, code
-            // {
-            //     teamCode: localStorage.getItem("teamCode"),
-            //     meetCode: localStorage.getItem("meetCode"),
-            // }
+             
+            const res = await axios.post(`${BASE_URL}/meet/getDate`,
+            {
+                teamCode: localStorage.getItem("teamCode"),
+                meetCode: localStorage.getItem("meetCode"),
+            }
             ,{
                 headers:
                 {
@@ -100,6 +114,44 @@ export default{
             
 
 
+        },
+       async getAllTime(){
+
+            try{
+                const res = await axios.post(`${BASE_URL}/meet/getResultTime`,
+                {
+                    "teamCode" : localStorage.getItem("teamCode"),
+                    "meetCode" : localStorage.getItem("meetCode"),
+                },
+                {
+                    headers:
+                    {
+                        "X-AUTH-TOKEN": localStorage.getItem("token"),
+                    }
+                });
+                //어떤 유저들이 시간을 체크했는지 유저이름 저장하기
+                for(var i in res.data.result.meetList){
+                    this.completeUser.push(res.data.result.meetList[i].userId);
+                }
+
+                console.log("모든 유저 정보 가져오기 성공!",res.data);
+
+                for(var j =0;j< res.data.result.meetList[0].meet.length; j++){
+                    var allTime="";
+                    console.log("몇번째 날짜:",j);
+                    for(var i in res.data.result.meetList)
+                    {   console.log("몇번재 유저:",i);
+                        allTime+=res.data.result.meetList[i].meet[j].time
+                        var timeSplit = allTime.split(',');
+                    }
+                    this.teamTime.push({time:this.resultColorArray(timeSplit)});
+                }
+
+                console.log("팀 합친 color : ", this.teamTime);
+                
+            }catch(err){
+                console.log(err);
+            }
         },
 
         resultColorArray(timeSplit){
@@ -136,6 +188,7 @@ export default{
     },
     mounted(){
         this.getUserTime();
+        this.getAllTime();
     },
 }
 </script>

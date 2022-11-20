@@ -109,8 +109,10 @@ export default {
                 console.log(err);
             }
             
+            //result에 반영하기
+           
             
-               this.$router.push({ path: "/WhenWeMeetResult" });
+            this.$router.push({ path: "/WhenWeMeetResult" });
         },
         ChildTimeReceived(usertime,useridx){
             console.log("자식으로부터 받음",usertime,useridx)
