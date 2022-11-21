@@ -11,31 +11,18 @@
           <v-btn @click="start">시작하기</v-btn>
         </v-row>
         <div v-if="isStart">
-          <v-row>
+          <v-row class="my-0">
             <div v-for="(n, idx) in count">
-              <v-text-field
-                :id="String(n)"
-                :key="idx"
-                class="mx-3 my-0"
-                label="Regular"
-                clearable
-                outlined
-              ></v-text-field>
+              <v-text-field :id="String(n)" :key="idx" class="mx-3 my-0" label="Regular" clearable outlined>
+              </v-text-field>
             </div>
           </v-row>
           <v-row>
-            <canvas id="canvas" width="1000" height="400"></canvas>
+            <canvas id="canvas" width="1000" height="600"></canvas>
           </v-row>
           <v-row>
             <div v-for="(n, idx) in count">
-              <v-text-field
-                :id="String(-n)"
-                :key="idx"
-                class="mx-3"
-                label="Regular"
-                clearable
-                outlined
-              ></v-text-field>
+              <v-text-field :id="String(-n)" :key="idx" class="mx-3" label="Regular" clearable outlined></v-text-field>
             </div>
           </v-row>
         </div>
@@ -49,9 +36,12 @@
 export default {
   data() {
     return {
-      position1: 0,
-      position2: 0,
-      msg: "",
+      datas: [
+
+      ],
+      position: [
+
+      ],
       count: 0,
       isStart: false,
     };
@@ -72,7 +62,23 @@ export default {
         this.isStart = true;
       }
     },
+    shuffle(array) {
+      array.sort(() => Math.random() - 0.5);
+    },
     confirm() {
+
+      for (var i = 0; i < this.count; i++) {
+        this.datas[i] = i;
+      }
+      this.shuffle(this.datas);
+      w
+      for (var i = 0; i < this.count; i++) {
+        this.postion[i] = document.getElementById({ i }).getBoundingClientRect();
+      }
+      for (var i = 0; i < this.count; i++) {
+        console.log(this.position[i + 1]);
+      }
+
       this.position1 = document.getElementById("2").getBoundingClientRect();
       this.position2 = document.getElementById("-2").getBoundingClientRect();
 
@@ -85,8 +91,8 @@ export default {
 
       ctx.beginPath();
       ctx.strokeStyle = "blue";
-      ctx.moveTo(this.position1.x, this.position1.y - 400);
-      ctx.lineTo(this.position2.x, this.position2.y);
+      ctx.moveTo(this.position1.x + 100, this.position1.y - 400);
+      ctx.lineTo(this.position2.x + 100, this.position2.y);
       ctx.stroke();
     },
   },
