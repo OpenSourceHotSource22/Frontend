@@ -1,7 +1,7 @@
 <template>
     <v-app>
         <v-main>
-            <div class="TimePick">
+            <div class="TimePick mt-8">
                 <v-row justify="space-around">
                     <table>
                         <th style="font-size:13.4px;">
@@ -10,17 +10,21 @@
                                 <tr>{{t.name}}</tr>
                             </div>
                         </th>
-                        <th v-for="day in date" :key="day.idx">
+                       
+                        <th v-for="day in date" :key="day.idx" :a="day">
                             <td>{{day.date}}</td>
-                            <div class="timeBox" v-for="i in 18" :key="i">
+                            <drag-select attribute="item">
+                            <div class="timeBox" v-for="i in 18" :key="i" :item="TimeBox">
                                 <TimeBox :userIdx="day.idx" :userTime="i+5" v-on:timeFromChild="ChildTimeReceived"/>
                             </div>
+                            </drag-select>
                         </th>
                     </table>
                 </v-row>
 
-                <v-row justify="space-around">
-                    <v-btn color="success" @click="btnSubmit">선택완료</v-btn>
+                <v-row  justify="space-around" class="mt-8">
+                    <v-col align="right" cols="7"> <v-btn  rounded color="primary" width="200px" @click="btnSubmit">선택완료</v-btn></v-col>
+                    <v-col cols="5"> <v-btn color="primary" @click="goPrev" text> <v-icon>mdi-arrow-left</v-icon> 돌아가기</v-btn></v-col>
                 </v-row>
             </div>
         </v-main>
@@ -30,12 +34,14 @@
 <script>
 import axios from "axios";
 import { BASE_URL } from "@/api";
-import TimeBox from './TimeBox.vue'
+import TimeBox from './TimeBox.vue';
+import DragSelect from 'drag-select-vue';
 
 export default {
-    components: {TimeBox},
+    components: {TimeBox, DragSelect},
+
     data : () =>({
-        meetCode:this.$route.params.meetCode,
+        meetCode:"",
         dateLength:0,
         timeString:[],
         userTime : [ ], //서버에 보낼 날짜와 시간이 담긴 배열
@@ -94,7 +100,7 @@ export default {
             const res = await axios.put(`${BASE_URL}/meet/updateTime`,
             {
                 "teamCode" : localStorage.getItem("teamCode"),
-                "meetCode" : localStorage.getItem("meetCode"),
+                "meetCode" : this.meetCode,
                 "meet" : this.userTime,
             },
             {
@@ -147,7 +153,7 @@ export default {
        
             var code = {
                 teamCode : localStorage.getItem("teamCode"),
-                meetCode : localStorage.getItem("meetCode"),
+                meetCode : this.meetCode,
             }   
             console.log("code",code);
             console.log("달력 받아오자");
@@ -178,7 +184,7 @@ export default {
                 const res = await axios.post(`${BASE_URL}/meet/getResultTime`,
                 {
                     "teamCode" : localStorage.getItem("teamCode"),
-                    "meetCode" : localStorage.getItem("meetCode"),
+                    "meetCode" : this.meetCode,
                 },
                 {
                     headers:
@@ -200,15 +206,22 @@ export default {
                 console.log(err);
             }
        },
+       goPrev(){
+            this.$router.push({path:"/WhenWeMeetResult", name:"WhenWeMeetResult", params:{meetCode:this.meetCode}})
+       }
        
     },
     beforeMount(){
         console.log("마운팅 전 실행");
         //this.visited();
+        console.log("meetCODE!!" , this.$route.params.meetCode)
+        this.meetCode = this.$route.params.meetCode;
+        
     },
     mounted(){//pageload 전에 실행
         console.log("마운트 후 실행")
             this.getDate();
+            
        },
 }
 

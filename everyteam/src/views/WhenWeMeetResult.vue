@@ -1,9 +1,9 @@
 <template>
     <v-app>
         <v-main>
-            <div class="timeResult">
+            <div  class="timeResult mt-5">
                 <v-row>
-                    <v-col class="userResult">
+                    <v-col cols="5" class="userResult">
                         <p>{{this.userId}}의 가능시간</p> 
                         <table>
                             <th style="font-size:13.4px;">
@@ -20,7 +20,7 @@
                             </th>
                         </table>
                     </v-col>
-                    <v-col class="teamResult">  
+                    <v-col cols="5" class="teamResult">  
                         <p>팀원의 가능시간</p> 
                         <table>
                             <th style="font-size:13.4px;">
@@ -37,16 +37,26 @@
                             </th>
                         </table>
                     </v-col>
+                    <v-col cols="2" class="completeUser">
+                        <p>선택 완료한 유저들</p>
+                        <div v-for="user in completeUser" :key="user">
+                            <v-icon color="primary">mdi-checkbox-marked-circle</v-icon> {{user}}
+                        </div>
+                    </v-col>
                 </v-row>
                 <v-row class="btn">
-                    <v-col class="prevBtn"> <v-btn color="primary" @click="goPrev">가능시간 선택하기</v-btn> </v-col>
-                   <!-- <v-col class="completeBtn"><v-btn color="primary" @click="isShow = !isShow">마감</v-btn></v-col> -->
+                    <v-col cols="6"  class="prevBtn"> <v-btn rounded color="primary" @click="goPrev"> <v-icon>mdi-alarm</v-icon>  가능시간 선택하기</v-btn> </v-col>
+                   <v-col class="goToMain"><v-btn color="primary" @click="goMain" text> <v-icon>mdi-arrow-left</v-icon>  메인으로 돌아가기</v-btn></v-col>
                 </v-row>
 
-                <v-row class="submit" justify="space-around">
+                <v-row class="submit mt-5" justify="space-around">
                     <v-form v-show="isShow">
-                        <v-text-field v-model="content" label="최종날짜를 입력하시오" outlined></v-text-field>
-                        <v-btn color="primary" @click="submit">마감</v-btn>
+                        <v-row>
+                            <v-col><v-text-field style="width:400px" v-model="content" label="최종날짜를 입력하시오" outlined ></v-text-field></v-col>
+                            <v-col> <v-btn color="primary" @click="submit"> <v-icon>mdi-pencil</v-icon>  마감</v-btn></v-col>
+                        </v-row>
+                        
+                       
                     </v-form>
                 </v-row>
            </div>
@@ -101,7 +111,7 @@ export default{
             const res = await axios.post(`${BASE_URL}/meet/getDate`,
             {
                 teamCode: localStorage.getItem("teamCode"),
-                meetCode: localStorage.getItem("meetCode"),
+                meetCode: this.meetCode,
             }
             ,{
                 headers:
@@ -135,7 +145,7 @@ export default{
                 const res = await axios.post(`${BASE_URL}/meet/getResultTime`,
                 {
                     "teamCode" : localStorage.getItem("teamCode"),
-                    "meetCode" : localStorage.getItem("meetCode"),
+                    "meetCode" : this.meetCode,
                 },
                 {
                     headers:
@@ -143,6 +153,11 @@ export default{
                         "X-AUTH-TOKEN": localStorage.getItem("token"),
                     }
                 });
+                //meet생성자라면 마감버튼 보여주기
+                if(this.userId == res.data.result.post.userId){
+                    this.isShow = true;
+                }
+                console.log("팀 합친 color : ", this.teamTime);
                 //어떤 유저들이 시간을 체크했는지 유저이름 저장하기
                 for(var i in res.data.result.meetList){
                     this.completeUser.push(res.data.result.meetList[i].userId);
@@ -160,11 +175,8 @@ export default{
                     }
                     this.teamTime.push({time:this.resultColorArray(timeSplit)});
                 }
-                //meet생성자라면 마감버튼 보여주기
-                if(this.userId == res.data.result.post.userId){
-                    this.isShow = true;
-                }
-                console.log("팀 합친 color : ", this.teamTime);
+                
+                
                 
             }catch(err){
                 console.log(err);
@@ -203,10 +215,14 @@ export default{
             return forBoxColor;
         },
         goPrev(){
-             this.$router.push({ path: "/timePick" });
+             this.$router.push({ path: "/timePick", name:"timePick", params:{meetCode:this.meetCode} });
         },
        async submit(){
             //input 서버에 저장, 메인 게시물에 보여주기
+            if(this.content==""){
+                alert("최종시간을 입력해주세요");
+                return;
+            }
             try{
                 const res = await axios.post(`${BASE_URL}/meet/updatePostMeet`,
                 {
@@ -226,10 +242,15 @@ export default{
                 console.log(err);
             }
         },
+        goMain(){
+            this.$router.push({path:"/main"});
+        }
+    },
+    beforeMount(){
+        this.meetCode = this.$route.params.meetCode;
     },
     mounted(){
-        console.log(this.$route.params.meetCode);
-        this.meetCode = this.$route.params.meetCode;
+        
         this.getUserTime();
         this.getAllTime();
     },
