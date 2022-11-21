@@ -5,8 +5,8 @@
 
       <v-row>
         <!-- 그룹 정보 -->
-        <v-col cols="3">
-          <v-card color="#FDFFAA" class="group">
+        <v-col cols="2">
+          <v-card color="#FDFFAA" class="group rounded-lg" elevation="0">
             <v-avatar size="100px">
               <img alt="Avatar" :src="teamProfileImg" />
             </v-avatar>
@@ -16,11 +16,11 @@
             </v-card-title>
             <v-card-text> {{ teamDesc }} </v-card-text>
             <v-card-text> {{ teamUserCount }} 명 </v-card-text>
-            <v-list-item-content>
+            <v-list-item-content class="mx-3">
               <!-- 그룹 list -->
               <v-menu open-on-hover top offset-x>
                 <template v-slot:activator="{ on, attrs }">
-                  <v-btn color="pink" v-on="on">
+                  <v-btn color="#a8dba8" v-on="on" elevation="0">
                     <v-icon> mdi-account </v-icon>
                   </v-btn>
                 </template>
@@ -35,7 +35,14 @@
               </v-menu>
               <v-dialog v-model="dialog" width="500">
                 <template v-slot:activator="{ on, attrs }">
-                  <v-btn color="red lighten-2" dark v-bind="attrs" v-on="on">
+                  <v-btn
+                    color="#79bd9a"
+                    dark
+                    v-bind="attrs"
+                    v-on="on"
+                    elevation="0"
+                    class="mt-5"
+                  >
                     초대하기
                   </v-btn>
                 </template>
@@ -58,7 +65,14 @@
                 </v-card>
               </v-dialog>
               <!-- group list -->
-              <v-btn color="primary"> + </v-btn>
+              <v-btn
+                color="#3b8686"
+                style="color: aliceblue; font-size: 25px"
+                elevation="0"
+                class="mt-5"
+              >
+                +
+              </v-btn>
             </v-list-item-content>
           </v-card>
         </v-col>
@@ -75,13 +89,13 @@
           </v-row>
           <v-row v-if="!switch1" v-masonry item-selector=".item">
             <v-col
-              v-for="(post, idx) in teamPostList"
+              v-for="(post, idx) in TeamPostListDate"
               :key="idx"
               cols="4"
               v-masonry-tile
               class="item"
             >
-              <v-card>
+              <v-card class="rounded-xl">
                 <v-list-item two-line>
                   <v-list-item-content>
                     <v-list-item-title class="text-h5">
@@ -94,19 +108,11 @@
                   </v-list-item-content>
                 </v-list-item>
                 <v-card-text>
-                  <!-- <v-list-item>
-                    <v-list-item-content>
-                      <v-list-item-title>
-                        {{ post["content"] }}
-                      </v-list-item-title>
-                      <v-list-item-subtitle
-                        >category :
-                        {{ post["category"] }}
-                      </v-list-item-subtitle>
-                    </v-list-item-content>
-                  </v-list-item> -->
                   <v-card-text>
                     {{ post["content"] }}
+                  </v-card-text>
+                  <v-card-text>
+                    {{ post["roles"] }}
                   </v-card-text>
                   <v-list-item class="grow">
                     <v-row justify="end">
@@ -123,29 +129,116 @@
           </v-row>
           <v-row v-else>
             <v-col>
-              <v-sheet rounded="lg" min-height="268">
-                게시물
+              <v-sheet class="rounded-xl">
+                <p class="font-weight-light pt-3 mb-0" style="font-size: 20px">
+                  post
+                </p>
 
-                <v-col v-for="n in 6" :key="n">
-                  <v-card height="200"></v-card>
+                <v-col v-for="(post, idx) in teamPostList" :key="idx">
+                  <v-card class="rounded-xl">
+                    <v-list-item two-line>
+                      <v-list-item-content>
+                        <v-list-item-title class="text-h5">
+                          {{ post["title"] }}
+                        </v-list-item-title>
+
+                        <v-list-item-subtitle>{{
+                          post["createdAt"]
+                        }}</v-list-item-subtitle>
+                      </v-list-item-content>
+                    </v-list-item>
+                    <v-card-text>
+                      <v-card-text>
+                        {{ post["content"] }}
+                      </v-card-text>
+                      <v-list-item class="grow">
+                        <v-row justify="end">
+                          <span class="subheading">
+                            <v-list-item-avatar color="grey lighten-3">
+                              {{ post["userId"] }}
+                            </v-list-item-avatar></span
+                          >
+                        </v-row>
+                      </v-list-item>
+                    </v-card-text>
+                  </v-card>
                 </v-col>
               </v-sheet>
             </v-col>
 
             <v-col>
-              <v-sheet min-height="70vh" rounded="lg">
-                whenWeMeet
-                <v-col v-for="n in 3" :key="n">
-                  <v-card height="200"></v-card>
+              <v-sheet class="rounded-xl">
+                <p class="font-weight-light pt-3 mb-0" style="font-size: 20px">
+                  whenWeMeet
+                </p>
+                <v-col v-for="(post, idx) in teamMeetList" :key="idx">
+                  <v-card class="rounded-xl">
+                    <v-list-item two-line>
+                      <v-list-item-content>
+                        <v-list-item-title class="text-h5">
+                          {{ post["title"] }}
+                        </v-list-item-title>
+
+                        <v-list-item-subtitle>{{
+                          post["createdAt"]
+                        }}</v-list-item-subtitle>
+                      </v-list-item-content>
+                    </v-list-item>
+                    <v-card-text>
+                      <v-card-text>
+                        {{ post["content"] }}
+                      </v-card-text>
+                      <v-list-item class="grow">
+                        <v-row justify="end">
+                          <span class="subheading">
+                            <v-list-item-avatar color="grey lighten-3">
+                              {{ post["userId"] }}
+                            </v-list-item-avatar></span
+                          >
+                        </v-row>
+                      </v-list-item>
+                    </v-card-text>
+                  </v-card>
                 </v-col>
               </v-sheet>
             </v-col>
 
             <v-col>
-              <v-sheet min-height="70vh" rounded="lg">
-                역할 정하기
-                <v-col v-for="n in 4" :key="n">
-                  <v-card height="200"></v-card>
+              <v-sheet class="rounded-xl">
+                <p class="font-weight-light pt-3 mb-0" style="font-size: 20px">
+                  Role
+                </p>
+                <v-col v-for="(post, idx) in teamRoleList" :key="idx">
+                  <v-card class="rounded-xl">
+                    <v-list-item two-line>
+                      <v-list-item-content>
+                        <v-list-item-title class="text-h5">
+                          {{ post["title"] }}
+                        </v-list-item-title>
+
+                        <v-list-item-subtitle>{{
+                          post["createdAt"]
+                        }}</v-list-item-subtitle>
+                      </v-list-item-content>
+                    </v-list-item>
+                    <v-card-text>
+                      <v-card-text>
+                        {{ post["content"] }}
+                      </v-card-text>
+                      <v-card-text>
+                        {{ post["roles"] }}
+                      </v-card-text>
+                      <v-list-item class="grow">
+                        <v-row justify="end">
+                          <span class="subheading">
+                            <v-list-item-avatar color="grey lighten-3">
+                              {{ post["userId"] }}
+                            </v-list-item-avatar></span
+                          >
+                        </v-row>
+                      </v-list-item>
+                    </v-card-text>
+                  </v-card>
                 </v-col>
                 <!--  -->
               </v-sheet>
@@ -175,10 +268,13 @@ export default {
       invite: false,
       tab: null,
       switch1: false,
-      items: ["생성일", "항목별"],
+      items: ["생성일s", "항목별"],
       select: "",
       teamUserList: [],
       teamPostList: [],
+      teamMeetList: [],
+      teamRoleList: [],
+      TeamPostListDate: [],
     };
   },
   computed: {
@@ -215,19 +311,39 @@ export default {
     //     console.log(error);
     //   }
     // },
-    async getTeamPostList() {
+    async getTeamPostListDate() {
       try {
-        const res = await axios.get(`${BASE_URL}/team/date`, {
-          params: {
-            teamCode: localStorage.getItem("teamCode"),
-          },
+        const res = await axios.get(`${BASE_URL}/team/${this.teamCode}/date`, {
           headers: {
             "X-AUTH-TOKEN": localStorage.getItem("token"),
           },
         });
+        console.log("팀 생성일 불러오기 성공");
+        console.log("getTeamPostList:", res.data["result"]["postList"]);
+        this.TeamPostListDate = res.data["result"]["postList"];
+        //teamuserlist update
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async getTeamPostList() {
+      try {
+        const res = await axios.get(
+          `${BASE_URL}/team/${this.teamCode}/category`,
+          {
+            // params: {
+            //   teamCode: localStorage.getItem("teamCode"),
+            // },
+            headers: {
+              "X-AUTH-TOKEN": localStorage.getItem("token"),
+            },
+          }
+        );
         console.log("팀 postlist 불러오기 성공");
         console.log("getTeamPostList:", res.data["result"]["postList"]);
-        this.teamPostList = res.data["result"]["postList"];
+        this.teamPostList = res.data["result"]["postList"]["post"];
+        this.teamMeetList = res.data["result"]["postList"]["meet"];
+        this.teamRoleList = res.data["result"]["postList"]["role"];
         //teamuserlist update
         console.log("userlist:", res.data["result"]["userList"]);
         this.teamUserList = res.data["result"]["userList"];
@@ -241,6 +357,7 @@ export default {
     console.log("메인페이지 마운티드");
     // this.getTeamUserList();
     this.getTeamPostList();
+    this.getTeamPostListDate();
   },
   watch: {
     //값이 바뀔 때 마다 action을 취하기 위해서는 여기 넣어두면 됨!
@@ -249,7 +366,7 @@ export default {
 </script>
 <style>
 .main {
-  background-color: #a3d4a2;
+  background-color: #83c882;
 }
 .cardList {
   margin: 30px;
@@ -258,5 +375,8 @@ export default {
   padding: 20px;
   margin-top: 20px;
   margin-left: 20px;
+}
+.card {
+  border-radius: 10%;
 }
 </style>
