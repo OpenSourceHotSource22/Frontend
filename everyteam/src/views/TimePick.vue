@@ -94,14 +94,14 @@ export default {
             try{
             const res = await axios.put(`${BASE_URL}/meet/updateTime`,
             {
-                "teamCode" : "pwAYfw",//localStorage.getItem("teamCode"),
+                "teamCode" : localStorage.getItem("teamCode"),
                 "meetCode" : localStorage.getItem("meetCode"),
                 "meet" : this.userTime,
             },
             {
             headers:
                 {
-                    "X-AUTH-TOKEN": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJoYXBweSIsImlhdCI6MTY2ODgxNzY5OCwiZXhwIjoxNjY4ODI4NDk4fQ.JwCb7HGoL2klLArWXaDMIxbwM_szMrr4daJZUEmQnvk",//localStorage.getItem("token"),
+                    "X-AUTH-TOKEN": localStorage.getItem("token"),
                 }
             });
             console.log("put성공하고 받은값",res.data);
@@ -109,8 +109,10 @@ export default {
                 console.log(err);
             }
             
+            //result에 반영하기
+           
             
-               // this.$router.push({ path: "/WhenWeMeetResult" });
+            this.$router.push({ path: "/WhenWeMeetResult" });
         },
         ChildTimeReceived(usertime,useridx){
             console.log("자식으로부터 받음",usertime,useridx)
@@ -141,15 +143,16 @@ export default {
        async getDate(){
        
             var code = {
-                teamCode : "pwAYfw",//localStorage.getItem("teamCode"),
+                teamCode : localStorage.getItem("teamCode"),
                 meetCode : localStorage.getItem("meetCode"),
             }   
             console.log("code",code);
             console.log("달력 받아오자");
+            try{
             const res = await axios.post(`${BASE_URL}/meet/getDate`, code,{
                 headers:
                 {
-                    "X-AUTH-TOKEN": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJoYXBweSIsImlhdCI6MTY2ODgxNzY5OCwiZXhwIjoxNjY4ODI4NDk4fQ.JwCb7HGoL2klLArWXaDMIxbwM_szMrr4daJZUEmQnvk"//localStorage.getItem("token"),
+                    "X-AUTH-TOKEN": localStorage.getItem("token"),
                 }
             })
             console.log(res.data);
@@ -161,12 +164,47 @@ export default {
                     idx : i,
             }); this.dateLength++;
             }
+            }catch(err){
+                console.log(err);
+            }
         
+       },
+       async visited(){
+        //meetCode의 모든 유저를 가져와 첫번째 방문이면 continue, 두 번째 방문이면 결과창으로 이동
+            try{
+                const res = await axios.post(`${BASE_URL}/meet/getResultTime`,
+                {
+                    "teamCode" : localStorage.getItem("teamCode"),
+                    "meetCode" : localStorage.getItem("meetCode"),
+                },
+                {
+                    headers:
+                    {
+                        "X-AUTH-TOKEN": localStorage.getItem("token"),
+                    }
+                });
+
+                for(var i in res.data.result.meetList){
+                    if(localStorage.getItem("userId") ==  res.data.result.meetList[i].userId){
+                        console.log("두번째 방문이므로 결과창으로 이동");
+                        this.$router.push({ path: "/WhenWeMeetResult" });
+                        return;
+                    }
+                }
+                console.log("첫번째 방문했으므로 시간체크");
+
+            }catch(err){
+                console.log(err);
+            }
        },
        
     },
+    beforeMount(){
+        console.log("마운팅 전 실행");
+        //this.visited();
+    },
     mounted(){//pageload 전에 실행
-        console.log("페이지 마운팅 전에 실행")
+        console.log("마운트 후 실행")
             this.getDate();
        },
 }

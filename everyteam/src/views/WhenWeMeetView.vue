@@ -83,6 +83,7 @@ export default {
       // }
       console.log("날짜 배열 : ", this.days);
     },
+
     async nextBtn(){
       console.log("title : ", this.title);
       console.log("배열 서버에 보내기")
@@ -92,20 +93,19 @@ export default {
 
       const res = await axios.post(`${BASE_URL}/meet/createDate`,
       {
-        teamCode : "pwAYfw",
+        teamCode : localStorage.getItem("teamCode"),
         title: this.title,
         date : this.days,
       },
       {
       headers: {
-            "X-AUTH-TOKEN": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJoYXBweSIsImlhdCI6MTY2ODgxNzY5OCwiZXhwIjoxNjY4ODI4NDk4fQ.JwCb7HGoL2klLArWXaDMIxbwM_szMrr4daJZUEmQnvk"//localStorage.getItem("token"),
+            "X-AUTH-TOKEN": localStorage.getItem("token"),
           },
       });
-      
-       
-  
+
     console.log("서버로부터 받은값 : ", res.data);
     localStorage.setItem("meetCode", res.data["result"].meetCode);
+    //메인페이지에 whenwemeet 게시물 생성, 이 게시물에 접근시 mmetCode가 일치하는 whenwemeet화면 출력
 
     this.$router.push({ path: "/timePick" });
   }catch(err){
