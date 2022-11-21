@@ -176,7 +176,10 @@ export default {
     goMainPage() {
       //TODO: group이름 저장해서 넘기기
       // this.updateGroupName(group["name"]);
-      this.$router.push({ path: "/main" });
+      this.$router.push({
+        name: "main",
+        params: { teamCode: "123" },
+      });
     },
 
     goCreateGroupPage() {
@@ -228,7 +231,11 @@ export default {
       // );
       //TODO: 팀코드를 local에 저장하기
       //라우터로 main페이지로 넘기기
-      this.$router.push({ path: "/main" });
+      this.$router.push({
+        path: "/main",
+        name: "main",
+        params: { test: 33333 },
+      });
     },
   },
 };
