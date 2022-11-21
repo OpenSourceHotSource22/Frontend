@@ -12,6 +12,7 @@
             v-model="title"
             label="title"
             outlined
+            class="mt-5"
           ></v-text-field>
           </v-col>
       </v-row>
@@ -22,8 +23,12 @@
       <v-date-picker
         
         v-model="dates"
+        year-icon="mdi-calendar-blank"
+        width="600"
         multiple
         @click:date ="dayclick"
+        class="mt-5 mb-10"
+        elevation="5"
       
 
     />
@@ -99,14 +104,13 @@ export default {
       });
 
     console.log("서버로부터 받은값 : ", res.data);
-    localStorage.setItem("meetCode", res.data["result"].meetCode);
-    this.meetCode = res.data["result"].meetCode;
+    this.$router.push({ path: "/main" });
    
     
   }catch(err){
     console.log("err : ", err);
   }
-    this.$router.push({ path: "/timePick" });
+    
     },
   },
 
