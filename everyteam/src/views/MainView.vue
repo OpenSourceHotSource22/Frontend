@@ -33,7 +33,8 @@
                   </v-list-item>
                 </v-list>
               </v-menu>
-              <v-dialog v-model="dialog" width="500">
+              <!-- 초대하기 btn -->
+              <v-dialog v-model="inviteDialog" width="500">
                 <template v-slot:activator="{ on, attrs }">
                   <v-btn
                     color="#79bd9a"
@@ -53,26 +54,55 @@
                   </v-card-title>
 
                   <v-card-text> {{ teamCode }} </v-card-text>
-
+                  <v-btn @click="doCopy">복사</v-btn>
                   <v-divider></v-divider>
 
                   <v-card-actions>
                     <v-spacer></v-spacer>
-                    <v-btn color="primary" text @click="dialog = false">
+                    <v-btn color="primary" text @click="inviteDialog = false">
                       닫기
                     </v-btn>
                   </v-card-actions>
                 </v-card>
               </v-dialog>
-              <!-- group list -->
-              <v-btn
-                color="#3b8686"
-                style="color: aliceblue; font-size: 25px"
-                elevation="0"
-                class="mt-5"
-              >
-                +
-              </v-btn>
+
+              <!-- +btn -->
+              <v-dialog v-model="plusDialog" width="500">
+                <template v-slot:activator="{ on, attrs }">
+                  <v-btn
+                    color="#3b8686"
+                    dark
+                    v-bind="attrs"
+                    v-on="on"
+                    elevation="0"
+                    class="mt-5"
+                    style="color: aliceblue; font-size: 25px"
+                  >
+                    +
+                  </v-btn>
+                </template>
+
+                <v-card>
+                  <v-card-title class="text-h5 grey lighten-2">
+                    추가하기
+                  </v-card-title>
+
+                  <v-card-text>
+                    <router-link to="/post">post</router-link>|
+                    <router-link to="/roles">Roles</router-link>|
+                    <router-link to="/whenWeMeet">whenwemeet</router-link>|
+                  </v-card-text>
+
+                  <v-divider></v-divider>
+
+                  <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn color="primary" text @click="plusDialog = false">
+                      닫기
+                    </v-btn>
+                  </v-card-actions>
+                </v-card>
+              </v-dialog>
             </v-list-item-content>
           </v-card>
         </v-col>
@@ -263,8 +293,8 @@ export default {
       teamProfileImg: localStorage.getItem("teamProfileImg"),
       teamTopImg: localStorage.getItem("teamTopImg"),
       teamUserCount: localStorage.getItem("teamUserCount"),
-
-      dialog: false,
+      inviteDialog: false,
+      plusDialog: false,
       invite: false,
       tab: null,
       switch1: false,
@@ -350,6 +380,9 @@ export default {
       } catch (error) {
         console.log(error);
       }
+    },
+    doCopy() {
+      this.$copyText(this.teamCode);
     },
   },
   mounted() {
