@@ -353,6 +353,7 @@ export default {
     },
   },
   mounted() {
+    console.log("파라미터", this.$route.params.test);
     //페이지가 다시 불릴때 마다 불러짐
     console.log("메인페이지 마운티드");
     // this.getTeamUserList();
