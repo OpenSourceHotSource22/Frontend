@@ -13,13 +13,13 @@
               clearable
             ></v-text-field>
             <v-textarea
+              v-model="post_Context"
               clearable
               outlined
               label="Text"
-              :value="post_Context"
             ></v-textarea>
           </v-container>
-          <v-btn color="primary">제출</v-btn>
+          <v-btn color="primary" @click="makePost">제출</v-btn>
         </template>
       </div>
     </v-main>
@@ -27,6 +27,8 @@
 </template>
 
 <script>
+import axios from "axios";
+import { BASE_URL } from "@/api";
 export default {
   data() {
     return {
@@ -35,5 +37,42 @@ export default {
       msg: "hi",
     };
   },
+  methods: {
+    async makePost() {
+      axios
+        .post(
+          `${BASE_URL}/post`,
+          {
+            teamCode: localStorage.getItem("teamCode"),
+            title: this.post_Title,
+            content: this.post_Context,
+            category: "POST",
+          },
+          {
+            headers: {
+              "X-AUTH-TOKEN": localStorage.getItem("token"),
+            },
+          }
+        )
+        .then(function (res) {
+          console.log("post 완료", res.data);
+        })
+        .catch(function (err) {
+          console.log(err);
+        });
+
+      this.$router.push({
+        path: "/main",
+      });
+    },
+  },
+  // watch: {
+  //   post_Title: function () {
+  //     console.log(this.post_Title);
+  //   },
+  //   post_Context: function () {
+  //     console.log(this.post_Context);
+  //   },
+  // },
 };
 </script>
