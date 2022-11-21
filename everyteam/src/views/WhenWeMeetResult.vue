@@ -247,7 +247,9 @@ export default{
         }
     },
     beforeMount(){
-        this.meetCode = this.$route.params.meetCode;
+        
+       // localStorage.setItem("meetCode",this.$route.params.meetCode);
+        this.meetCode = localStorage.getItem("meetCode");
     },
     mounted(){
         

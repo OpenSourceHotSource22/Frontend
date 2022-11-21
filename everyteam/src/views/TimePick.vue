@@ -13,11 +13,11 @@
                        
                         <th v-for="day in date" :key="day.idx" :a="day">
                             <td>{{day.date}}</td>
-                            <drag-select attribute="item">
-                            <div class="timeBox" v-for="i in 18" :key="i" :item="TimeBox">
+                            
+                            <div class="timeBox" v-for="i in 18" :key="i">
                                 <TimeBox :userIdx="day.idx" :userTime="i+5" v-on:timeFromChild="ChildTimeReceived"/>
                             </div>
-                            </drag-select>
+                        
                         </th>
                     </table>
                 </v-row>
@@ -35,10 +35,10 @@
 import axios from "axios";
 import { BASE_URL } from "@/api";
 import TimeBox from './TimeBox.vue';
-import DragSelect from 'drag-select-vue';
+//import DragSelect from 'drag-select-vue';
 
 export default {
-    components: {TimeBox, DragSelect},
+    components: {TimeBox},
 
     data : () =>({
         meetCode:"",
@@ -150,7 +150,8 @@ export default {
         ,
 
        async getDate(){
-       
+       localStorage.setItem("meetCode",this.$route.params.meetCode);
+        this.meetCode = localStorage.getItem("meetCode");
             var code = {
                 teamCode : localStorage.getItem("teamCode"),
                 meetCode : this.meetCode,
@@ -215,7 +216,7 @@ export default {
         console.log("마운팅 전 실행");
         //this.visited();
         console.log("meetCODE!!" , this.$route.params.meetCode)
-        this.meetCode = this.$route.params.meetCode;
+        
         
     },
     mounted(){//pageload 전에 실행
