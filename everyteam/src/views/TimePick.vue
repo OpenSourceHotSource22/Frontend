@@ -4,11 +4,7 @@
             <div class="TimePick">
                 <v-row justify="space-around">
                     <table>
-<<<<<<< HEAD
                         <th style="font-size:13.4px;">
-=======
-                        <th  style="font-size:13.4px;">
->>>>>>> origin
                             <td>시간</td>
                             <div class="timeBox" v-for="t in time" :key="t.name">
                                 <tr>{{t.name}}</tr>

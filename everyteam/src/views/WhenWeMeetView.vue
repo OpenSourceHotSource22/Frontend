@@ -104,14 +104,13 @@ export default {
       });
 
     console.log("서버로부터 받은값 : ", res.data);
-    localStorage.setItem("meetCode", res.data["result"].meetCode);
-    this.meetCode = res.data["result"].meetCode;
+    this.$router.push({ path: "/main" });
    
     
   }catch(err){
     console.log("err : ", err);
   }
-    this.$router.push({ path: "/timePick" });
+    
     },
   },
 
