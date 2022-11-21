@@ -64,6 +64,7 @@ export default{
     components :{ResultTimeBox},
 
     data : ()=>({
+        meetCode:'',
         content:"",
         isShow : false,
         userId : localStorage.getItem("userId"),
@@ -210,7 +211,7 @@ export default{
                 const res = await axios.post(`${BASE_URL}/meet/updatePostMeet`,
                 {
                     teamCode:localStorage.getItem("teamCode"),
-                    meetCode: localStorage.getItem("meetCode"),
+                    meetCode: this.meetCode,
                     content: this.content,
                 },
                 {
@@ -219,12 +220,16 @@ export default{
                          "X-AUTH-TOKEN": localStorage.getItem("token"),
                     }
                 });
+
+                this.$router.push({ path: "/main" });
             }catch(err){
                 console.log(err);
             }
         },
     },
     mounted(){
+        console.log(this.$route.params.meetCode);
+        this.meetCode = this.$route.params.meetCode;
         this.getUserTime();
         this.getAllTime();
     },
