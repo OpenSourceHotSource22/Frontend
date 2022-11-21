@@ -66,7 +66,7 @@ export default {
         const idx = this.days.findIndex(d=> d === day);
         if (idx >= 0) {
         this.days.splice(idx, 1);
-        this.daysLength--
+        this.daysLength--;
       } else {
         this.days.push(day)
         this.daysLength++;
@@ -88,7 +88,14 @@ export default {
     async nextBtn(){
       console.log("title : ", this.title);
       console.log("배열 서버에 보내기")
-      
+      if(this.days[0] ==null){
+        alert("날짜를 선택하세요");
+        return;
+      }
+      if(this.title == ""){
+        alert("제목을 입력하세요");
+        return;
+      }
 
   try{
       const res = await axios.post(`${BASE_URL}/meet/createDate`,
@@ -102,9 +109,10 @@ export default {
             "X-AUTH-TOKEN": localStorage.getItem("token"),
           },
       });
-
+  this.meetCode = res.data.result.meetCode;
     console.log("서버로부터 받은값 : ", res.data);
-    this.$router.push({ path: "/main" });
+    console.log("meetCODE to pickdate", this.meetCode);
+    this.$router.push({ path: "/timePick", name:"timePick", params:{meetCode:this.meetCode }});
    
     
   }catch(err){
