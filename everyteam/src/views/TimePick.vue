@@ -4,7 +4,7 @@
             <div class="TimePick">
                 <v-row justify="space-around">
                     <table>
-                        <th>
+                        <th  style="font-size:13.4px;">
                             <td>시간</td>
                             <div class="timeBox" v-for="t in time" :key="t.name">
                                 <tr>{{t.name}}</tr>
@@ -35,9 +35,8 @@ import TimeBox from './TimeBox.vue'
 export default {
     components: {TimeBox},
     data : () =>({
+        meetCode:this.$route.params.meetCode,
         dateLength:0,
-        //timeLength : 0,
-        
         timeString:[],
         userTime : [ ], //서버에 보낼 날짜와 시간이 담긴 배열
         times:[], //선택한 시간들 넣는 배열
@@ -112,7 +111,11 @@ export default {
             //result에 반영하기
            
             
-            this.$router.push({ path: "/WhenWeMeetResult" });
+            this.$router.push({
+                path: "/WhenWeMeetResult",
+                name:"WhenWeMeetResult",
+                params:{meetCode:this.meetCode} 
+            });
         },
         ChildTimeReceived(usertime,useridx){
             console.log("자식으로부터 받음",usertime,useridx)

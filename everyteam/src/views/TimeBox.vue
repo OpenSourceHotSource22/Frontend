@@ -9,8 +9,8 @@ export default {
     
   data() {  // Box 의 state
     return {
-      width: 40, // 넓이
-      height: 20, // 높이
+      width: 60, // 넓이
+      height: 25, // 높이
       bColor:"white",
       clicked:false
     };
