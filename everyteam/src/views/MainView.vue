@@ -388,10 +388,14 @@ export default {
         post["category"] == "MEET" &&
         post["content"].split("/")[0] != "result"
       ) {
+        // this.$router.push({
+        //   path: "/WhenWeMeetResult",
+        //   name: "WhenWeMeetResult",
+        //   params: { meetCode: post["content"].split("/")[0] },
+        // });
+        localStorage.setItem("meetCode", post["content"].split("/")[0]);
         this.$router.push({
           path: "/WhenWeMeetResult",
-          name: "WhenWeMeetResult",
-          params: { meetCode: post["content"].split("/")[0] },
         });
       }
     },

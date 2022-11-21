@@ -69,9 +69,7 @@ export default {
   }),
 
   mounted() {
-    this.getUserTeamList();
-    // this.getGroupList();
-    // this.getUser();
+    // this.createGroup();
   },
   computed: {
     icon() {
@@ -96,25 +94,6 @@ export default {
         console.log("팀생성 성공!!");
         console.log("res:", res);
         this.$router.push({ path: "/myGroups" });
-      } catch (error) {
-        console.log(error);
-      }
-    },
-    async getGroupList() {
-      console.log(localStorage.getItem("token"));
-      try {
-        const res = await axios.get(
-          `${BASE_URL}/role/userList`,
-          {
-            teamCode: this.teamcode,
-          },
-          {
-            headers: {
-              "X-AUTH-TOKEN": localStorage.getItem("token"),
-            },
-          }
-        );
-        console.log("group list:", res);
       } catch (error) {
         console.log(error);
       }
