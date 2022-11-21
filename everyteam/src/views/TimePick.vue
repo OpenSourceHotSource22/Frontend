@@ -35,7 +35,7 @@ import TimeBox from './TimeBox.vue'
 export default {
     components: {TimeBox},
     data : () =>({
-        meetCode:this.$route.params.meetCode,
+        meetCode:"",
         dateLength:0,
         timeString:[],
         userTime : [ ], //서버에 보낼 날짜와 시간이 담긴 배열
@@ -205,6 +205,7 @@ export default {
     beforeMount(){
         console.log("마운팅 전 실행");
         //this.visited();
+        this.meetcode = this.$route.params.meetCode;
     },
     mounted(){//pageload 전에 실행
         console.log("마운트 후 실행")
