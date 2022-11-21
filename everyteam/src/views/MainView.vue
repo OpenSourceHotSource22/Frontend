@@ -54,7 +54,7 @@
                   </v-card-title>
 
                   <v-card-text> {{ teamCode }} </v-card-text>
-                  <v-btn @click="doCopy">복사</v-btn>
+
                   <v-divider></v-divider>
 
                   <v-card-actions>
@@ -380,9 +380,6 @@ export default {
       } catch (error) {
         console.log(error);
       }
-    },
-    doCopy() {
-      this.$copyText(this.teamCode);
     },
   },
   mounted() {
