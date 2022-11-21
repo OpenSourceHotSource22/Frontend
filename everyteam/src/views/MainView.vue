@@ -389,8 +389,8 @@ export default {
         post["content"].split("/")[0] != "result"
       ) {
         this.$router.push({
-          path: "/timePick",
-          name: "timePick",
+          path: "/WhenWeMeetResult",
+          name: "WhenWeMeetResult",
           params: { meetCode: post["content"].split("/")[0] },
         });
       }
