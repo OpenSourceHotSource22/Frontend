@@ -49,6 +49,5 @@ export default{
 <style scoped>
 #resulttimebox{
     border: solid 1px black;
-    font-display: top;
 }
 </style>

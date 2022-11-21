@@ -38,6 +38,17 @@
                         </table>
                     </v-col>
                 </v-row>
+                <v-row class="btn">
+                    <v-col class="prevBtn"> <v-btn color="primary" @click="goPrev">가능시간 선택하기</v-btn> </v-col>
+                   <!-- <v-col class="completeBtn"><v-btn color="primary" @click="isShow = !isShow">마감</v-btn></v-col> -->
+                </v-row>
+
+                <v-row class="submit" justify="space-around">
+                    <v-form v-show="isShow">
+                        <v-text-field v-model="content" label="최종날짜를 입력하시오" outlined></v-text-field>
+                        <v-btn color="primary" @click="submit">마감</v-btn>
+                    </v-form>
+                </v-row>
            </div>
         </v-main>
     </v-app>
@@ -53,6 +64,8 @@ export default{
     components :{ResultTimeBox},
 
     data : ()=>({
+        content:"",
+        isShow : false,
         userId : localStorage.getItem("userId"),
         userTime:[],
         boxColor:[],
@@ -146,7 +159,10 @@ export default{
                     }
                     this.teamTime.push({time:this.resultColorArray(timeSplit)});
                 }
-
+                //meet생성자라면 마감버튼 보여주기
+                if(this.userId == res.data.result.post.userId){
+                    this.isShow = true;
+                }
                 console.log("팀 합친 color : ", this.teamTime);
                 
             }catch(err){
@@ -161,29 +177,51 @@ export default{
                 var idx=0;
                
                 switch(timeSplit[i]){
-                    case '6': { idx = forBoxColor[i]; forBoxColor[i] = ++idx;  break;}
-                    case '7': { idx = forBoxColor[i]; forBoxColor[i] = ++idx;  break;}
-                    case '8': { idx = forBoxColor[i]; forBoxColor[i] = ++idx;  break;}
-                    case '9': { idx = forBoxColor[i]; forBoxColor[i] = ++idx;  break;}
-                    case '10': { idx = forBoxColor[i]; forBoxColor[i] = ++idx;  break;}
-                    case '11': { idx = forBoxColor[i]; forBoxColor[i] = ++idx;  break;}
-                    case '12': { idx = forBoxColor[i]; forBoxColor[i] = ++idx;  break;}
-                    case '13': { idx = forBoxColor[i]; forBoxColor[i] = ++idx;  break;}
-                    case '14': { idx = forBoxColor[i]; forBoxColor[i] = ++idx;  break;}
-                    case '15': { idx = forBoxColor[i]; forBoxColor[i] = ++idx;  break;}
-                    case '16': { idx = forBoxColor[i]; forBoxColor[i] = ++idx;  break;}
-                    case '17': { idx = forBoxColor[i]; forBoxColor[i] = ++idx;  break;}
-                    case '18': { idx = forBoxColor[i]; forBoxColor[i] = ++idx;  break;}
-                    case '19': { idx = forBoxColor[i]; forBoxColor[i] = ++idx;  break;}
-                    case '20': { idx = forBoxColor[i]; forBoxColor[i] = ++idx;  break;}
-                    case '21': { idx = forBoxColor[i]; forBoxColor[i] = ++idx;  break;}
-                    case '22': { idx = forBoxColor[i]; forBoxColor[i] = ++idx;  break;}
-                    case '23': { idx = forBoxColor[i]; forBoxColor[i] = ++idx;  break;}
+                    case '6': { idx = forBoxColor[0]; forBoxColor[0] = ++idx;  break;}
+                    case '7': { idx = forBoxColor[1]; forBoxColor[1] = ++idx;  break;}
+                    case '8': { idx = forBoxColor[2]; forBoxColor[2] = ++idx;  break;}
+                    case '9': { idx = forBoxColor[3]; forBoxColor[3] = ++idx;  break;}
+                    case '10': { idx = forBoxColor[4]; forBoxColor[4] = ++idx;  break;}
+                    case '11': { idx = forBoxColor[5]; forBoxColor[5] = ++idx;  break;}
+                    case '12': { idx = forBoxColor[6]; forBoxColor[6] = ++idx;  break;}
+                    case '13': { idx = forBoxColor[7]; forBoxColor[7] = ++idx;  break;}
+                    case '14': { idx = forBoxColor[8]; forBoxColor[8] = ++idx;  break;}
+                    case '15': { idx = forBoxColor[9]; forBoxColor[9] = ++idx;  break;}
+                    case '16': { idx = forBoxColor[10]; forBoxColor[10] = ++idx;  break;}
+                    case '17': { idx = forBoxColor[11]; forBoxColor[11] = ++idx;  break;}
+                    case '18': { idx = forBoxColor[12]; forBoxColor[12] = ++idx;  break;}
+                    case '19': { idx = forBoxColor[13]; forBoxColor[13] = ++idx;  break;}
+                    case '20': { idx = forBoxColor[14]; forBoxColor[14] = ++idx;  break;}
+                    case '21': { idx = forBoxColor[15]; forBoxColor[15] = ++idx;  break;}
+                    case '22': { idx = forBoxColor[16]; forBoxColor[16] = ++idx;  break;}
+                    case '23': { idx = forBoxColor[17]; forBoxColor[17] = ++idx;  break;}
 
                 }
             }
             console.log("forboxcolor:",forBoxColor);
             return forBoxColor;
+        },
+        goPrev(){
+             this.$router.push({ path: "/timePick" });
+        },
+       async submit(){
+            //input 서버에 저장, 메인 게시물에 보여주기
+            try{
+                const res = await axios.post(`${BASE_URL}/meet/updatePostMeet`,
+                {
+                    teamCode:localStorage.getItem("teamCode"),
+                    meetCode: localStorage.getItem("meetCode"),
+                    content: this.content,
+                },
+                {
+                    headers:
+                    {
+                         "X-AUTH-TOKEN": localStorage.getItem("token"),
+                    }
+                });
+            }catch(err){
+                console.log(err);
+            }
         },
     },
     mounted(){

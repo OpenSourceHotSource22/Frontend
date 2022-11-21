@@ -45,6 +45,6 @@ export default {
 <style scoped>
 #timebox{
     border : solid 1px black;
-    font-display: top;
+    
 }
 </style>

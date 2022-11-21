@@ -83,6 +83,7 @@ export default {
       // }
       console.log("날짜 배열 : ", this.days);
     },
+
     async nextBtn(){
       console.log("title : ", this.title);
       console.log("배열 서버에 보내기")
@@ -101,11 +102,10 @@ export default {
             "X-AUTH-TOKEN": localStorage.getItem("token"),
           },
       });
-      
-       
-  
+
     console.log("서버로부터 받은값 : ", res.data);
     localStorage.setItem("meetCode", res.data["result"].meetCode);
+    //메인페이지에 whenwemeet 게시물 생성, 이 게시물에 접근시 mmetCode가 일치하는 whenwemeet화면 출력
 
     this.$router.push({ path: "/timePick" });
   }catch(err){

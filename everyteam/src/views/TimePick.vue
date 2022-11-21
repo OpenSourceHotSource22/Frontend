@@ -169,10 +169,42 @@ export default {
             }
         
        },
+       async visited(){
+        //meetCode의 모든 유저를 가져와 첫번째 방문이면 continue, 두 번째 방문이면 결과창으로 이동
+            try{
+                const res = await axios.post(`${BASE_URL}/meet/getResultTime`,
+                {
+                    "teamCode" : localStorage.getItem("teamCode"),
+                    "meetCode" : localStorage.getItem("meetCode"),
+                },
+                {
+                    headers:
+                    {
+                        "X-AUTH-TOKEN": localStorage.getItem("token"),
+                    }
+                });
+
+                for(var i in res.data.result.meetList){
+                    if(localStorage.getItem("userId") ==  res.data.result.meetList[i].userId){
+                        console.log("두번째 방문이므로 결과창으로 이동");
+                        this.$router.push({ path: "/WhenWeMeetResult" });
+                        return;
+                    }
+                }
+                console.log("첫번째 방문했으므로 시간체크");
+
+            }catch(err){
+                console.log(err);
+            }
+       },
        
     },
+    beforeMount(){
+        console.log("마운팅 전 실행");
+        //this.visited();
+    },
     mounted(){//pageload 전에 실행
-        console.log("페이지 마운팅 전에 실행")
+        console.log("마운트 후 실행")
             this.getDate();
        },
 }
