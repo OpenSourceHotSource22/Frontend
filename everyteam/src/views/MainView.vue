@@ -202,7 +202,7 @@
                   whenWeMeet
                 </p>
                 <v-col v-for="(post, idx) in teamMeetList" :key="idx">
-                  <v-card class="rounded-xl">
+                  <v-card class="rounded-xl" @click="MeetCardClick(post)">
                     <v-list-item two-line>
                       <v-list-item-content>
                         <v-list-item-title class="text-h5">
@@ -379,6 +379,16 @@ export default {
         this.teamUserList = res.data["result"]["userList"];
       } catch (error) {
         console.log(error);
+      }
+    },
+    MeetCardClick(post) {
+      console.log("split test", post["content"].split("/")[0]);
+      if (post["content"].split("/")[0] != "result") {
+        this.$router.push({
+          path: "/timePick",
+          name: "timePick",
+          params: { meetCode: post["content"].split("/")[0] },
+        });
       }
     },
   },
