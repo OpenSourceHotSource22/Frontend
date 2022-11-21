@@ -48,9 +48,9 @@ const routes = [
     component: TimePick,
   },
   {
-    path : "/WhenWeMeetResult",
-    name : "WhenWeMeetResult",
-    component:WWMResult,
+    path: "/WhenWeMeetResult",
+    name: "WhenWeMeetResult",
+    component: WWMResult,
   },
   {
     path: "/roles",
