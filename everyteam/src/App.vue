@@ -13,9 +13,9 @@
               group["team"].name
             }}</v-list-item-title>
           </v-list-item>
-          <v-list-item>
+          <v-list-item style="background-color: aquamarine">
             <v-list-item-title @click="goCreateGroupPage">
-              팀 생성하기
+              + 팀 생성하기
             </v-list-item-title>
           </v-list-item>
         </v-list-item-group>
