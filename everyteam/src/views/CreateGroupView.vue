@@ -52,7 +52,7 @@ import { BASE_URL } from "@/api";
 export default {
   data: () => ({
     show: false,
-    groupName: "피곤러들",
+    groupName: "",
     marker: true,
     iconIndex: 0,
     icons: [
@@ -65,10 +65,10 @@ export default {
       "mdi-emoticon-sad",
       "mdi-emoticon-tongue",
     ],
-    description: "우리는 항상 피곤하다",
+    description: "",
     profileImg: [],
     preview: "",
-    teamcode: "jNgxNI",
+    teamcode: "",
   }),
 
   mounted() {
@@ -157,7 +157,6 @@ export default {
           false
         );
       } else {
-        ㅌ;
         this.preview = "";
       }
     },
