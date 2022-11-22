@@ -1,6 +1,32 @@
 <template>
   <div id="app">
+    <v-navigation-drawer v-model="drawer" absolute app>
+      <v-list nav dense>
+        <v-list-item-group
+          v-model="group"
+          active-class="deep-purple--text text--accent-4"
+        >
+          <v-list-item>
+            <v-list-item-title>Foo</v-list-item-title>
+          </v-list-item>
+
+          <v-list-item>
+            <v-list-item-title>Bar</v-list-item-title>
+          </v-list-item>
+
+          <v-list-item>
+            <v-list-item-title>Fizz</v-list-item-title>
+          </v-list-item>
+
+          <v-list-item>
+            <v-list-item-title>Buzz</v-list-item-title>
+          </v-list-item>
+        </v-list-item-group>
+      </v-list>
+    </v-navigation-drawer>
     <v-app-bar app color="blue" flat v-if="showAppBar">
+      <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
+
       everyTeam
       <nav>
         <router-link to="/">Intro</router-link> |
@@ -68,6 +94,8 @@ export default {
     return {
       dialog: false,
       showAppBar: true,
+      drawer: false,
+      group: null,
     };
   },
   methods: {
@@ -98,6 +126,9 @@ export default {
       } else {
         this.showAppBar = true;
       }
+    },
+    group() {
+      this.drawer = false;
     },
   },
   mounted() {

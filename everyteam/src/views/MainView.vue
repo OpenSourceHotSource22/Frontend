@@ -343,7 +343,6 @@ export default {
       teamDesc: localStorage.getItem("teamDesc"),
       teamProfileImg: localStorage.getItem("teamProfileImg"),
       teamTopImg: localStorage.getItem("teamTopImg"),
-
       inviteDialog: false,
       plusDialog: false,
       teamTopImgDialog: false,
