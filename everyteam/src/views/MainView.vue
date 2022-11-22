@@ -343,7 +343,6 @@ export default {
       teamDesc: localStorage.getItem("teamDesc"),
       teamProfileImg: localStorage.getItem("teamProfileImg"),
       teamTopImg: localStorage.getItem("teamTopImg"),
-      teamUserCount: localStorage.getItem("teamUserCount"),
       inviteDialog: false,
       plusDialog: false,
       teamTopImgDialog: false,
@@ -362,6 +361,9 @@ export default {
     };
   },
   computed: {
+    teamUserCount() {
+      return this.teamUserList.length;
+    },
     ...mapState("userStore", {
       userId: "userId",
     }),
