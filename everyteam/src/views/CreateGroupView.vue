@@ -36,6 +36,9 @@
           <img class="img" :src="preview" />
         </v-col>
         <v-col>
+          <v-btn @click="createGroup">그룹생성하기</v-btn>
+        </v-col>
+        <v-col>
           <v-btn @click="goMyGroupsPage" color="pink"> Mygroups </v-btn>
         </v-col>
       </v-flex>
@@ -49,7 +52,7 @@ import { BASE_URL } from "@/api";
 export default {
   data: () => ({
     show: false,
-    groupName: "",
+    groupName: "피곤러들",
     marker: true,
     iconIndex: 0,
     icons: [
@@ -62,7 +65,7 @@ export default {
       "mdi-emoticon-sad",
       "mdi-emoticon-tongue",
     ],
-    description: "",
+    description: "우리는 항상 피곤하다",
     profileImg: [],
     preview: "",
     teamcode: "jNgxNI",
@@ -79,18 +82,36 @@ export default {
 
   methods: {
     async createGroup() {
+      const data = new FormData();
+      data.append("image", this.profileImg);
+      const teamData = {
+        name: this.groupName,
+        description: this.description,
+      };
+
+      // formData.append('key', new Blob([ JSON.stringify(data) ], {type : "application/json"}));
+      data.append(
+        "team",
+        new Blob([JSON.stringify(teamData)], { type: "application/json" })
+      );
+      // data.append("team", {
+      //   name: this.groupName,
+      //   description: this.description,
+      // });
+
+      // console.log("formdata:", formdata.entries());
+      for (var pair of data.entries()) {
+        console.log(pair[0] + ", " + pair[1]);
+      }
+
       try {
-        const res = await axios.post(
-          `${BASE_URL}/team/create`,
-          {
-            name: this.groupName,
+        const res = await axios.post(`${BASE_URL}/team/create`, data, {
+          headers: {
+            "X-AUTH-TOKEN": localStorage.getItem("token"),
+            "Content-Type": "multipart/form-data",
           },
-          {
-            headers: {
-              "X-AUTH-TOKEN": localStorage.getItem("token"),
-            },
-          }
-        );
+        });
+        alert(res.data["message"]);
         console.log("팀생성 성공!!");
         console.log("res:", res);
         this.$router.push({ path: "/myGroups" });
@@ -136,16 +157,19 @@ export default {
           false
         );
       } else {
+        ㅌ;
         this.preview = "";
       }
     },
   },
   watch: {
     profileImg() {
-      console.log(this.profileImg);
-      const formdata = new FormData();
-      formdata.append("profileImg", this.profileImg);
-      console.log("formdata:", formdata);
+      console.log("이미지", this.profileImg);
+      const data = new FormData();
+      data.append("profileImg", this.profileImg);
+      for (var pair of data.entries()) {
+        console.log(pair[0] + ", " + pair[1]);
+      }
     },
   },
 };
