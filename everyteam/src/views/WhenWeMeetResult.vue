@@ -215,7 +215,7 @@ export default{
             return forBoxColor;
         },
         goPrev(){
-             this.$router.push({ path: "/timePick", name:"timePick", params:{meetCode:this.meetCode} });
+             this.$router.push({ path: "/timePick"});
         },
        async submit(){
             //input 서버에 저장, 메인 게시물에 보여주기
