@@ -12,6 +12,7 @@
             v-model="title"
             label="title"
             outlined
+            class="mt-5"
           ></v-text-field>
           </v-col>
       </v-row>
@@ -22,8 +23,12 @@
       <v-date-picker
         
         v-model="dates"
+        year-icon="mdi-calendar-blank"
+        width="600"
         multiple
         @click:date ="dayclick"
+        class="mt-5 mb-10"
+        elevation="5"
       
 
     />
@@ -46,14 +51,10 @@ export default {
   
   name: "App",
   data : () => ({
+    meetCode:'',
     days : [],
     daysLength:0,
     title : "",
-    formats: {
-         input: ['YYYY-MM-DD'],
-      },
-    selectedDate: [ new Date()],
-
    dates:[],
   }),
 
@@ -65,7 +66,7 @@ export default {
         const idx = this.days.findIndex(d=> d === day);
         if (idx >= 0) {
         this.days.splice(idx, 1);
-        this.daysLength--
+        this.daysLength--;
       } else {
         this.days.push(day)
         this.daysLength++;
@@ -87,10 +88,16 @@ export default {
     async nextBtn(){
       console.log("title : ", this.title);
       console.log("배열 서버에 보내기")
-      
+      if(this.days[0] ==null){
+        alert("날짜를 선택하세요");
+        return;
+      }
+      if(this.title == ""){
+        alert("제목을 입력하세요");
+        return;
+      }
 
   try{
-
       const res = await axios.post(`${BASE_URL}/meet/createDate`,
       {
         teamCode : localStorage.getItem("teamCode"),
@@ -102,35 +109,21 @@ export default {
             "X-AUTH-TOKEN": localStorage.getItem("token"),
           },
       });
-
+  this.meetCode = res.data.result.meetCode;
     console.log("서버로부터 받은값 : ", res.data);
-    localStorage.setItem("meetCode", res.data["result"].meetCode);
-    //메인페이지에 whenwemeet 게시물 생성, 이 게시물에 접근시 mmetCode가 일치하는 whenwemeet화면 출력
-
-    this.$router.push({ path: "/timePick" });
+    console.log("meetCODE to pickdate", this.meetCode);
+    localStorage.setItem("meetCode",this.meetCode);
+    this.$router.push({ path: "/timePick", name:"timePick", params:{meetCode:this.meetCode }});
+   
+    
   }catch(err){
     console.log("err : ", err);
   }
+    
     },
-    
-    
-  
   },
 
-  computed: {
-    // dates() {
-    //   return this.days.map(day => day.date);
-    // },
-    // attributes() {
-    //   return this.dates.map(date => ({
-    //     highlight: true,
-    //     dates: date,
-    //   }));
-    // },
-
-    
-  },
 }
-//console.log(this.days.id);
+
 
 </script>

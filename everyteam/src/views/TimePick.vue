@@ -1,26 +1,30 @@
 <template>
     <v-app>
         <v-main>
-            <div class="TimePick">
+            <div class="TimePick mt-8">
                 <v-row justify="space-around">
                     <table>
-                        <th>
+                        <th style="font-size:13.4px;">
                             <td>시간</td>
                             <div class="timeBox" v-for="t in time" :key="t.name">
                                 <tr>{{t.name}}</tr>
                             </div>
                         </th>
-                        <th v-for="day in date" :key="day.idx">
+                       
+                        <th v-for="day in date" :key="day.idx" :a="day">
                             <td>{{day.date}}</td>
+                            
                             <div class="timeBox" v-for="i in 18" :key="i">
                                 <TimeBox :userIdx="day.idx" :userTime="i+5" v-on:timeFromChild="ChildTimeReceived"/>
                             </div>
+                        
                         </th>
                     </table>
                 </v-row>
 
-                <v-row justify="space-around">
-                    <v-btn color="success" @click="btnSubmit">선택완료</v-btn>
+                <v-row  justify="space-around" class="mt-8">
+                    <v-col align="right" cols="7"> <v-btn  rounded color="primary" width="200px" @click="btnSubmit">선택완료</v-btn></v-col>
+                    <v-col cols="5"> <v-btn color="primary" @click="goPrev" text> <v-icon>mdi-arrow-left</v-icon>결과창으로 돌아가기</v-btn></v-col>
                 </v-row>
             </div>
         </v-main>
@@ -30,14 +34,15 @@
 <script>
 import axios from "axios";
 import { BASE_URL } from "@/api";
-import TimeBox from './TimeBox.vue'
+import TimeBox from './TimeBox.vue';
+//import DragSelect from 'drag-select-vue';
 
 export default {
     components: {TimeBox},
+
     data : () =>({
+        meetCode:"",
         dateLength:0,
-        //timeLength : 0,
-        
         timeString:[],
         userTime : [ ], //서버에 보낼 날짜와 시간이 담긴 배열
         times:[], //선택한 시간들 넣는 배열
@@ -95,7 +100,7 @@ export default {
             const res = await axios.put(`${BASE_URL}/meet/updateTime`,
             {
                 "teamCode" : localStorage.getItem("teamCode"),
-                "meetCode" : localStorage.getItem("meetCode"),
+                "meetCode" : this.meetCode,
                 "meet" : this.userTime,
             },
             {
@@ -112,7 +117,8 @@ export default {
             //result에 반영하기
            
             
-            this.$router.push({ path: "/WhenWeMeetResult" });
+            this.$router.push({
+                path: "/WhenWeMeetResult",});
         },
         ChildTimeReceived(usertime,useridx){
             console.log("자식으로부터 받음",usertime,useridx)
@@ -144,7 +150,7 @@ export default {
        
             var code = {
                 teamCode : localStorage.getItem("teamCode"),
-                meetCode : localStorage.getItem("meetCode"),
+                meetCode : this.meetCode,
             }   
             console.log("code",code);
             console.log("달력 받아오자");
@@ -169,43 +175,24 @@ export default {
             }
         
        },
-       async visited(){
-        //meetCode의 모든 유저를 가져와 첫번째 방문이면 continue, 두 번째 방문이면 결과창으로 이동
-            try{
-                const res = await axios.post(`${BASE_URL}/meet/getResultTime`,
-                {
-                    "teamCode" : localStorage.getItem("teamCode"),
-                    "meetCode" : localStorage.getItem("meetCode"),
-                },
-                {
-                    headers:
-                    {
-                        "X-AUTH-TOKEN": localStorage.getItem("token"),
-                    }
-                });
-
-                for(var i in res.data.result.meetList){
-                    if(localStorage.getItem("userId") ==  res.data.result.meetList[i].userId){
-                        console.log("두번째 방문이므로 결과창으로 이동");
-                        this.$router.push({ path: "/WhenWeMeetResult" });
-                        return;
-                    }
-                }
-                console.log("첫번째 방문했으므로 시간체크");
-
-            }catch(err){
-                console.log(err);
-            }
-       },
+       
+       goPrev(){
+            this.$router.push({path:"/WhenWeMeetResult"})
+       }
        
     },
     beforeMount(){
         console.log("마운팅 전 실행");
         //this.visited();
+       
+        
+        
     },
     mounted(){//pageload 전에 실행
-        console.log("마운트 후 실행")
+        console.log("마운트 후 실행");
+        this.meetCode = localStorage.getItem("meetCode");
             this.getDate();
+            
        },
 }
 
