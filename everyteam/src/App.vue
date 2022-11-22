@@ -13,6 +13,11 @@
               group["team"].name
             }}</v-list-item-title>
           </v-list-item>
+          <v-list-item>
+            <v-list-item-title @click="goCreateGroupPage">
+              팀 생성하기
+            </v-list-item-title>
+          </v-list-item>
         </v-list-item-group>
       </v-list>
     </v-navigation-drawer>
@@ -88,6 +93,9 @@ export default {
       localStorage.setItem("teamUserCount", team.countUser);
       //새로고침해줌
       this.$router.go();
+    },
+    goCreateGroupPage() {
+      this.$router.push({ path: "/createGroup" });
     },
   },
   computed: {
