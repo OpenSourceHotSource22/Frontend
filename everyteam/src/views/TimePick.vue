@@ -185,11 +185,12 @@ export default {
         console.log("마운팅 전 실행");
         //this.visited();
        
-        this.meetCode = localStorage.getItem("meetCode");
+        
         
     },
     mounted(){//pageload 전에 실행
-        console.log("마운트 후 실행")
+        console.log("마운트 후 실행");
+        this.meetCode = localStorage.getItem("meetCode");
             this.getDate();
             
        },
