@@ -5,7 +5,7 @@
 
       <div class="roles">
         <h1>사다리타기 page</h1>
-        <v-btn @click="goRolsPage">다시선택하기 </v-btn>
+        <v-btn @click="goRolsPage">선택메뉴 가기 </v-btn>
       </div>
     </v-main>
   </v-app>
