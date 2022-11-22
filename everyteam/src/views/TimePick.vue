@@ -24,7 +24,7 @@
 
                 <v-row  justify="space-around" class="mt-8">
                     <v-col align="right" cols="7"> <v-btn  rounded color="primary" width="200px" @click="btnSubmit">선택완료</v-btn></v-col>
-                    <v-col cols="5"> <v-btn color="primary" @click="goPrev" text> <v-icon>mdi-arrow-left</v-icon> 돌아가기</v-btn></v-col>
+                    <v-col cols="5"> <v-btn color="primary" @click="goPrev" text> <v-icon>mdi-arrow-left</v-icon>결과창으로 돌아가기</v-btn></v-col>
                 </v-row>
             </div>
         </v-main>
@@ -185,11 +185,12 @@ export default {
         console.log("마운팅 전 실행");
         //this.visited();
        
-        this.meetCode = localStorage.getItem("meetCode");
+        
         
     },
     mounted(){//pageload 전에 실행
-        console.log("마운트 후 실행")
+        console.log("마운트 후 실행");
+        this.meetCode = localStorage.getItem("meetCode");
             this.getDate();
             
        },

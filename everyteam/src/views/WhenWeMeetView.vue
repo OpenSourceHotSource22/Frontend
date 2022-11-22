@@ -112,6 +112,7 @@ export default {
   this.meetCode = res.data.result.meetCode;
     console.log("서버로부터 받은값 : ", res.data);
     console.log("meetCODE to pickdate", this.meetCode);
+    localStorage.setItem("meetCode",this.meetCode);
     this.$router.push({ path: "/timePick", name:"timePick", params:{meetCode:this.meetCode }});
    
     
