@@ -2,7 +2,7 @@
   <v-app>
     <v-layout>
       <v-flex xs6 sm5 md4 lg3 xl2 style="position: relative; margin: auto">
-        <h1>login page~~~~!!!!!~</h1>
+        <h1>login page</h1>
         <v-form ref="form" v-model="loginValid" lazy-validation>
           <v-text-field
             v-model="loginId"

@@ -1,7 +1,58 @@
 <template>
   <v-app>
     <v-main class="main">
-      <v-img src="@/assets/groupBack.png" max-height="250"></v-img>
+      <v-img
+        v-if="teamTopImg == null"
+        src="@/assets/groupBack.png"
+        max-height="250"
+      >
+        <!-- teamtopimg 추가 -->
+        <v-dialog v-model="teamTopImgDialog" width="500">
+          <template v-slot:activator="{ on, attrs }">
+            <v-btn
+              elevation="2"
+              color="#3b8686"
+              dark
+              v-bind="attrs"
+              v-on="on"
+              class="mt-5"
+              rounded
+              bottom
+              right
+              absolute
+            >
+              <v-icon>mdi-plus</v-icon>
+            </v-btn>
+          </template>
+
+          <v-card>
+            <v-card-title class="text-h5">
+              그룹배경이미지 추가하기
+            </v-card-title>
+
+            <v-card-text>
+              <v-file-input
+                v-model="teamTopInputImg"
+                show-size
+                label="main페이지의 top이미지를 선택해주세요"
+                @change="previewFile(teamTopInputImg)"
+              ></v-file-input>
+              <img class="inputImg" :src="preview"
+            /></v-card-text>
+            <v-btn @click="updateTeamTopImg"> 체출 </v-btn>
+            <v-divider></v-divider>
+
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn color="primary" text @click="teamTopImgDialog = false">
+                닫기
+              </v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+      </v-img>
+
+      <v-img v-else :src="teamTopImg" max-height="250"></v-img>
 
       <v-row>
         <!-- 그룹 정보 -->
@@ -295,7 +346,10 @@ export default {
       teamUserCount: localStorage.getItem("teamUserCount"),
       inviteDialog: false,
       plusDialog: false,
+      teamTopImgDialog: false,
+      teamTopInputImg: [],
       invite: false,
+      preview: "",
       tab: null,
       switch1: false,
       items: ["생성일s", "항목별"],
@@ -349,7 +403,7 @@ export default {
           },
         });
         console.log("팀 생성일 불러오기 성공");
-        console.log("getTeamPostList:", res.data["result"]["postList"]);
+        console.log("getTeamPostListdate:", res.data["result"]["postList"]);
         this.TeamPostListDate = res.data["result"]["postList"];
         //teamuserlist update
       } catch (error) {
@@ -370,12 +424,16 @@ export default {
           }
         );
         console.log("팀 postlist 불러오기 성공");
-        console.log("getTeamPostList:", res.data["result"]["postList"]);
+        console.log("getTeamPostList:", res.data["result"]);
         this.teamPostList = res.data["result"]["postList"]["post"];
         this.teamMeetList = res.data["result"]["postList"]["meet"];
         this.teamRoleList = res.data["result"]["postList"]["role"];
-        //teamuserlist update
-        console.log("userlist:", res.data["result"]["userList"]);
+        //팀 상단 이미지 저장
+        console.log("팀 상단 이미지", res.data["result"]["team"].topImgUrl);
+        this.teamTopImg = res.data["result"]["team"].topImgUrl;
+        localStorage.setItem("teamTopImg", this.teamTopImg),
+          //teamuserlist update
+          console.log("userlist:", res.data["result"]["userList"]);
         this.teamUserList = res.data["result"]["userList"];
       } catch (error) {
         console.log(error);
@@ -397,6 +455,54 @@ export default {
         this.$router.push({
           path: "/WhenWeMeetResult",
         });
+      }
+    },
+    async updateTeamTopImg() {
+      if (this.preview != "") {
+        const data = new FormData();
+        const teamData = {
+          teamCode: this.teamCode,
+        };
+        data.append(
+          "team",
+          new Blob([JSON.stringify(teamData)], { type: "application/json" })
+        );
+        data.append("image", this.teamTopInputImg);
+
+        try {
+          const res = await axios.put(`${BASE_URL}/team/updateTopImage`, data, {
+            headers: {
+              "X-AUTH-TOKEN": localStorage.getItem("token"),
+              "Content-Type": "multipart/form-data",
+            },
+          });
+          console.log("팀 top img update 성공!!");
+          console.log("res:", res);
+          this.teamTopImgDialog = false;
+          this.$router.go();
+        } catch (error) {
+          console.log(error);
+        }
+      } else {
+        alert("사진을 선택해주세요!");
+      }
+    },
+    previewFile(file) {
+      if (this.teamTopInputImg != null) {
+        const filedata = (data) => {
+          this.preview = data;
+        };
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.addEventListener(
+          "load",
+          function () {
+            filedata(reader.result);
+          },
+          false
+        );
+      } else {
+        this.preview = "";
       }
     },
   },
@@ -427,5 +533,11 @@ export default {
 }
 .card {
   border-radius: 10%;
+}
+.inputImg {
+  width: auto;
+  height: auto;
+  max-width: 400px;
+  max-height: 400px;
 }
 </style>
