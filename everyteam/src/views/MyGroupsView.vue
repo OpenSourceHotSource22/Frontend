@@ -64,11 +64,7 @@
               v-for="(group, idx) in userGroups"
               :key="idx"
             >
-              <v-card
-                class="mx-auto"
-                max-width="344"
-                @click="teamCardClick(group)"
-              >
+              <v-card class="mx-auto" @click="teamCardClick(group)">
                 <v-img
                   v-if="group['team'].imgUrl != null"
                   :src="`${group['team'].imgUrl}`"

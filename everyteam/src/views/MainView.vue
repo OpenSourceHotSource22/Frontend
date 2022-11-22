@@ -66,12 +66,12 @@
               {{ teamName }}
             </v-card-title>
             <v-card-text> {{ teamDesc }} </v-card-text>
-            <v-card-text> {{ teamUserCount }} 명 </v-card-text>
-            <v-list-item-content class="mx-3">
+            <v-card-text>
               <!-- 그룹 list -->
               <v-menu open-on-hover top offset-x>
                 <template v-slot:activator="{ on, attrs }">
-                  <v-btn color="#a8dba8" v-on="on" elevation="0">
+                  <v-btn color="#a8dba8" v-on="on" elevation="0" fab>
+                    {{ teamUserCount }}
                     <v-icon> mdi-account </v-icon>
                   </v-btn>
                 </template>
@@ -84,6 +84,8 @@
                   </v-list-item>
                 </v-list>
               </v-menu>
+            </v-card-text>
+            <v-list-item-content class="mx-3">
               <!-- 초대하기 btn -->
               <v-dialog v-model="inviteDialog" width="500">
                 <template v-slot:activator="{ on, attrs }">
