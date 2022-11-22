@@ -138,7 +138,7 @@ export default {
       this.showAppBar = true;
     }
     console.log("router: ", this.routerName);
-    this.getUserGroupList();
+    // this.getUserGroupList();
   },
 };
 </script>
