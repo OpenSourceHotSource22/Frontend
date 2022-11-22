@@ -1,25 +1,17 @@
 <template>
   <div id="app">
-    <v-navigation-drawer v-model="drawer" absolute app>
-      <v-list nav dense>
-        <v-list-item-group
-          v-model="group"
-          active-class="deep-purple--text text--accent-4"
-        >
-          <v-list-item>
-            <v-list-item-title>Foo</v-list-item-title>
-          </v-list-item>
-
-          <v-list-item>
-            <v-list-item-title>Bar</v-list-item-title>
-          </v-list-item>
-
-          <v-list-item>
-            <v-list-item-title>Fizz</v-list-item-title>
-          </v-list-item>
-
-          <v-list-item>
-            <v-list-item-title>Buzz</v-list-item-title>
+    <v-navigation-drawer v-model="drawer" absolute app style="padding: 20px">
+      <v-list dense>
+        <v-list-item-group v-model="selectedItem" color="primary">
+          <v-subheader>{{ userId }} Groups</v-subheader>
+          <v-list-item
+            v-for="(group, idx) in userGroupList"
+            :key="idx"
+            style="padding-top: 10px"
+          >
+            <v-list-item-title @click="goToGroupMain(group, idx)">{{
+              group["team"].name
+            }}</v-list-item-title>
           </v-list-item>
         </v-list-item-group>
       </v-list>
@@ -40,44 +32,6 @@
         <router-link to="/example">example</router-link>
       </nav>
 
-      <!-- <div style="position: absolute; position: fixed; top: 10px; right: 50px">
-        <v-menu open-on-hover top offset-x>
-          <template v-slot:activator="{ on, attrs }">
-            <v-btn class="mx-2" fab small color="pink" v-on="on">
-              <v-icon> mdi-account </v-icon>
-            </v-btn>
-          </template>
-
-          <v-list>
-            <v-list-item v-for="(item, index) in groupList" :key="index">
-              <v-list-item-title>{{ item }}</v-list-item-title>
-            </v-list-item>
-          </v-list>
-        </v-menu>
-        <v-dialog v-model="dialog" width="500">
-          <template v-slot:activator="{ on, attrs }">
-            <v-btn color="red lighten-2" dark v-bind="attrs" v-on="on">
-              초대하기
-            </v-btn>
-          </template>
-
-          <v-card>
-            <v-card-title class="text-h5 grey lighten-2">
-              선택하시오
-            </v-card-title>
-
-            <v-card-text> 초대링크 </v-card-text>
-
-            <v-divider></v-divider>
-
-            <v-card-actions>
-              <v-spacer></v-spacer>
-              <v-btn color="primary" text @click="dialog = false"> 닫기 </v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-dialog>
-        <v-btn @click="logout">로그아웃</v-btn>
-      </div> -->
       <div style="position: absolute; position: fixed; top: 10px; right: 50px">
         <v-btn @click="logout">로그아웃</v-btn>
       </div>
@@ -89,13 +43,18 @@
 
 <script>
 import { mapState } from "vuex";
+import axios from "axios";
+import { BASE_URL } from "@/api";
 export default {
   data() {
     return {
+      selectedItem: localStorage.getItem("selectedItem"),
+      userId: localStorage.getItem("userId"),
       dialog: false,
       showAppBar: true,
       drawer: false,
       group: null,
+      userGroupList: [],
     };
   },
   methods: {
@@ -104,6 +63,31 @@ export default {
       localStorage.setItem("token", "");
       localStorage.setItem("userId", "");
       this.$router.push({ path: "/login" });
+    },
+    async getUserGroupList() {
+      try {
+        const res = await axios.get(`${BASE_URL}/user/teamList`, {
+          headers: {
+            "X-AUTH-TOKEN": localStorage.getItem("token"),
+          },
+        });
+        this.userGroupList = res.data["result"]["team"];
+        console.log("dreawer:", res.data["result"]["team"]);
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    goToGroupMain(team, idx) {
+      // console.log("idx", idx);
+      localStorage.setItem("selectedItem", idx);
+      localStorage.setItem("teamName", team["team"].name);
+      localStorage.setItem("teamCode", team["team"].code);
+      localStorage.setItem("teamDesc", team["team"].description);
+      localStorage.setItem("teamProfileImg", team["team"].imgUrl);
+      localStorage.setItem("teamTopImg", team["team"].topImgUrl);
+      localStorage.setItem("teamUserCount", team.countUser);
+      //새로고침해줌
+      this.$router.go();
     },
   },
   computed: {
@@ -122,7 +106,11 @@ export default {
         this.$route.name == "myGroups" ||
         this.$route.name == "createGroup"
       ) {
+        this.drawer = false;
         this.showAppBar = false;
+      } else if (this.$route.name == "main") {
+        this.getUserGroupList();
+        this.showAppBar = true;
       } else {
         this.showAppBar = true;
       }
@@ -130,8 +118,12 @@ export default {
     group() {
       this.drawer = false;
     },
+    // drawer() {
+    //   this.getUserGroupList();
+    // },
   },
   mounted() {
+    console.log("selectedidx", this.selectedItem);
     if (
       this.$route.name == "login" ||
       this.$route.name == "intro" ||
@@ -139,10 +131,14 @@ export default {
       this.$route.name == "createGroup"
     ) {
       this.showAppBar = false;
+    } else if (this.$route.name == "main") {
+      this.showAppBar = true;
+      this.getUserGroupList();
     } else {
       this.showAppBar = true;
     }
     console.log("router: ", this.routerName);
+    this.getUserGroupList();
   },
 };
 </script>
