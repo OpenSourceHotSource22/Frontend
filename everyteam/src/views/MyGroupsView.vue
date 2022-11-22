@@ -17,27 +17,17 @@
                 <v-btn @click="joinGroupBtn = !joinGroupBtn"> 그룹 가입 </v-btn>
               </v-card-title>
 
-              <div
-                v-show="joinGroupBtn"
-                style="margin-top: 30px; margin-bottom: 30px"
-                class="green lighten-2"
-              >
+              <div v-show="joinGroupBtn" style="margin-top: 30px; margin-bottom: 30px" class="green lighten-2">
                 그룹코드를 입력하세요
                 <v-row>
                   <v-col cols="9">
                     <div class="ma-auto" style="max-width: 300px">
-                      <v-otp-input
-                        v-model="teamCode"
-                        length="6"
-                        dark
-                      ></v-otp-input>
+                      <v-otp-input v-model="teamCode" length="6" dark></v-otp-input>
                     </div>
                   </v-col>
 
                   <v-col cols="2" class="my-3">
-                    <v-btn block :disabled="!isActive" @click="joinGroup"
-                      >Ready</v-btn
-                    >
+                    <v-btn block :disabled="!isActive" @click="joinGroup">Ready</v-btn>
                   </v-col>
                 </v-row>
               </div>
@@ -57,23 +47,9 @@
         <!-- user team list -->
         <div class="container">
           <v-row>
-            <v-col
-              cols="12"
-              md="4"
-              sm="4"
-              v-for="(group, idx) in userGroups"
-              :key="idx"
-            >
-              <v-card
-                class="mx-auto"
-                max-width="344"
-                @click="teamCardClick(group)"
-              >
-                <v-img
-                  v-if="group['team'].imgUrl != null"
-                  :src="`${group['team'].imgUrl}`"
-                  height="250px"
-                ></v-img>
+            <v-col cols="12" md="4" sm="4" v-for="(group, idx) in userGroups" :key="idx">
+              <v-card class="mx-auto" max-width="344" @click="teamCardClick(group)">
+                <v-img v-if="group['team'].imgUrl != null" :src="`${group['team'].imgUrl}`" height="250px"></v-img>
                 <v-img v-else src="@/assets/groupProfile.png"> </v-img>
 
                 <v-card-title> {{ group["team"].name }} </v-card-title>
@@ -245,6 +221,7 @@ export default {
 .myGroups {
   margin: 30px;
 }
+
 .container {
   padding: 30px;
 }
