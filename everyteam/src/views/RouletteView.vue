@@ -9,21 +9,21 @@
           <div class="roulette" v-bind:style="rouletteStyle">
             <!--값 영역-->
             <div class="item-wrapper">
-              <div class="item" v-for="(item, index) in items" v-bind:style="itemStyles[index]">
+              <div class="item" v-for="(item, index) in teamUsers" v-bind:style="itemStyles[index]">
                 {{ item.value }}
               </div>
             </div>
 
             <!--선 영역-->
             <div class="line-wrapper">
-              <div class="line" v-for="(item, index) in items" v-bind:style="lineStyles[index]"></div>
+              <div class="line" v-for="(item, index) in teamUsers" v-bind:style="lineStyles[index]"></div>
             </div>
           </div>
         </div>
         <v-btn class="play-btn my-5 mx-5" v-on:click="play" v-bind:disabled="buttonDisable">
           돌려돌려 돌림판~
         </v-btn>
-        <v-btn color="success">Success</v-btn>
+        <v-btn color="success" @click="">Submit</v-btn>
         <hr />
         <ul>
           <li v-for="(h, idx) in history">{{ h }}</li>
@@ -36,10 +36,12 @@
 <script>
 import { BASE_URL } from "@/api";
 import axios from "axios";
+import { mapState } from "vuex";
 
 export default {
   data() {
     return {
+
       items: [
         { value: "100점" },
         { value: "200점" },
@@ -52,13 +54,16 @@ export default {
       count: 0,
       history: [],
       buttonDisable: false,
-      teamcode: "jNgxNI",
+      teamcode: "",
     };
   },
 
   computed: {
+    ...mapState("rolesStore", {
+      teamUsers: "teamUsers"
+    }),
     segment() {
-      return 360 / this.items.length;
+      return 360 / this.teamUsers.length;
     },
     offset() {
       return this.segment / 2;
@@ -77,25 +82,26 @@ export default {
       };
     },
     currentItem() {
-      return this.items[this.current];
+      return this.teamUsers[this.current];
     },
   },
   methods: {
-    async getGroupList() {
-      console.log("getgrouplist");
+    async getTeamUserList() {
       try {
-        const res = await axios.get(
-          `http://everyteam.shop/role/userList`,
-          {
-            teamCode: this.teamcode,
+        const res = await axios.get(`${BASE_URL}/role/userList`, {
+          params: {
+            teamCode: localStorage.getItem("teamCode"),
           },
-          {
-            headers: {
-              "X-AUTH-TOKEN": localStorage.getItem("token"),
-            },
-          }
-        );
-        console.log("res:", res);
+          headers: {
+            "X-AUTH-TOKEN": localStorage.getItem("token"),
+          },
+        });
+        console.log("팀 유저 불러오기 성공!!");
+        console.log("teamUserList:", res.data["result"]);
+        for (let i = 0; i < res.data["result"].length; i++) {
+          this.teamUsers[i] = { value: String(res.data["result"][i]) };
+          console.log(this.teamUsers[i]);
+        }
       } catch (error) {
         console.log(error);
       }
@@ -103,7 +109,7 @@ export default {
     play() {
       this.buttonDisable = true;
       this.count++;
-      this.current = Math.floor(Math.random() * this.items.length);
+      this.current = Math.floor(Math.random() * this.teamUsers.length);
       this.history.push(this.currentItem.value);
       if (count >= 1) {
         this.buttonDisable = false;
@@ -116,8 +122,9 @@ export default {
   },
   mounted() {
     //itemStyles정의
-    this.getGroupList();
-    this.items.forEach((el, idx) => {
+    console.log("store에 저장된 TEAMUSERS", this.teamUsers)
+    this.getTeamUserList();
+    this.teamUsers.forEach((el, idx) => {
       this.itemStyles.push({
         transform: "rotate(" + this.segment * idx + "deg)",
       });
