@@ -23,7 +23,7 @@
         <v-btn class="play-btn my-5 mx-5" v-on:click="play" v-bind:disabled="buttonDisable">
           돌려돌려 돌림판~
         </v-btn>
-        <v-btn color="success" @click="">Submit</v-btn>
+        <v-btn color="success" @click="submit" v-bind:disabled="buttonDisable2">Submit</v-btn>
         <hr />
         <ul>
           <li v-for="(h, idx) in history">{{ h }}</li>
@@ -41,19 +41,13 @@ import { mapState } from "vuex";
 export default {
   data() {
     return {
-
-      items: [
-        { value: "100점" },
-        { value: "200점" },
-        { value: "-500점" },
-        { value: "0점" },
-      ],
       itemStyles: [],
       lineStyles: [],
       current: 0, //실제 가리키는 데이터
       count: 0,
       history: [],
       buttonDisable: false,
+      buttonDisable2: true,
       teamcode: "",
     };
   },
@@ -86,6 +80,33 @@ export default {
     },
   },
   methods: {
+    async submit() {
+      let vari = this.history[0];
+      console.log(vari);
+      axios
+        .post(
+          `${BASE_URL}/role/roulette`,
+          {
+            teamCode: localStorage.getItem("teamCode"),
+            title: "roulette test",
+            userId: vari,
+          },
+          {
+            headers: {
+              "X-AUTH-TOKEN": localStorage.getItem("token"),
+            },
+          }
+        )
+        .then(function (res) {
+          console.log("post 완료", res.data);
+        })
+        .catch(function (err) {
+          console.log(err);
+        });
+      this.$router.push({
+        path: "/main",
+      });
+    },
     async getTeamUserList() {
       try {
         const res = await axios.get(`${BASE_URL}/role/userList`, {
@@ -108,11 +129,12 @@ export default {
     },
     play() {
       this.buttonDisable = true;
+      this.buttonDisable2 = false;
       this.count++;
       this.current = Math.floor(Math.random() * this.teamUsers.length);
       this.history.push(this.currentItem.value);
-      if (count >= 1) {
-        this.buttonDisable = false;
+      if (this.count >= 1) {
+        this.buttonDisable = true;
         return;
       }
     },
@@ -156,7 +178,6 @@ body {
   font-size: 30px;
   margin-left: auto;
   margin-right: auto;
-  background: #ffeaa7;
 }
 
 .roulette-outer>.roulette {
