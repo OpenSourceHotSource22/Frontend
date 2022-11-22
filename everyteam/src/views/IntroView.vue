@@ -14,5 +14,12 @@ export default {
   components: {
     HelloWorld,
   },
+  mounted() {
+    if (localStorage.getItem("token")) {
+      this.$router.push({ path: "/mygroups" });
+    } else {
+      this.$router.push({ path: "/login" });
+    }
+  },
 };
 </script>
