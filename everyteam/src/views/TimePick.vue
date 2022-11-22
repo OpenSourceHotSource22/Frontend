@@ -13,11 +13,11 @@
                        
                         <th v-for="day in date" :key="day.idx" :a="day">
                             <td>{{day.date}}</td>
-                            <drag-select attribute="item">
-                            <div class="timeBox" v-for="i in 18" :key="i" :item="TimeBox">
+                            
+                            <div class="timeBox" v-for="i in 18" :key="i">
                                 <TimeBox :userIdx="day.idx" :userTime="i+5" v-on:timeFromChild="ChildTimeReceived"/>
                             </div>
-                            </drag-select>
+                        
                         </th>
                     </table>
                 </v-row>
@@ -35,10 +35,10 @@
 import axios from "axios";
 import { BASE_URL } from "@/api";
 import TimeBox from './TimeBox.vue';
-import DragSelect from 'drag-select-vue';
+//import DragSelect from 'drag-select-vue';
 
 export default {
-    components: {TimeBox, DragSelect},
+    components: {TimeBox},
 
     data : () =>({
         meetCode:"",
@@ -118,10 +118,7 @@ export default {
            
             
             this.$router.push({
-                path: "/WhenWeMeetResult",
-                name:"WhenWeMeetResult",
-                params:{meetCode:this.meetCode} 
-            });
+                path: "/WhenWeMeetResult",});
         },
         ChildTimeReceived(usertime,useridx){
             console.log("자식으로부터 받음",usertime,useridx)
@@ -178,44 +175,17 @@ export default {
             }
         
        },
-       async visited(){
-        //meetCode의 모든 유저를 가져와 첫번째 방문이면 continue, 두 번째 방문이면 결과창으로 이동
-            try{
-                const res = await axios.post(`${BASE_URL}/meet/getResultTime`,
-                {
-                    "teamCode" : localStorage.getItem("teamCode"),
-                    "meetCode" : this.meetCode,
-                },
-                {
-                    headers:
-                    {
-                        "X-AUTH-TOKEN": localStorage.getItem("token"),
-                    }
-                });
-
-                for(var i in res.data.result.meetList){
-                    if(localStorage.getItem("userId") ==  res.data.result.meetList[i].userId){
-                        console.log("두번째 방문이므로 결과창으로 이동");
-                        this.$router.push({ path: "/WhenWeMeetResult" });
-                        return;
-                    }
-                }
-                console.log("첫번째 방문했으므로 시간체크");
-
-            }catch(err){
-                console.log(err);
-            }
-       },
+       
        goPrev(){
-            this.$router.push({path:"/WhenWeMeetResult", name:"WhenWeMeetResult", params:{meetCode:this.meetCode}})
+            this.$router.push({path:"/WhenWeMeetResult"})
        }
        
     },
     beforeMount(){
         console.log("마운팅 전 실행");
         //this.visited();
-        console.log("meetCODE!!" , this.$route.params.meetCode)
-        this.meetCode = this.$route.params.meetCode;
+       
+        this.meetCode = localStorage.getItem("meetCode");
         
     },
     mounted(){//pageload 전에 실행

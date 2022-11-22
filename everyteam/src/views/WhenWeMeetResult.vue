@@ -121,6 +121,7 @@ export default{
             })
 
             console.log("res:",res.data);
+            try{
             for(var i in res.data.result.date){
                 var timeSplit = res.data.result.date[i].time.split(',');
                 console.log("timesplit : ", timeSplit);
@@ -134,14 +135,29 @@ export default{
                 this.boxColor.push({time:this.resultColorArray(timeSplit) });
                 console.log("boxColor: ", this.boxColor);
             }
+            }catch(err){
+                console.log(err);
+                for(var i in res.data.result.date){
+                var timeSplit = 0;
+                console.log("timesplit : ", timeSplit);
+                this.userTime.push({
+                    date : res.data.result.date[i].date,
+                    time : timeSplit,
+                    idx : i,
+                });
+                //선택한 시간의 색을 결정하기 우히ㅐ
+                
+                this.boxColor.push({time:this.resultColorArray(timeSplit) });
+                console.log("boxColor: ", this.boxColor);}
+            }
 
             
 
 
         },
        async getAllTime(){
-
-            try{
+       
+            try{ 
                 const res = await axios.post(`${BASE_URL}/meet/getResultTime`,
                 {
                     "teamCode" : localStorage.getItem("teamCode"),
@@ -157,22 +173,23 @@ export default{
                 if(this.userId == res.data.result.post.userId){
                     this.isShow = true;
                 }
-                console.log("팀 합친 color : ", this.teamTime);
+                //console.log("팀 합친 color : ", this.teamTime);
                 //어떤 유저들이 시간을 체크했는지 유저이름 저장하기
-                for(var i in res.data.result.meetList){
-                    this.completeUser.push(res.data.result.meetList[i].userId);
+                for(var i in res.data.result.meetTime){
+                    this.completeUser.push(res.data.result.meetTime[i].userId);
                 }
 
                 console.log("모든 유저 정보 가져오기 성공!",res.data);
-
-                for(var j =0;j< res.data.result.meetList[0].meet.length; j++){
+               // console.log("날짜 길이",res.data.result.meetTime[0].meet.length)
+                for(var j =0;j< res.data.result.meetTime[0].meet.length; j++){
                     var allTime="";
                     console.log("몇번째 날짜:",j);
-                    for(var i in res.data.result.meetList)
-                    {   console.log("몇번재 유저:",i);
-                        allTime+=res.data.result.meetList[i].meet[j].time
-                        var timeSplit = allTime.split(',');
-                    }
+                    for(var i in res.data.result.meetTime)
+                    {   console.log("몇번재 유저:",i);  
+                        allTime+=res.data.result.meetTime[i].meet[j].time;
+                        allTime+=',';
+                    }var timeSplit = allTime.split(',');
+                    console.log(j,"번째 날 유저들의 날짜 합친것 : ",timeSplit);
                     this.teamTime.push({time:this.resultColorArray(timeSplit)});
                 }
                 
@@ -215,7 +232,7 @@ export default{
             return forBoxColor;
         },
         goPrev(){
-             this.$router.push({ path: "/timePick", name:"timePick", params:{meetCode:this.meetCode} });
+             this.$router.push({ path: "/timePick"});
         },
        async submit(){
             //input 서버에 저장, 메인 게시물에 보여주기
@@ -247,7 +264,9 @@ export default{
         }
     },
     beforeMount(){
-        this.meetCode = this.$route.params.meetCode;
+        
+       // localStorage.setItem("meetCode",this.$route.params.meetCode);
+        this.meetCode = localStorage.getItem("meetCode");
     },
     mounted(){
         
