@@ -1,6 +1,6 @@
 <template>
     <div class="time">
-        <div id="resulttimebox" :style="{ width: width + 'px', height: height + 'px',background:bColor }" ></div>
+        <div id="resulttimebox" :style="{ width: width + 'px', height: height + 'px',background:bColor }" @click="whoSelect" ></div>
     </div>
 </template>
 
@@ -17,10 +17,15 @@ export default{
 
   props:{
     Color:{},
+    name:{},
   },
 
   methods:{
-
+    whoSelect(){
+      console.log("child:",this.name);
+      this.$emit("whoFromChild",this.name);
+    },
+    
   },
 
   computed:{
