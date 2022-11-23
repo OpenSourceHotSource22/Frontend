@@ -1,18 +1,19 @@
 <template>
     <v-app>
         <v-main>
-            <div class="TimePick mt-8">
+            <div class="TimePick container" style="overflow:auto">
                 <v-row justify="space-around">
                     <table>
                         <th style="font-size:13.4px;">
                             <td>시간</td>
-                            <div class="timeBox" v-for="t in time" :key="t.name">
-                                <tr>{{t.name}}</tr>
+                            <div class="timeBox" style="font-size:9px; width:65px; height:25px; text-align:right"
+                             v-for="t in time" :key="t.name">
+                                {{t.name}}
                             </div>
                         </th>
                        
-                        <th v-for="day in date" :key="day.idx" :a="day">
-                            <td>{{day.date}}</td>
+                        <th  v-for="day in date" :key="day.idx" :a="day" >
+                            <td style="width:65px; height:25px;">{{day.date}}</td>
                             
                             <div class="timeBox" v-for="i in 18" :key="i">
                                 <TimeBox :userIdx="day.idx" :userTime="i+5" v-on:timeFromChild="ChildTimeReceived"/>
@@ -24,7 +25,7 @@
 
                 <v-row  justify="space-around" class="mt-8">
                     <v-col align="right" cols="7"> <v-btn  rounded color="primary" width="200px" @click="btnSubmit">선택완료</v-btn></v-col>
-                    <v-col cols="5"> <v-btn color="primary" @click="goPrev" text> <v-icon>mdi-arrow-left</v-icon>결과창으로 돌아가기</v-btn></v-col>
+                    <v-col cols="5"> <v-btn color="primary" @click="goPrev" text> <v-icon>mdi-arrow-left</v-icon>결과창으로 가기</v-btn></v-col>
                 </v-row>
             </div>
         </v-main>
@@ -48,6 +49,7 @@ export default {
         times:[], //선택한 시간들 넣는 배열
         date :[], //받아온 날
         time :[
+            {name:'time'},
             {name:'6:00 AM'},
             {name:'7:00 AM'},
             {name:'8:00 AM'},
