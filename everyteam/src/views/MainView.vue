@@ -102,11 +102,14 @@
                 </template>
 
                 <v-card>
-                  <v-card-title class="text-h5 grey lighten-2">
-                    teamCode
-                  </v-card-title>
+                  <v-card-title class="text-h5"> teamCode </v-card-title>
 
-                  <v-card-text> {{ teamCode }} </v-card-text>
+                  <v-card-text>
+                    {{ teamCode }}
+                    <v-icon @click="copy(teamCode)"
+                      >mdi-content-copy</v-icon
+                    ></v-card-text
+                  >
 
                   <v-divider></v-divider>
 
@@ -443,6 +446,12 @@ export default {
     }),
   },
   methods: {
+    copy(copyText) {
+      navigator.clipboard.writeText(copyText).then(function () {
+        alert("클립보드에 복사되었습니다");
+      });
+      this.inviteDialog = false;
+    },
     createdAtSplit(date) {
       return date.split(" ")[0];
     },
@@ -470,7 +479,7 @@ export default {
         return arr;
       } else if (post["category"] == "ROLE_ROULETTE") {
         //룰렛
-        return post["content"];
+        return "당첨자 : " + post["content"];
       }
     },
     meetContent(post) {
