@@ -132,21 +132,39 @@
                     v-on="on"
                     elevation="0"
                     class="mt-5"
-                    style="color: aliceblue; font-size: 25px"
+                    style="color: aliceblue"
                   >
-                    +
+                    작성하기
                   </v-btn>
                 </template>
 
                 <v-card>
-                  <v-card-title class="text-h5 grey lighten-2">
-                    추가하기
-                  </v-card-title>
+                  <v-card-title class="text-h5"> 추가하기 </v-card-title>
 
                   <v-card-text>
-                    <router-link to="/post">post</router-link>|
-                    <router-link to="/roles">Roles</router-link>|
-                    <router-link to="/whenWeMeet">whenwemeet</router-link>|
+                    <v-row class="ma-10" style="justify-content: space-between">
+                      <v-btn
+                        rounded
+                        large
+                        color="primary"
+                        @click="$router.push({ path: '/post' })"
+                        >post</v-btn
+                      >
+                      <v-btn
+                        rounded
+                        large
+                        color="primary"
+                        @click="$router.push({ path: '/whenWeMeet' })"
+                        >meet</v-btn
+                      >
+                      <v-btn
+                        rounded
+                        large
+                        color="primary"
+                        @click="$router.push({ path: '/roles' })"
+                        >role</v-btn
+                      >
+                    </v-row>
                   </v-card-text>
 
                   <v-divider></v-divider>

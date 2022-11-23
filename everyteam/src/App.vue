@@ -21,10 +21,10 @@
         </v-list-item-group>
       </v-list>
     </v-navigation-drawer>
-    <v-app-bar app color="blue" flat v-if="showAppBar">
-      <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
+    <v-app-bar app v-if="showAppBar">
+      <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
 
-      everyTeam
+      <p @click="$router.push({ path: '/main' })">everyTeam</p>
       <nav>
         <router-link to="/">Intro</router-link> |
         <router-link to="/login">Login</router-link>|
@@ -84,6 +84,7 @@ export default {
     },
     goToGroupMain(team, idx) {
       // console.log("idx", idx);
+      this.$router.push({ path: "/main" });
       localStorage.setItem("selectedItem", idx);
       localStorage.setItem("teamName", team["team"].name);
       localStorage.setItem("teamCode", team["team"].code);
@@ -120,6 +121,7 @@ export default {
         this.getUserGroupList();
         this.showAppBar = true;
       } else {
+        this.getUserGroupList();
         this.showAppBar = true;
       }
     },
@@ -143,6 +145,7 @@ export default {
       this.showAppBar = true;
       this.getUserGroupList();
     } else {
+      this.getUserGroupList();
       this.showAppBar = true;
     }
     console.log("router: ", this.routerName);
