@@ -13,7 +13,7 @@
               group["team"].name
             }}</v-list-item-title>
           </v-list-item>
-          <v-list-item style="background-color: aquamarine">
+          <v-list-item style="background-color: lightblue; margin-top: 10px">
             <v-list-item-title @click="goCreateGroupPage">
               + 팀 생성하기
             </v-list-item-title>
@@ -25,7 +25,7 @@
       <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
 
       <p @click="$router.push({ path: '/main' })">everyTeam</p>
-      <nav>
+      <!-- <nav>
         <router-link to="/">Intro</router-link> |
         <router-link to="/login">Login</router-link>|
         <router-link to="/mygroups">mygroups</router-link> |
@@ -35,7 +35,7 @@
         <router-link to="/roles">Roles</router-link>|
         <router-link to="/whenWeMeet">whenwemeet</router-link>|
         <router-link to="/example">example</router-link>
-      </nav>
+      </nav> -->
 
       <div style="position: absolute; position: fixed; top: 10px; right: 50px">
         <v-btn @click="logout">로그아웃</v-btn>
