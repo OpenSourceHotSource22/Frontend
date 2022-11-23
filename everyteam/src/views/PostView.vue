@@ -17,8 +17,7 @@
               clearable
               outlined
               label="Text"
-              rows="20"
-              row-height="300"
+              rows="10"
               shaped
             ></v-textarea>
           </v-container>
