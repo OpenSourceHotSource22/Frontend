@@ -66,12 +66,12 @@
               {{ teamName }}
             </v-card-title>
             <v-card-text> {{ teamDesc }} </v-card-text>
-            <v-card-text> {{ teamUserCount }} 명 </v-card-text>
-            <v-list-item-content class="mx-3">
+            <v-card-text>
               <!-- 그룹 list -->
               <v-menu open-on-hover top offset-x>
                 <template v-slot:activator="{ on, attrs }">
-                  <v-btn color="#a8dba8" v-on="on" elevation="0">
+                  <v-btn color="#a8dba8" v-on="on" elevation="0" fab>
+                    {{ teamUserCount }}
                     <v-icon> mdi-account </v-icon>
                   </v-btn>
                 </template>
@@ -84,6 +84,8 @@
                   </v-list-item>
                 </v-list>
               </v-menu>
+            </v-card-text>
+            <v-list-item-content class="mx-3">
               <!-- 초대하기 btn -->
               <v-dialog v-model="inviteDialog" width="500">
                 <template v-slot:activator="{ on, attrs }">
@@ -187,16 +189,34 @@
                       {{ post["title"] }}
                     </v-list-item-title>
 
-                    <v-list-item-subtitle>{{
-                      createdAtSplit(post["createdAt"])
-                    }}</v-list-item-subtitle>
-                    <v-list-item-subtitle>{{
-                      post["category"]
-                    }}</v-list-item-subtitle>
+                    <v-list-item-subtitle>
+                      {{ createdAtSplit(post["createdAt"]) }}
+                    </v-list-item-subtitle>
+
+                    <v-row>
+                      <v-col md="6" offset-md="3">
+                        <v-list-item-subtitle
+                          style="
+                            background-color: blanchedalmond;
+                            border-radius: 5px;
+                          "
+                        >
+                          {{ post["category"] }}
+                        </v-list-item-subtitle>
+                      </v-col>
+                    </v-row>
                   </v-list-item-content>
                 </v-list-item>
                 <v-card-text>
-                  <v-card-text v-if="post['category'] == 'ROLE'">
+                  <v-list-item
+                    v-if="post['category'] == `ROLE`"
+                    v-for="role in roleContent(post)"
+                  >
+                    <v-list-item-subtitle v-for="result in role">{{
+                      result
+                    }}</v-list-item-subtitle>
+                  </v-list-item>
+                  <v-card-text v-if="post['category'] == `ROLE_ROULETTE`">
                     {{ roleContent(post) }}
                   </v-card-text>
                   <v-card-text v-else-if="post['category'] == 'MEET'">
@@ -249,11 +269,15 @@
                       </v-card-text>
                       <v-list-item class="grow">
                         <v-row justify="end">
-                          <span class="subheading">
-                            <v-list-item-avatar color="grey lighten-3">
-                              {{ post["userId"] }}
-                            </v-list-item-avatar></span
+                          <div
+                            style="
+                              background-color: lightcyan;
+                              padding: 10px;
+                              border-radius: 50%;
+                            "
                           >
+                            {{ post["userId"] }}
+                          </div>
                         </v-row>
                       </v-list-item>
                     </v-card-text>
@@ -292,11 +316,15 @@
                       </v-card-text>
                       <v-list-item class="grow">
                         <v-row justify="end">
-                          <span class="subheading">
-                            <v-list-item-avatar color="grey lighten-3">
-                              {{ post["userId"] }}
-                            </v-list-item-avatar></span
+                          <div
+                            style="
+                              background-color: lightcyan;
+                              padding: 10px;
+                              border-radius: 50%;
+                            "
                           >
+                            {{ post["userId"] }}
+                          </div>
                         </v-row>
                       </v-list-item>
                     </v-card-text>
@@ -324,19 +352,33 @@
                       </v-list-item-content>
                     </v-list-item>
                     <v-card-text>
-                      <v-card-text>
+                      <!-- <v-card-text>
+                        {{ roleContent(post) }}
+                      </v-card-text> -->
+                      <v-list-item
+                        v-if="post['category'] == `ROLE`"
+                        v-for="role in roleContent(post)"
+                      >
+                        <v-list-item-subtitle v-for="result in role">{{
+                          result
+                        }}</v-list-item-subtitle>
+                      </v-list-item>
+
+                      <v-card-text v-if="post['category'] == `ROLE_ROULETTE`">
                         {{ roleContent(post) }}
                       </v-card-text>
-                      <!-- <v-card-text>
-                        {{ post["roles"] }}
-                      </v-card-text> -->
+
                       <v-list-item class="grow">
                         <v-row justify="end">
-                          <span class="subheading">
-                            <v-list-item-avatar color="grey lighten-3">
-                              {{ post["userId"] }}
-                            </v-list-item-avatar></span
+                          <div
+                            style="
+                              background-color: lightcyan;
+                              padding: 10px;
+                              border-radius: 50%;
+                            "
                           >
+                            {{ post["userId"] }}
+                          </div>
                         </v-row>
                       </v-list-item>
                     </v-card-text>
@@ -408,6 +450,15 @@ export default {
       if (post["category"] == "ROLE") {
         // console.log(Object.keys(post["roles"]).length);
         var str = "";
+        var arr = [];
+        var prettyArr = [];
+        for (var i = 0; i < Object.keys(post["roles"]).length; i++) {
+          prettyArr.push("|");
+        }
+        arr.push(Object.keys(post["roles"]));
+        arr.push(prettyArr);
+        arr.push(Object.values(post["roles"]));
+        // console.log("arr", arr);
         //사다리타기
         for (var i = 0; i < Object.keys(post["roles"]).length; i++) {
           str +=
@@ -416,7 +467,7 @@ export default {
             Object.values(post["roles"])[i] +
             "/";
         }
-        return str;
+        return arr;
       } else if (post["category"] == "ROLE_ROULETTE") {
         //룰렛
         return post["content"];
