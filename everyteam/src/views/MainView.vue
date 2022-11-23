@@ -102,11 +102,14 @@
                 </template>
 
                 <v-card>
-                  <v-card-title class="text-h5 grey lighten-2">
-                    teamCode
-                  </v-card-title>
+                  <v-card-title class="text-h5"> teamCode </v-card-title>
 
-                  <v-card-text> {{ teamCode }} </v-card-text>
+                  <v-card-text>
+                    {{ teamCode }}
+                    <v-icon @click="copy(teamCode)"
+                      >mdi-content-copy</v-icon
+                    ></v-card-text
+                  >
 
                   <v-divider></v-divider>
 
@@ -129,21 +132,39 @@
                     v-on="on"
                     elevation="0"
                     class="mt-5"
-                    style="color: aliceblue; font-size: 25px"
+                    style="color: aliceblue"
                   >
-                    +
+                    작성하기
                   </v-btn>
                 </template>
 
                 <v-card>
-                  <v-card-title class="text-h5 grey lighten-2">
-                    추가하기
-                  </v-card-title>
+                  <v-card-title class="text-h5"> 추가하기 </v-card-title>
 
                   <v-card-text>
-                    <router-link to="/post">post</router-link>|
-                    <router-link to="/roles">Roles</router-link>|
-                    <router-link to="/whenWeMeet">whenwemeet</router-link>|
+                    <v-row class="ma-10" style="justify-content: space-between">
+                      <v-btn
+                        rounded
+                        large
+                        color="primary"
+                        @click="$router.push({ path: '/post' })"
+                        >post</v-btn
+                      >
+                      <v-btn
+                        rounded
+                        large
+                        color="primary"
+                        @click="$router.push({ path: '/whenWeMeet' })"
+                        >meet</v-btn
+                      >
+                      <v-btn
+                        rounded
+                        large
+                        color="primary"
+                        @click="$router.push({ path: '/roles' })"
+                        >role</v-btn
+                      >
+                    </v-row>
                   </v-card-text>
 
                   <v-divider></v-divider>
@@ -443,6 +464,12 @@ export default {
     }),
   },
   methods: {
+    copy(copyText) {
+      navigator.clipboard.writeText(copyText).then(function () {
+        alert("클립보드에 복사되었습니다");
+      });
+      this.inviteDialog = false;
+    },
     createdAtSplit(date) {
       return date.split(" ")[0];
     },
@@ -470,7 +497,7 @@ export default {
         return arr;
       } else if (post["category"] == "ROLE_ROULETTE") {
         //룰렛
-        return post["content"];
+        return "당첨자 : " + post["content"];
       }
     },
     meetContent(post) {
