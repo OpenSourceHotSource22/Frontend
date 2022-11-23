@@ -1,10 +1,27 @@
 <template>
   <v-app>
     <v-main>
-      <v-container class="roles my-5">
+      <v-container class="roles my-3">
         <h1>역할고르기</h1>
-        <v-btn class="mx-5 my-5" @click="goToRoulette"> 룰렛 </v-btn>
-        <v-btn class="my-5" @click="goToGhostLeg"> 사다리타기 </v-btn>
+        <v-row class="my-5">
+          <v-col>
+            <v-card class="my-5" @click="goToRoulette" style="height:550px; border-radius: 10%;">
+
+              <v-img src="../assets/roulettePicture.png" max-height="550">
+                <v-card-text style="position:absolute; top:50%; font-weight: bold; font-size: large;"></v-card-text>
+              </v-img>
+            </v-card>
+          </v-col>
+          <v-col>
+            <v-card class="my-5" @click="goToGhostLeg" style="height:481px; border-radius:10%">
+              <v-img src="../assets/loveLine.png" contain>
+                <v-card-text style="position:absolute; top:50%; font-weight: bold; font-size: large;">
+                </v-card-text>
+              </v-img>
+
+            </v-card>
+          </v-col>
+        </v-row>
       </v-container>
     </v-main>
   </v-app>
