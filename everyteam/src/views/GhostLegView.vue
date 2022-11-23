@@ -3,7 +3,7 @@
   <v-app>
     <v-main>
       <div class="roles">
-        <h1>사다리타기</h1>
+        <h1>사랑의 작대기</h1>
         <v-btn @click="goRolsPage">선택메뉴 가기 </v-btn>
       </div>
       <v-card class="container">
@@ -33,7 +33,7 @@
             </div>
           </v-row>
         </div>
-        <v-btn @click="confirm" class="check">확인하기</v-btn>
+        <v-btn @click="confirm" class="check" v-bind:disabled="buttonDisable">확인하기</v-btn>
         <v-btn color="success" @click="submit" v-bind:disabled="isStart2">Submit</v-btn>
       </v-card>
     </v-main>
@@ -47,6 +47,7 @@ import { mapState } from "vuex";
 export default {
   data() {
     return {
+      buttonDisable: false,
       datas: [
 
       ],
@@ -74,7 +75,7 @@ export default {
           `${BASE_URL}/role/create`,
           {
             teamCode: localStorage.getItem("teamCode"),
-            title: "role test",
+            title: "사랑의 작대기 결과",
             role: this.saved,
           },
           {
@@ -117,20 +118,21 @@ export default {
       for (var i = 0; i < this.count; i++) {
         this.datas[i] = i;
       }
-
+      this.buttonDisable = true;
       this.shuffle(this.datas);
       for (var i = 0; i < this.count; i++) {
         this.position[i] = document.getElementById(String(i + 1)).getBoundingClientRect();
       }
       const canvas = document.getElementById("canvas");
       const ctx = canvas.getContext("2d");
+
       ctx.beginPath();
       ctx.strokeStyle = "black";
       for (let i = 0; i < this.count; i++) {
         ctx.moveTo(this.position[i].x + 90, this.position[i].y - 150);
         ctx.lineTo(this.position[this.datas[i]].x + 90, this.position[this.datas[i]].y + 200);
-        ctx.stroke();
       }
+      ctx.stroke();
       for (let i = 0; i < this.count; i++) {
         this.saved[i] = { user: String([this.textField[i]]), role: String(this.resultField[i]) };
       }
