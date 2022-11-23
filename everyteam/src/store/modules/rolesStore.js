@@ -1,17 +1,16 @@
-//성호 구현하시오
-
 const rolesStore = {
   namespaced: true,
   state: {
+    teamUsers: [],
     // userName: "지선",
   },
   //   getters: {
   //     getUserName: (state) => state.userName,
   //   },
   mutations: {
-    //   updateUserName(state, value) {
-    //     state.userName = value;
-    //   },
+    updateTeamUsers(state, value) {
+      state.teamUsers = value;
+    },
   },
   //   actions: {
   //     AC_USER_NAME: ({ commit }, payload) => {

@@ -70,6 +70,7 @@
                   :src="`${group['team'].imgUrl}`"
                   height="250px"
                 ></v-img>
+
                 <v-img v-else src="@/assets/groupProfile.png"> </v-img>
 
                 <v-card-title> {{ group["team"].name }} </v-card-title>
@@ -241,6 +242,7 @@ export default {
 .myGroups {
   margin: 30px;
 }
+
 .container {
   padding: 30px;
 }
