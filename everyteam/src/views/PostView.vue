@@ -2,12 +2,25 @@
   <v-app>
     <v-main>
       <div class="post">
-        <h1>post page</h1>
+        <h1 class="mt-10">post</h1>
 
         <template>
           <v-container fluid>
-            <v-text-field v-model="post_Title" outlined label="title" clearable></v-text-field>
-            <v-textarea v-model="post_Context" clearable outlined label="Text"></v-textarea>
+            <v-text-field
+              v-model="post_Title"
+              outlined
+              label="title"
+              clearable
+            ></v-text-field>
+            <v-textarea
+              v-model="post_Context"
+              clearable
+              outlined
+              label="Text"
+              rows="20"
+              row-height="300"
+              shaped
+            ></v-textarea>
           </v-container>
           <v-btn color="primary" @click="makePost">제출</v-btn>
         </template>
