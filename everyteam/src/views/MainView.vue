@@ -57,7 +57,7 @@
       <v-row>
         <!-- 그룹 정보 -->
         <v-col cols="2">
-          <v-card color="#FDFFAA" class="group rounded-lg mt-16" elevation="0">
+          <v-card color="#FDFFAA" class="group rounded-lg mt-6" elevation="0">
             <v-avatar size="100px" class="mt-4">
               <img alt="Avatar" :src="teamProfileImg" />
             </v-avatar>
@@ -544,7 +544,7 @@ export default {
         });
         console.log("팀 생성일 불러오기 성공");
         console.log("getTeamPostListdate:", res.data["result"]["postList"]);
-        this.TeamPostListDate = res.data["result"]["postList"];
+        this.TeamPostListDate = res.data["result"]["postList"].reverse();
         console.log("TeamPostListDate", this.TeamPostListDate[0]);
         //teamuserlist update
       } catch (error) {
@@ -566,9 +566,9 @@ export default {
         );
         console.log("팀 postlist 불러오기 성공");
         console.log("getTeamPostList:", res.data["result"]);
-        this.teamPostList = res.data["result"]["postList"]["post"];
-        this.teamMeetList = res.data["result"]["postList"]["meet"];
-        this.teamRoleList = res.data["result"]["postList"]["role"];
+        this.teamPostList = res.data["result"]["postList"]["post"].reverse();
+        this.teamMeetList = res.data["result"]["postList"]["meet"].reverse();
+        this.teamRoleList = res.data["result"]["postList"]["role"].reverse();
         //팀 상단 이미지 저장
         console.log("팀 상단 이미지", res.data["result"]["team"].topImgUrl);
         this.teamTopImg = res.data["result"]["team"].topImgUrl;
