@@ -2,7 +2,7 @@
   <v-app>
     <v-container>
       <v-flex>
-        <h1>GreateGroup</h1>
+        <h1>CreateGroup</h1>
         <v-col>
           <v-text-field
             v-model="groupName"
@@ -24,6 +24,7 @@
             solo
             label="그룹 설명"
             clearable
+            rows="10"
           ></v-textarea>
         </v-col>
         <v-col>
@@ -36,10 +37,10 @@
           <img class="img" :src="preview" />
         </v-col>
         <v-col>
-          <v-btn @click="createGroup">그룹생성하기</v-btn>
+          <v-btn @click="createGroup" color="blue">그룹생성하기</v-btn>
         </v-col>
         <v-col>
-          <v-btn @click="goMyGroupsPage" color="pink"> Mygroups </v-btn>
+          <v-btn @click="goMyGroupsPage">go Mygroups </v-btn>
         </v-col>
       </v-flex>
     </v-container>
