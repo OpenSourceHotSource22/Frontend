@@ -25,7 +25,9 @@
 
                 <v-row  justify="space-around" class="mt-8">
                     <v-col align="right" cols="7"> <v-btn  rounded color="primary" width="200px" @click="btnSubmit">선택완료</v-btn></v-col>
+
                     <v-col cols="5"> <v-btn color="primary" @click="goPrev" text> <v-icon>mdi-arrow-left</v-icon>결과창으로 가기</v-btn></v-col>
+
                 </v-row>
             </div>
         </v-main>

@@ -57,12 +57,12 @@
       <v-row>
         <!-- 그룹 정보 -->
         <v-col cols="2">
-          <v-card color="#FDFFAA" class="group rounded-lg" elevation="0">
-            <v-avatar size="100px">
+          <v-card color="#FDFFAA" class="group rounded-lg mt-16" elevation="0">
+            <v-avatar size="100px" class="mt-4">
               <img alt="Avatar" :src="teamProfileImg" />
             </v-avatar>
 
-            <v-card-title class="text-h5">
+            <v-card-title class="justify-center text-h4">
               {{ teamName }}
             </v-card-title>
             <v-card-text> {{ teamDesc }} </v-card-text>
@@ -157,8 +157,8 @@
             </v-list-item-content>
           </v-card>
         </v-col>
-        <!-- context -->
-        <v-col class="cardList">
+        <!-- context 생성일 -->
+        <v-col class="cardList" v-if="TeamPostListDate[0] != undefined">
           <!-- <v-select :items="items" label="Standard" v-model="select"></v-select> -->
           <v-row>
             <v-switch
@@ -176,7 +176,11 @@
               v-masonry-tile
               class="item"
             >
-              <v-card class="rounded-xl" @click="MeetCardClick(post)">
+              <v-card
+                class="rounded-xl"
+                @click="MeetCardClick(post)"
+                :color="meetContent(post) == `진행중입니다` ? `blue` : `white`"
+              >
                 <v-list-item two-line>
                   <v-list-item-content>
                     <v-list-item-title class="text-h5">
@@ -184,30 +188,41 @@
                     </v-list-item-title>
 
                     <v-list-item-subtitle>{{
-                      post["createdAt"]
+                      createdAtSplit(post["createdAt"])
+                    }}</v-list-item-subtitle>
+                    <v-list-item-subtitle>{{
+                      post["category"]
                     }}</v-list-item-subtitle>
                   </v-list-item-content>
                 </v-list-item>
                 <v-card-text>
-                  <v-card-text>
-                    {{ post["content"] }}
+                  <v-card-text v-if="post['category'] == 'ROLE'">
+                    {{ roleContent(post) }}
                   </v-card-text>
-                  <v-card-text>
-                    {{ post["roles"] }}
+                  <v-card-text v-else-if="post['category'] == 'MEET'">
+                    {{ meetContent(post) }}
+                  </v-card-text>
+                  <v-card-text v-else>
+                    {{ post["content"] }}
                   </v-card-text>
                   <v-list-item class="grow">
                     <v-row justify="end">
-                      <span class="subheading">
-                        <v-list-item-avatar color="grey lighten-3">
-                          {{ post["userId"] }}
-                        </v-list-item-avatar></span
+                      <div
+                        style="
+                          background-color: lightcyan;
+                          padding: 10px;
+                          border-radius: 50%;
+                        "
                       >
+                        {{ post["userId"] }}
+                      </div>
                     </v-row>
                   </v-list-item>
                 </v-card-text>
               </v-card>
             </v-col>
           </v-row>
+          <!-- context 항목별 -->
           <v-row v-else>
             <v-col>
               <v-sheet class="rounded-xl">
@@ -224,7 +239,7 @@
                         </v-list-item-title>
 
                         <v-list-item-subtitle>{{
-                          post["createdAt"]
+                          createdAtSplit(post["createdAt"])
                         }}</v-list-item-subtitle>
                       </v-list-item-content>
                     </v-list-item>
@@ -253,7 +268,13 @@
                   whenWeMeet
                 </p>
                 <v-col v-for="(post, idx) in teamMeetList" :key="idx">
-                  <v-card class="rounded-xl" @click="MeetCardClick(post)">
+                  <v-card
+                    class="rounded-xl"
+                    @click="MeetCardClick(post)"
+                    :color="
+                      meetContent(post) == `진행중입니다` ? `blue` : `white`
+                    "
+                  >
                     <v-list-item two-line>
                       <v-list-item-content>
                         <v-list-item-title class="text-h5">
@@ -261,13 +282,13 @@
                         </v-list-item-title>
 
                         <v-list-item-subtitle>{{
-                          post["createdAt"]
+                          createdAtSplit(post["createdAt"])
                         }}</v-list-item-subtitle>
                       </v-list-item-content>
                     </v-list-item>
                     <v-card-text>
                       <v-card-text>
-                        {{ post["content"] }}
+                        {{ meetContent(post) }}
                       </v-card-text>
                       <v-list-item class="grow">
                         <v-row justify="end">
@@ -298,17 +319,17 @@
                         </v-list-item-title>
 
                         <v-list-item-subtitle>{{
-                          post["createdAt"]
+                          createdAtSplit(post["createdAt"])
                         }}</v-list-item-subtitle>
                       </v-list-item-content>
                     </v-list-item>
                     <v-card-text>
                       <v-card-text>
-                        {{ post["content"] }}
+                        {{ roleContent(post) }}
                       </v-card-text>
-                      <v-card-text>
+                      <!-- <v-card-text>
                         {{ post["roles"] }}
-                      </v-card-text>
+                      </v-card-text> -->
                       <v-list-item class="grow">
                         <v-row justify="end">
                           <span class="subheading">
@@ -325,6 +346,13 @@
               </v-sheet>
             </v-col>
           </v-row>
+        </v-col>
+        <v-col v-else>
+          <div class="pa-16">
+            <v-alert type="info" dense border="left" prominent>
+              + 버튼을 눌러 기능을 사용해보세요 !!
+            </v-alert>
+          </div>
         </v-col>
       </v-row>
     </v-main>
@@ -343,7 +371,6 @@ export default {
       teamDesc: localStorage.getItem("teamDesc"),
       teamProfileImg: localStorage.getItem("teamProfileImg"),
       teamTopImg: localStorage.getItem("teamTopImg"),
-      teamUserCount: localStorage.getItem("teamUserCount"),
       inviteDialog: false,
       plusDialog: false,
       teamTopImgDialog: false,
@@ -362,6 +389,9 @@ export default {
     };
   },
   computed: {
+    teamUserCount() {
+      return this.teamUserList.length;
+    },
     ...mapState("userStore", {
       userId: "userId",
     }),
@@ -371,6 +401,38 @@ export default {
     }),
   },
   methods: {
+    createdAtSplit(date) {
+      return date.split(" ")[0];
+    },
+    roleContent(post) {
+      if (post["category"] == "ROLE") {
+        // console.log(Object.keys(post["roles"]).length);
+        var str = "";
+        //사다리타기
+        for (var i = 0; i < Object.keys(post["roles"]).length; i++) {
+          str +=
+            Object.keys(post["roles"])[i] +
+            " - " +
+            Object.values(post["roles"])[i] +
+            "/";
+        }
+        return str;
+      } else if (post["category"] == "ROLE_ROULETTE") {
+        //룰렛
+        return post["content"];
+      }
+    },
+    meetContent(post) {
+      if (
+        post["category"] == "MEET" &&
+        post["content"].split("/")[0] != "result"
+      ) {
+        return "진행중입니다";
+      } else if (post["category"] == "MEET") {
+        //마감완료된 카드
+        return "만나는시간: " + post["content"].split("/")[1];
+      }
+    },
     //함수 넣으면 됨
     ...mapMutations("userStore", {
       updateUserId: "updateUserId",
@@ -405,6 +467,7 @@ export default {
         console.log("팀 생성일 불러오기 성공");
         console.log("getTeamPostListdate:", res.data["result"]["postList"]);
         this.TeamPostListDate = res.data["result"]["postList"];
+        console.log("TeamPostListDate", this.TeamPostListDate[0]);
         //teamuserlist update
       } catch (error) {
         console.log(error);
@@ -441,7 +504,7 @@ export default {
     },
     MeetCardClick(post) {
       // console.log("split test", post["content"].split("/")[0]);
-      console.log(typeof post["content"]);
+      // console.log("카드클릭", post["content"]);
       if (
         post["category"] == "MEET" &&
         post["content"].split("/")[0] != "result"
@@ -455,6 +518,8 @@ export default {
         this.$router.push({
           path: "/WhenWeMeetResult",
         });
+      } else {
+        //마감완료된 카드
       }
     },
     async updateTeamTopImg() {
