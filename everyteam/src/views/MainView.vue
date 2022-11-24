@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-main class="main">
+    <v-main :style="mainBackColor">
       <v-img
         v-if="teamTopImg == null"
         src="@/assets/groupBack.png"
@@ -40,7 +40,7 @@
               ></v-file-input>
               <img class="inputImg" :src="preview"
             /></v-card-text>
-            <v-btn @click="updateTeamTopImg"> 체출 </v-btn>
+            <v-btn class="mb-5" @click="updateTeamTopImg"> 적용하기 </v-btn>
             <v-divider></v-divider>
 
             <v-card-actions>
@@ -88,7 +88,7 @@
               ></v-file-input>
               <img class="inputImg" :src="preview"
             /></v-card-text>
-            <v-btn @click="updateTeamTopImg"> 체출 </v-btn>
+            <v-btn class="mb-5" @click="updateTeamTopImg"> 적용하기 </v-btn>
             <v-divider></v-divider>
 
             <v-card-actions>
@@ -105,7 +105,7 @@
         <!-- 그룹 정보 -->
         <v-col cols="2">
           <v-card
-            color="#80C0CC"
+            :color="groupInfoBackColor"
             class="group rounded-lg mt-3 mb-10"
             elevation="0"
             style="color: whitesmoke"
@@ -125,7 +125,7 @@
               <v-menu open-on-hover top offset-x>
                 <template v-slot:activator="{ on, attrs }">
                   <v-btn
-                    color="#1096A4"
+                    :color="groupInfoBtnColor"
                     v-on="on"
                     elevation="0"
                     fab
@@ -150,7 +150,7 @@
               <v-dialog v-model="inviteDialog" width="500">
                 <template v-slot:activator="{ on, attrs }">
                   <v-btn
-                    color="#1096A4"
+                    :color="groupInfoBtnColor"
                     dark
                     v-bind="attrs"
                     v-on="on"
@@ -186,7 +186,7 @@
               <v-dialog v-model="plusDialog" width="500">
                 <template v-slot:activator="{ on, attrs }">
                   <v-btn
-                    color="#1096A4"
+                    :color="groupInfoBtnColor"
                     dark
                     v-bind="attrs"
                     v-on="on"
@@ -237,6 +237,11 @@
                   </v-card-actions>
                 </v-card>
               </v-dialog>
+              <v-select
+                v-model="theme"
+                :items="themeItems"
+                label="theme"
+              ></v-select>
             </v-list-item-content>
           </v-card>
         </v-col>
@@ -264,7 +269,9 @@
                 class="rounded-xl"
                 @click="MeetCardClick(post)"
                 :color="
-                  meetContent(post) == `진행중입니다` ? `#D6E6F2` : `white`
+                  meetContent(post) == `진행중입니다`
+                    ? `${meetCardColor}`
+                    : `white`
                 "
               >
                 <v-list-item two-line>
@@ -387,7 +394,9 @@
                     class="rounded-xl"
                     @click="MeetCardClick(post)"
                     :color="
-                      meetContent(post) == `진행중입니다` ? `#D6E6F2` : `white`
+                      meetContent(post) == `진행중입니다`
+                        ? `${meetCardColor}`
+                        : `white`
                     "
                   >
                     <v-list-item two-line>
@@ -495,7 +504,7 @@
 <script>
 import axios from "axios";
 import { BASE_URL } from "@/api";
-import { mapState, mapMutations } from "vuex";
+import { mapState, mapMutations, mapActions } from "vuex";
 export default {
   data() {
     return {
@@ -519,14 +528,78 @@ export default {
       teamMeetList: [],
       teamRoleList: [],
       TeamPostListDate: [],
+      // color
+
+      theme: "basic",
+      themeItems: ["basic", "earth", "purple", "indigo"],
     };
   },
   computed: {
+    mainBackColor() {
+      if (this.theme == "basic") {
+        return this.basicTheme["mainBackColor"];
+      }
+      if (this.theme == "purple") {
+        return this.purpleTheme["mainBackColor"];
+      }
+      if (this.theme == "earth") {
+        return this.earthTheme["mainBackColor"];
+      }
+      if (this.theme == "indigo") {
+        return this.indigoTheme["mainBackColor"];
+      }
+    },
+    groupInfoBackColor() {
+      if (this.theme == "basic") {
+        return this.basicTheme["groupInfoBackColor"];
+      }
+      if (this.theme == "purple") {
+        return this.purpleTheme["groupInfoBackColor"];
+      }
+      if (this.theme == "earth") {
+        return this.earthTheme["groupInfoBackColor"];
+      }
+      if (this.theme == "indigo") {
+        return this.indigoTheme["groupInfoBackColor"];
+      }
+    },
+    groupInfoBtnColor() {
+      if (this.theme == "basic") {
+        return this.basicTheme["groupInfoBtnColor"];
+      }
+      if (this.theme == "purple") {
+        return this.purpleTheme["groupInfoBtnColor"];
+      }
+      if (this.theme == "earth") {
+        return this.earthTheme["groupInfoBtnColor"];
+      }
+      if (this.theme == "indigo") {
+        return this.indigoTheme["groupInfoBtnColor"];
+      }
+    },
+    meetCardColor() {
+      if (this.theme == "basic") {
+        return this.basicTheme["meetCardColor"];
+      }
+      if (this.theme == "purple") {
+        return this.purpleTheme["meetCardColor"];
+      }
+      if (this.theme == "earth") {
+        return this.earthTheme["meetCardColor"];
+      }
+      if (this.theme == "indigo") {
+        return this.indigoTheme["meetCardColor"];
+      }
+    },
     teamUserCount() {
       return this.teamUserList.length;
     },
-    ...mapState("userStore", {
-      userId: "userId",
+    ...mapState("themeStore", {
+      basicTheme: "basicTheme",
+      purpleTheme: "purpleTheme",
+      earthTheme: "earthTheme",
+      indigoTheme: "indigoTheme",
+      themeStore: "themeStore",
     }),
     ...mapState("groupStore", {
       groupName: "groupName",
@@ -534,6 +607,12 @@ export default {
     }),
   },
   methods: {
+    ...mapMutations("themeStore", {
+      updateTheme: "updateTheme",
+    }),
+    // ...mapActions("themeStore", {
+    //   actionTheme: "actionTheme",
+    // }),
     copy(copyText) {
       navigator.clipboard.writeText(copyText).then(function () {
         alert("클립보드에 복사되었습니다");
@@ -581,30 +660,10 @@ export default {
         return "만나는시간: " + post["content"].split("/")[1];
       }
     },
-    //함수 넣으면 됨
-    ...mapMutations("userStore", {
-      updateUserId: "updateUserId",
-    }),
     inviteButtonClick() {
       console.log("초대하기 버튼이 클릭되었습니다");
     },
-    // async getTeamUserList() {
-    //   try {
-    //     const res = await axios.get(`${BASE_URL}/role/userList`, {
-    //       params: {
-    //         teamCode: localStorage.getItem("teamCode"),
-    //       },
-    //       headers: {
-    //         "X-AUTH-TOKEN": localStorage.getItem("token"),
-    //       },
-    //     });
-    //     console.log("팀 유저 불러오기 성공!!");
-    //     console.log("teamUserList:", res.data["result"]);
-    //     this.teamUserList = res.data["result"];
-    //   } catch (error) {
-    //     console.log(error);
-    //   }
-    // },
+
     async getTeamPostListDate() {
       try {
         const res = await axios.get(`${BASE_URL}/team/${this.teamCode}/date`, {
@@ -725,6 +784,9 @@ export default {
     },
   },
   mounted() {
+    console.log("컬러", this.basicTheme["groupInfoBackColor"]);
+    // 컬러 변경해주기
+
     console.log("파라미터", this.$route.params.test);
     //페이지가 다시 불릴때 마다 불러짐
     console.log("메인페이지 마운티드");
@@ -733,7 +795,15 @@ export default {
     this.getTeamPostListDate();
   },
   watch: {
-    //값이 바뀔 때 마다 action을 취하기 위해서는 여기 넣어두면 됨!
+    theme() {
+      // localStorage.setItem("theme", this.theme);
+      this.updateTheme(this.theme);
+      console.log("store theme", this.themeStore);
+      // const payload = {
+      //   theme: this.theme,
+      // };
+      // this.actionTheme(payload);
+    },
   },
 };
 </script>

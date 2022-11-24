@@ -1,5 +1,5 @@
 <template>
-  <v-app style="background-color: #f5f5f5">
+  <v-app :style="myGroupsBackColor">
     <v-main>
       <div class="myGroups">
         <v-row>
@@ -101,32 +101,7 @@ export default {
       plusBtnClick: false,
       joinGroupBtn: false,
       teamCode: "",
-      team: [
-        {
-          team: {
-            teamIdx: 1,
-            name: "team1",
-            code: "SEqjXh",
-            imgUrl:
-              "https://storage.googleapis.com/weave_bucket/everyTeam_SEqjXh",
-            description: "team1생성",
-            topImgUrl: null,
-          },
-          countUser: 3,
-        },
-        {
-          team: {
-            teamIdx: 5,
-            name: "team2",
-            code: "bkQsvL",
-            imgUrl:
-              "https://storage.googleapis.com/weave_bucket/everyTeam_bkQsvL",
-            description: "team2생성",
-            topImgUrl: null,
-          },
-          countUser: 1,
-        },
-      ],
+      myGroupsBackColor: "#f5f5f5",
     };
   },
   mounted() {
