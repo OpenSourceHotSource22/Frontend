@@ -101,7 +101,7 @@ export default {
       plusBtnClick: false,
       joinGroupBtn: false,
       teamCode: "",
-      myGroupsBackColor: "#f5f5f5",
+      // myGroupsBackColor: "#f5f5f5",
     };
   },
   mounted() {
@@ -110,10 +110,31 @@ export default {
     console.log(this.userToken);
   },
   computed: {
+    myGroupsBackColor() {
+      if (this.themeStore == "basic") {
+        return this.basicTheme["mainBackColor"];
+      }
+      if (this.themeStore == "purple") {
+        return this.purpleTheme["mainBackColor"];
+      }
+      if (this.themeStore == "earth") {
+        return this.earthTheme["mainBackColor"];
+      }
+      if (this.themeStore == "indigo") {
+        return this.indigoTheme["mainBackColor"];
+      }
+    },
     ...mapState("userStore", {
       // userId: "userId",
       userToken: "userToken",
       userGroups: "userGroups",
+    }),
+    ...mapState("themeStore", {
+      basicTheme: "basicTheme",
+      purpleTheme: "purpleTheme",
+      earthTheme: "earthTheme",
+      indigoTheme: "indigoTheme",
+      themeStore: "themeStore",
     }),
     ...mapState("groupStore", {
       groupName: "groupName",

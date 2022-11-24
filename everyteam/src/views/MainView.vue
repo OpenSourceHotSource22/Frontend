@@ -536,58 +536,58 @@ export default {
   },
   computed: {
     mainBackColor() {
-      if (this.theme == "basic") {
+      if (this.themeStore == "basic") {
         return this.basicTheme["mainBackColor"];
       }
-      if (this.theme == "purple") {
+      if (this.themeStore == "purple") {
         return this.purpleTheme["mainBackColor"];
       }
-      if (this.theme == "earth") {
+      if (this.themeStore == "earth") {
         return this.earthTheme["mainBackColor"];
       }
-      if (this.theme == "indigo") {
+      if (this.themeStore == "indigo") {
         return this.indigoTheme["mainBackColor"];
       }
     },
     groupInfoBackColor() {
-      if (this.theme == "basic") {
+      if (this.themeStore == "basic") {
         return this.basicTheme["groupInfoBackColor"];
       }
-      if (this.theme == "purple") {
+      if (this.themeStore == "purple") {
         return this.purpleTheme["groupInfoBackColor"];
       }
-      if (this.theme == "earth") {
+      if (this.themeStore == "earth") {
         return this.earthTheme["groupInfoBackColor"];
       }
-      if (this.theme == "indigo") {
+      if (this.themeStore == "indigo") {
         return this.indigoTheme["groupInfoBackColor"];
       }
     },
     groupInfoBtnColor() {
-      if (this.theme == "basic") {
+      if (this.themeStore == "basic") {
         return this.basicTheme["groupInfoBtnColor"];
       }
-      if (this.theme == "purple") {
+      if (this.themeStore == "purple") {
         return this.purpleTheme["groupInfoBtnColor"];
       }
-      if (this.theme == "earth") {
+      if (this.themeStore == "earth") {
         return this.earthTheme["groupInfoBtnColor"];
       }
-      if (this.theme == "indigo") {
+      if (this.themeStore == "indigo") {
         return this.indigoTheme["groupInfoBtnColor"];
       }
     },
     meetCardColor() {
-      if (this.theme == "basic") {
+      if (this.themeStore == "basic") {
         return this.basicTheme["meetCardColor"];
       }
-      if (this.theme == "purple") {
+      if (this.themeStore == "purple") {
         return this.purpleTheme["meetCardColor"];
       }
-      if (this.theme == "earth") {
+      if (this.themeStore == "earth") {
         return this.earthTheme["meetCardColor"];
       }
-      if (this.theme == "indigo") {
+      if (this.themeStore == "indigo") {
         return this.indigoTheme["meetCardColor"];
       }
     },
