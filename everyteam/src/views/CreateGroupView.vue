@@ -6,14 +6,12 @@
         <v-col>
           <v-text-field
             v-model="groupName"
-            :append-outer-icon="groupName ? 'mdi-send' : ''"
             :prepend-icon="icon"
             filled
             clear-icon="mdi-close-circle"
             clearable
             label="그룹이름을 입력하세요"
             type="text"
-            @click:append-outer="createGroup"
             @click:prepend="changeIcon"
             @click:clear="clearMessage"
           ></v-text-field>
@@ -101,23 +99,27 @@ export default {
       // });
 
       // console.log("formdata:", formdata.entries());
-      for (var pair of data.entries()) {
-        console.log(pair[0] + ", " + pair[1]);
-      }
+      // for (var pair of data.entries()) {
+      //   console.log(pair[0] + ", " + pair[1]);
+      // }
 
-      try {
-        const res = await axios.post(`${BASE_URL}/team/create`, data, {
-          headers: {
-            "X-AUTH-TOKEN": localStorage.getItem("token"),
-            "Content-Type": "multipart/form-data",
-          },
-        });
-        alert(res.data["message"]);
-        console.log("팀생성 성공!!");
-        console.log("res:", res);
-        this.$router.push({ path: "/myGroups" });
-      } catch (error) {
-        console.log(error);
+      if (this.groupName == "" || this.description == "") {
+        alert("내용을 모두 입력해주세요!");
+      } else {
+        try {
+          const res = await axios.post(`${BASE_URL}/team/create`, data, {
+            headers: {
+              "X-AUTH-TOKEN": localStorage.getItem("token"),
+              "Content-Type": "multipart/form-data",
+            },
+          });
+          alert(res.data["message"]);
+          console.log("팀생성 성공!!");
+          console.log("res:", res);
+          this.$router.push({ path: "/myGroups" });
+        } catch (error) {
+          console.log(error);
+        }
       }
     },
 
