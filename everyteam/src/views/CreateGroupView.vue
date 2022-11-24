@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-app :style="createGroupsBackColor">
     <v-container>
       <v-flex>
         <h1>CreateGroup</h1>
@@ -48,6 +48,7 @@
 <script>
 import axios from "axios";
 import { BASE_URL } from "@/api";
+import { mapState } from "vuex";
 export default {
   data: () => ({
     show: false,
@@ -77,6 +78,27 @@ export default {
     icon() {
       return this.icons[this.iconIndex];
     },
+    createGroupsBackColor() {
+      if (this.themeStore == "basic") {
+        return this.basicTheme["mainBackColor"];
+      }
+      if (this.themeStore == "purple") {
+        return this.purpleTheme["mainBackColor"];
+      }
+      if (this.themeStore == "earth") {
+        return this.earthTheme["mainBackColor"];
+      }
+      if (this.themeStore == "indigo") {
+        return this.indigoTheme["mainBackColor"];
+      }
+    },
+    ...mapState("themeStore", {
+      basicTheme: "basicTheme",
+      purpleTheme: "purpleTheme",
+      earthTheme: "earthTheme",
+      indigoTheme: "indigoTheme",
+      themeStore: "themeStore",
+    }),
   },
 
   methods: {
