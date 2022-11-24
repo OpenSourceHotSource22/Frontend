@@ -15,7 +15,7 @@
           </v-list-item>
 
           <v-list-item style="background-color: lightblue; margin-top: 10px">
-            <v-list-item-title @click="goMyGroupsPage">
+            <v-list-item-title :style="logoColor" @click="goMyGroupsPage">
               나의 그룹리스트
             </v-list-item-title>
           </v-list-item>
