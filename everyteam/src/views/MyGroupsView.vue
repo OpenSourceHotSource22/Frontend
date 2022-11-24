@@ -19,7 +19,7 @@
 
               <div
                 v-show="joinGroupBtn"
-                style="margin-top: 30px; margin-bottom: 30px"
+                style="margin: 20px; padding: 20px; border-radius: 5px"
                 class="green lighten-2"
               >
                 그룹코드를 입력하세요

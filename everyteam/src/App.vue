@@ -13,9 +13,10 @@
               group["team"].name
             }}</v-list-item-title>
           </v-list-item>
+
           <v-list-item style="background-color: lightblue; margin-top: 10px">
-            <v-list-item-title @click="goCreateGroupPage">
-              + 팀 생성하기
+            <v-list-item-title @click="goMyGroupsPage">
+              나의 그룹리스트
             </v-list-item-title>
           </v-list-item>
         </v-list-item-group>
@@ -97,8 +98,8 @@ export default {
       //새로고침해줌
       this.$router.go();
     },
-    goCreateGroupPage() {
-      this.$router.push({ path: "/createGroup" });
+    goMyGroupsPage() {
+      this.$router.push({ path: "/mygroups" });
     },
   },
   computed: {
