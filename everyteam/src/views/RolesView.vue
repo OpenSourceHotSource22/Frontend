@@ -5,16 +5,16 @@
         <h1>역할고르기</h1>
         <v-row class="my-5">
           <v-col>
-            <v-card class="my-5" @click="goToRoulette" style="height:550px; border-radius: 10%;">
-
+            <v-card class="leftPic my-5" @click="goToRoulette" style="height:550px; border-radius: 10%;">
               <v-img src="../assets/roulettePicture.png" max-height="550">
-                <v-card-text style="position:absolute; top:50%; font-weight: bold; font-size: large;"></v-card-text>
+                <v-card-text style="position:absolute; top:50%; font-weight: bold; font-size: large;  ">
+                </v-card-text>
               </v-img>
             </v-card>
           </v-col>
           <v-col>
-            <v-card class="my-5" @click="goToGhostLeg" style="height:481px; border-radius:10%">
-              <v-img src="../assets/loveLine.png" contain>
+            <v-card class="my-5" @click="goToGhostLeg" style="height:481px; border-radius:10%; border-color: black;">
+              <v-img src="../assets/Frame 1.png" contain>
                 <v-card-text style="position:absolute; top:50%; font-weight: bold; font-size: large;">
                 </v-card-text>
               </v-img>

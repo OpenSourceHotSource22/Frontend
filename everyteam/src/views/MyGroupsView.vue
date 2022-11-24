@@ -1,10 +1,10 @@
 <template>
-  <v-app style="background-color: #e5e5bf">
+  <v-app style="background-color: #f5f5f5">
     <v-main>
       <div class="myGroups">
         <v-row>
           <v-col>
-            <h2>{{ userId }}님의 프로젝트</h2>
+            <h2>{{ userId }}님의 그룹리스트</h2>
           </v-col>
 
           <v-dialog v-model="plusBtnClick" width="500">
@@ -19,7 +19,7 @@
 
               <div
                 v-show="joinGroupBtn"
-                style="margin-top: 30px; margin-bottom: 30px"
+                style="margin: 20px; padding: 20px; border-radius: 5px"
                 class="green lighten-2"
               >
                 그룹코드를 입력하세요

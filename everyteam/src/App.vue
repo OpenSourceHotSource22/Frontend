@@ -13,9 +13,10 @@
               group["team"].name
             }}</v-list-item-title>
           </v-list-item>
+
           <v-list-item style="background-color: lightblue; margin-top: 10px">
-            <v-list-item-title @click="goCreateGroupPage">
-              + 팀 생성하기
+            <v-list-item-title @click="goMyGroupsPage">
+              나의 그룹리스트
             </v-list-item-title>
           </v-list-item>
         </v-list-item-group>
@@ -24,7 +25,9 @@
     <v-app-bar app v-if="showAppBar">
       <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
 
-      <p @click="$router.push({ path: '/main' })">everyTeam</p>
+      <p @click="$router.push({ path: '/main' })">
+        <v-img src="@/assets/everyteamBar.png" width="100"></v-img>
+      </p>
       <!-- <nav>
         <router-link to="/">Intro</router-link> |
         <router-link to="/login">Login</router-link>|
@@ -95,8 +98,8 @@ export default {
       //새로고침해줌
       this.$router.go();
     },
-    goCreateGroupPage() {
-      this.$router.push({ path: "/createGroup" });
+    goMyGroupsPage() {
+      this.$router.push({ path: "/mygroups" });
     },
   },
   computed: {
