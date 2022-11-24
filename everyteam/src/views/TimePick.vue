@@ -2,8 +2,8 @@
     <v-app>
         <v-main>
             <div class="TimePick container" >
-                <v-row>
-                    <v-col style="overflow:auto" class="align-self-center">
+                <v-row justify-content="center">
+                    <v-col style="overflow:auto" >
 
                     <table>
                         <th>
