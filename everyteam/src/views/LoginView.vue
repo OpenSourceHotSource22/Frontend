@@ -12,6 +12,7 @@
         <v-col>
           <div style="padding: 30px; padding-top: 300px">
             <v-form ref="form" v-model="loginValid" lazy-validation>
+              <h2>login</h2>
               <v-text-field
                 v-model="loginId"
                 :rules="idRules"
