@@ -1,7 +1,7 @@
 <template>
     <v-app>
         <v-main>
-            <div class="TimePick container" >
+            <div class="TimePick container text-center" >
                 <v-row justify="space-around">
                     <v-col style="text-align:center; overflow:auto" >
 
