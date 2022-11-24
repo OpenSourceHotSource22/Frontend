@@ -1,9 +1,9 @@
 <template>
     <v-app>
         <v-main>
-            <div class="TimePick container" >
+            <div class="TimePick container"style="overflow:auto" >
                 <v-row justify="space-around">
-                    <v-col style="overflow:auto" >
+                    <v-col  >
 
                     <table>
                         <th>
