@@ -261,7 +261,7 @@
             >
               <v-card
                 :id="post['category']"
-                class="rounded-xl dateCard"
+                class="rounded-xl"
                 @click="MeetCardClick(post)"
                 :color="
                   meetContent(post) == `진행중입니다` ? `#D6E6F2` : `white`
@@ -336,7 +336,7 @@
           <!-- context 항목별 -->
           <v-row v-else>
             <v-col>
-              <v-sheet class="rounded-xl">
+              <v-sheet class="rounded-xl" style="background-color: #ebebeb">
                 <p class="font-weight-light pt-3 mb-0" style="font-size: 20px">
                   post
                 </p>
@@ -378,7 +378,7 @@
             </v-col>
 
             <v-col>
-              <v-sheet class="rounded-xl">
+              <v-sheet class="rounded-xl" style="background-color: #ebebeb">
                 <p class="font-weight-light pt-3 mb-0" style="font-size: 20px">
                   whenWeMeet
                 </p>
@@ -425,7 +425,7 @@
             </v-col>
 
             <v-col>
-              <v-sheet class="rounded-xl">
+              <v-sheet class="rounded-xl" style="background-color: #ebebeb">
                 <p class="font-weight-light pt-3 mb-0" style="font-size: 20px">
                   Role
                 </p>
