@@ -104,7 +104,7 @@
         <v-col cols="2">
           <v-card
             color="#FDFFAA"
-            class="group rounded-lg mt-6 mb-10"
+            class="group rounded-lg mt-3 mb-10"
             elevation="0"
           >
             <v-avatar size="100px" class="mt-4">
@@ -144,7 +144,6 @@
                     v-bind="attrs"
                     v-on="on"
                     elevation="0"
-                    class="mt-5"
                   >
                     초대하기
                   </v-btn>
@@ -180,7 +179,7 @@
                     v-bind="attrs"
                     v-on="on"
                     elevation="0"
-                    class="mt-5"
+                    class="mt-3"
                     style="color: aliceblue"
                   >
                     작성하기
@@ -244,7 +243,7 @@
             <v-col
               v-for="(post, idx) in TeamPostListDate"
               :key="idx"
-              cols="4"
+              cols="3"
               v-masonry-tile
               class="item"
             >
