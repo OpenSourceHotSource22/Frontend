@@ -35,7 +35,7 @@
         <v-btn color="success" @click="submit" v-bind:disabled="buttonDisable2">Submit</v-btn>
         <hr />
         <ul>
-          <li v-for="(h, idx) in history">{{ h }}</li>
+          <li id="historys" v-for="(h, idx) in history" style="display:none">{{ h }}</li>
         </ul>
       </div>
     </v-main>
@@ -95,7 +95,7 @@ export default {
       let text = document.getElementById("textInsert").value;
       if (text.length <= 1) {
         alert("두글자 이상 입력해주세요!");
-        return;
+        goRolsPage();
       }
       axios
         .post(
@@ -146,11 +146,15 @@ export default {
       this.buttonDisable2 = false;
       this.count++;
       this.current = Math.floor(Math.random() * this.teamUsers.length);
-      this.history.push(this.currentItem.value);
+
       this.textInput = document.getElementById("textInsert").value;
       let startTime = new Date().getTime();
       let particles = [];
       const colors = ["#eb6383", "#fa9191", "#ffe9c5", "#b4f2e1"];
+      this.history.push(this.currentItem.value);
+      function show() {
+        document.getElementById("historys").style.display = "inline";
+      }
       function pop() {
         console.log("pop함수");
         for (let i = 0; i < 150; i++) {
@@ -195,6 +199,7 @@ export default {
       };
       pop();
       setTimeout(render, 5500);
+      setTimeout(show, 5000);
       if (this.count >= 1) {
         this.buttonDisable = true;
         return;
@@ -233,7 +238,7 @@ body {
 
 #app2 {
   text-align: center;
-  background: linear-gradient(#eb6383 25%, #fa9191 25% 50%, #ffe9c5 50% 75%, #b4f2e1 75%);
+  background-color: #eb6383;
 }
 
 

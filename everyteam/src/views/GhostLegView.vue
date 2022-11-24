@@ -3,32 +3,47 @@
   <v-app>
     <v-main>
       <div class="roles">
-        <h1>사랑의 작대기</h1>
-        <v-btn @click="goRolsPage">선택메뉴 가기 </v-btn>
-      </div>
-      <v-card class="container">
+        <div class="tooltip">
+          <h1 style="margin-top:20px; margin-bottom:20px;" id="Title">사랑의 작대기</h1>
+          <span class="tooltiptext">이건 툴팁입니다.</span>
+        </div>
+        <v-btn @click="goRolsPage" style="margin-bottom:20px;">선택메뉴 가기 </v-btn>
         <v-row>
-          <v-btn :disabled="isStart" @click="plus" id="plusBtn" class="mx-4"> + </v-btn>
-          {{ count }}
-          <v-btn :disabled="isStart" @click="minus" class="mx-4"> - </v-btn>
+          <v-col></v-col>
+          <v-col>
+            <v-text-field label="제목작성" clearable outlined id="textInsert"></v-text-field>
+          </v-col>
+          <v-col></v-col>
         </v-row>
-        <v-row>
-          <v-btn class="my-4" @click="start">시작하기</v-btn>
+      </div>
+      <v-card class="container" id="mainVue">
+        <v-row class="isValid">
+          <v-col class="pt-5">
+            <v-btn :disabled="isStart" @click="minus" class="mx-4" v-bind:disabled="buttonDisable2"> - </v-btn>
+            {{ count }}
+            <v-btn :disabled="isStart" @click="plus" id="plusBtn" class="mx-4" v-bind:disabled="buttonDisable3"> +
+            </v-btn>
+          </v-col>
+          <v-col>
+            <v-btn class="startBtn my-5" @click="start">시작하기</v-btn>
+          </v-col>
+          <v-col></v-col>
+          <v-col></v-col>
         </v-row>
         <div v-if="isStart">
-          <v-row class="my-0">
+          <v-row class="mt-3">
             <div v-for="(n, idx) in count">
-              <v-text-field :id="String(n)" :key="idx" class="mx-3 my-0" label="Regular" clearable outlined
-                v-model="textField[n - 1]">
+              <v-text-field :id="String(n)" :key="idx" class="mx-3 my-0" label="Name" clearable outlined
+                v-model="textField[n - 1]" no-gutters>
               </v-text-field>
             </div>
           </v-row>
-          <v-row>
-            <canvas id="canvas" width="2000" height="400"></canvas>
-          </v-row>
-          <v-row>
+
+          <canvas id="canvas" width="3000" height="300"></canvas>
+
+          <v-row class="mt-1">
             <div v-for="(n, idx) in count">
-              <v-text-field :id="String(-n)" :key="idx" class="mx-3" label="Regular" clearable outlined
+              <v-text-field :id="String(-n)" :key="idx" class="mx-3" label="Role" clearable outlined
                 v-model="resultField[n - 1]"></v-text-field>
             </div>
           </v-row>
@@ -47,7 +62,10 @@ import { mapState } from "vuex";
 export default {
   data() {
     return {
-      buttonDisable: false,
+      textInput: "",
+      buttonDisable: true,
+      buttonDisable2: false,
+      buttonDisable3: false,
       datas: [
 
       ],
@@ -67,15 +85,30 @@ export default {
       isStart2: true,
     };
   },
-  computed: {},
+  computed: {
+  },
+  watch: {
+    warning() {
+      console.log("count가작습니다.");
+      if (this.count <= 0) {
+        this.buttonDisable2 = true;
+      }
+    },
+  },
   methods: {
     async submit() {
+      let text = document.getElementById("textInsert").value;
+      if (text.length <= 1) {
+        alert("두글자 이상 입력해주세요!");
+        goRolsPage();
+      }
+      this.textInput = document.getElementById("textInsert").value;
       axios
         .post(
           `${BASE_URL}/role/create`,
           {
             teamCode: localStorage.getItem("teamCode"),
-            title: "사랑의 작대기 결과",
+            title: this.textInput,
             role: this.saved,
           },
           {
@@ -98,22 +131,42 @@ export default {
       this.$router.push({ path: "/roles" });
     },
     plus() {
+      if (this.count <= 0) {
+        this.buttonDisable2 = false;
+      }
+      if (this.count >= 6) {
+        alert("6이상은 불가능합니다.");
+        this.buttonDisable3 = true;
+        return;
+      }
       this.count++;
     },
     minus() {
+      if (this.count <= 6) {
+        this.buttonDisable3 = false;
+      }
+      if (this.count <= 0) {
+        alert("2이상부터 가능합니다.");
+        this.buttonDisable2 = true;
+        return;
+      }
       this.count--;
     },
     start() {
       if (this.count <= 1) {
         alert("2이상으로 적으세요!");
-      } else {
+      }
+      else {
         this.isStart = true;
+        this.buttonDisable3 = false;
+        this.buttonDisable = false;
       }
     },
     shuffle(array) {
       array.sort(() => Math.random() - 0.5);
     },
     confirm() {
+      this.start();
       this.isStart2 = false;
       for (var i = 0; i < this.count; i++) {
         this.datas[i] = i;
@@ -129,8 +182,8 @@ export default {
       ctx.beginPath();
       ctx.strokeStyle = "black";
       for (let i = 0; i < this.count; i++) {
-        ctx.moveTo(this.position[i].x + 90, this.position[i].y - 150);
-        ctx.lineTo(this.position[this.datas[i]].x + 90, this.position[this.datas[i]].y + 200);
+        ctx.moveTo(this.position[i].x + 90, this.position[i].y - 100);
+        ctx.lineTo(this.position[this.datas[i]].x + 90, this.position[this.datas[i]].y);
       }
       ctx.stroke();
       for (let i = 0; i < this.count; i++) {
@@ -147,6 +200,34 @@ export default {
 </script>
 
 <style>
+.v-sheet.v-card:not(.v-sheet--outlined) {
+  box-shadow: 0px 0px 0px 0px rgb(0 0 0 / 20%),
+    0px 0px 0px 0px rgb(0 0 0 / 14%),
+    0px 0px 0px 0px rgb(0 0 0 / 12%);
+
+}
+
+.roles.tooltip.tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  padding: 5px 0;
+  border-radius: 6px;
+
+  /* Position the tooltip text */
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -60px;
+
+  /* Fade in tooltip */
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
 .container {
   padding: 30px;
 }
