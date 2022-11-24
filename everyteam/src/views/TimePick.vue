@@ -5,7 +5,7 @@
                 <v-row justify="space-around">
                     <v-col style="text-align:center; overflow:auto" >
 
-                    <table>
+                    <table class="align-self-center">
                         <th>
                             <td>시간</td>
                             <div class="timeBox" style="font-size:9px; width:65px; height:25px; text-align:right"
