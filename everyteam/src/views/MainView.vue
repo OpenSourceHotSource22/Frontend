@@ -57,7 +57,11 @@
       <v-row>
         <!-- 그룹 정보 -->
         <v-col cols="2">
-          <v-card color="#FDFFAA" class="group rounded-lg mt-6" elevation="0">
+          <v-card
+            color="#FDFFAA"
+            class="group rounded-lg mt-6 mb-10"
+            elevation="0"
+          >
             <v-avatar size="100px" class="mt-4">
               <img alt="Avatar" :src="teamProfileImg" />
             </v-avatar>
