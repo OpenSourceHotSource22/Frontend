@@ -2,8 +2,10 @@
     <v-app>
         <v-main>
             <div class="TimePick container" >
+
                 <v-row justify="space-around" >
                     <v-col style="overflow:auto">
+
                     <table>
                         <th style="font-size:13.4px;">
                             <td>시간</td>
