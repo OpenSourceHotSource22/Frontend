@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <v-container>
-      <v-row class="pt-16">
+      <v-row>
         <v-col>
           <v-img
             src="@/assets/everyteamLogo.png"
