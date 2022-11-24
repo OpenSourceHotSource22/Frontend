@@ -3,7 +3,7 @@
         <v-main>
             <div class="TimePick container"style="overflow:auto" >
                 <v-row justify="space-around">
-                    <v-col  >
+                    <v-col style="text-align:center" >
 
                     <table>
                         <th>
