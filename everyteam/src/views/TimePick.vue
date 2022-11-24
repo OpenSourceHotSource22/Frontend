@@ -3,7 +3,7 @@
         <v-main>
             <div class="TimePick container text-center" >
                 <v-row justify="space-around">
-                    <v-col style="text-align:center; overflow:auto" >
+                    
 
                     <table class="align-self-center">
                         <th>
@@ -23,6 +23,7 @@
                         
                         </th>
                     </table>
+                    <v-col style="text-align:center; overflow:auto" >
                     </v-col>
                 </v-row>
 
