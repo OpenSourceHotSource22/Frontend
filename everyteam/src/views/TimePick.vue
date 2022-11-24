@@ -2,7 +2,7 @@
     <v-app>
         <v-main>
             <div class="TimePick container" >
-                <v-row justify-content="center">
+                <v-row justify="center">
                     <v-col style="overflow:auto" >
 
                     <table>
