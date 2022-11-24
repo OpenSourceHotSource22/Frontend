@@ -24,7 +24,9 @@
     <v-app-bar app v-if="showAppBar">
       <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
 
-      <p @click="$router.push({ path: '/main' })">everyTeam</p>
+      <p @click="$router.push({ path: '/main' })">
+        <v-img src="@/assets/everyteamBar.png" width="100"></v-img>
+      </p>
       <!-- <nav>
         <router-link to="/">Intro</router-link> |
         <router-link to="/login">Login</router-link>|

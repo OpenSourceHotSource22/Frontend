@@ -10,9 +10,10 @@
         <v-dialog v-model="teamTopImgDialog" width="500">
           <template v-slot:activator="{ on, attrs }">
             <v-btn
-              elevation="2"
-              color="#3b8686"
+              elevation="1"
+              color="#A3BBBC"
               dark
+              small
               v-bind="attrs"
               v-on="on"
               class="mt-5"
@@ -57,9 +58,10 @@
         <v-dialog v-model="teamTopImgDialog" width="500">
           <template v-slot:activator="{ on, attrs }">
             <v-btn
-              elevation="2"
-              color="#3b8686"
+              elevation="1"
+              color="#A3BBBC"
               dark
+              small
               v-bind="attrs"
               v-on="on"
               class="mt-5"
@@ -103,9 +105,10 @@
         <!-- 그룹 정보 -->
         <v-col cols="2">
           <v-card
-            color="#FDFFAA"
+            color="#80C0CC"
             class="group rounded-lg mt-3 mb-10"
             elevation="0"
+            style="color: whitesmoke"
           >
             <v-avatar size="100px" class="mt-4">
               <img alt="Avatar" :src="teamProfileImg" />
@@ -114,12 +117,14 @@
             <v-card-title class="justify-center text-h4">
               {{ teamName }}
             </v-card-title>
-            <v-card-text> {{ teamDesc }} </v-card-text>
+            <v-card-text style="color: whitesmoke">
+              {{ teamDesc }}
+            </v-card-text>
             <v-card-text>
               <!-- 그룹 list -->
               <v-menu open-on-hover top offset-x>
                 <template v-slot:activator="{ on, attrs }">
-                  <v-btn color="#a8dba8" v-on="on" elevation="0" fab>
+                  <v-btn color="#1096A4" v-on="on" elevation="0" fab>
                     {{ teamUserCount }}
                     <v-icon> mdi-account </v-icon>
                   </v-btn>
@@ -139,11 +144,12 @@
               <v-dialog v-model="inviteDialog" width="500">
                 <template v-slot:activator="{ on, attrs }">
                   <v-btn
-                    color="#79bd9a"
+                    color="#1096A4"
                     dark
                     v-bind="attrs"
                     v-on="on"
                     elevation="0"
+                    style="color: black"
                   >
                     초대하기
                   </v-btn>
@@ -174,13 +180,13 @@
               <v-dialog v-model="plusDialog" width="500">
                 <template v-slot:activator="{ on, attrs }">
                   <v-btn
-                    color="#3b8686"
+                    color="#1096A4"
                     dark
                     v-bind="attrs"
                     v-on="on"
                     elevation="0"
                     class="mt-3"
-                    style="color: aliceblue"
+                    style="color: black"
                   >
                     작성하기
                   </v-btn>
@@ -235,7 +241,7 @@
             <v-switch
               v-model="switch1"
               flat
-              color="indigo darken-3"
+              color="primary"
               :label="switch1 ? `항목별` : `생성일`"
             ></v-switch>
           </v-row>
@@ -249,9 +255,11 @@
             >
               <v-card
                 :id="post['category']"
-                class="rounded-xl"
+                class="rounded-xl dateCard"
                 @click="MeetCardClick(post)"
-                :color="meetContent(post) == `진행중입니다` ? `blue` : `white`"
+                :color="
+                  meetContent(post) == `진행중입니다` ? `#D6E6F2` : `white`
+                "
               >
                 <v-list-item two-line>
                   <v-list-item-content>
@@ -373,7 +381,7 @@
                     class="rounded-xl"
                     @click="MeetCardClick(post)"
                     :color="
-                      meetContent(post) == `진행중입니다` ? `blue` : `white`
+                      meetContent(post) == `진행중입니다` ? `#D6E6F2` : `white`
                     "
                   >
                     <v-list-item two-line>
@@ -725,7 +733,7 @@ export default {
 </script>
 <style>
 .main {
-  background-color: #83c882;
+  background-color: #f5f5f5;
 }
 .cardList {
   margin: 30px;
