@@ -4,8 +4,8 @@
     <v-main>
       <div class="roles">
         <div class="tooltip">
-          <h1 style="margin-top:20px; margin-bottom:20px;" id="Title">사랑의 작대기</h1>
-          <span class="tooltiptext">이건 툴팁입니다.</span>
+          사랑의 작대기
+          <span id="toolTipText" class="tooltiptext">원할한 진행을 위해 화면을 100%로 맞춰주세요.</span>
         </div>
         <v-btn @click="goRolsPage" style="margin-bottom:20px;">선택메뉴 가기 </v-btn>
         <v-row>
@@ -23,9 +23,10 @@
             {{ count }}
             <v-btn :disabled="isStart" @click="plus" id="plusBtn" class="mx-4" v-bind:disabled="buttonDisable3"> +
             </v-btn>
+            <v-btn class="startBtn my-5" @click="start" v-bind:disabled="buttonDisable4">시작하기</v-btn>
           </v-col>
           <v-col>
-            <v-btn class="startBtn my-5" @click="start">시작하기</v-btn>
+
           </v-col>
           <v-col></v-col>
           <v-col></v-col>
@@ -48,8 +49,9 @@
             </div>
           </v-row>
         </div>
-        <v-btn @click="confirm" class="check" v-bind:disabled="buttonDisable">확인하기</v-btn>
-        <v-btn color="success" @click="submit" v-bind:disabled="isStart2">Submit</v-btn>
+
+        <v-btn @click="confirm" class="check mt-3" v-bind:disabled="buttonDisable">확인하기</v-btn>
+        <v-btn color="success" class="mt-3" @click="submit" v-bind:disabled="isStart2">Submit</v-btn>
       </v-card>
     </v-main>
   </v-app>
@@ -66,6 +68,7 @@ export default {
       buttonDisable: true,
       buttonDisable2: false,
       buttonDisable3: false,
+      buttonDisable4: false,
       datas: [
 
       ],
@@ -160,6 +163,9 @@ export default {
         this.isStart = true;
         this.buttonDisable3 = false;
         this.buttonDisable = false;
+        this.buttonDisable4 = true;
+        let ToolText = document.getElementById("toolTipText");
+        ToolText.style.visibility = "visible";
       }
     },
     shuffle(array) {
@@ -182,8 +188,8 @@ export default {
       ctx.beginPath();
       ctx.strokeStyle = "black";
       for (let i = 0; i < this.count; i++) {
-        ctx.moveTo(this.position[i].x + 90, this.position[i].y - 100);
-        ctx.lineTo(this.position[this.datas[i]].x + 90, this.position[this.datas[i]].y);
+        ctx.moveTo(this.position[i].x + 90, this.position[i].y + 100);
+        ctx.lineTo(this.position[this.datas[i]].x + 90, -100);
       }
       ctx.stroke();
       for (let i = 0; i < this.count; i++) {
@@ -207,25 +213,36 @@ export default {
 
 }
 
-.roles.tooltip.tooltiptext {
+
+
+.tooltip {
+  position: relative;
+  display: block;
+  font-size: 50px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+
+.tooltip .tooltiptext {
   visibility: hidden;
-  width: 120px;
-  background-color: #555;
+  width: 250px;
+  background-color: black;
   color: #fff;
   text-align: center;
-  padding: 5px 0;
   border-radius: 6px;
-
-  /* Position the tooltip text */
+  padding: 5px 0;
+  font-size: 20px;
+  /* Position the tooltip */
   position: absolute;
   z-index: 1;
-  bottom: 125%;
-  left: 50%;
-  margin-left: -60px;
+  top: 10%;
+  left: 70%;
+  margin-left: -40px;
+}
 
-  /* Fade in tooltip */
-  opacity: 0;
-  transition: opacity 0.3s;
+.tooltip:hover .tooltiptext {
+  visibility: visible;
 }
 
 .container {

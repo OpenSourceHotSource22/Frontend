@@ -238,7 +238,7 @@ body {
 
 #app2 {
   text-align: center;
-  background-color: #eb6383;
+  background-color: #ffe9c5;
 }
 
 
