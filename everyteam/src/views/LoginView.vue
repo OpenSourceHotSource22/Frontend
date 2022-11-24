@@ -1,83 +1,89 @@
 <template>
   <v-app>
-    <v-layout>
-      <v-flex xs6 sm5 md4 lg3 xl2 style="position: relative; margin: auto">
-        <h1>Welcome</h1>
-        <v-form ref="form" v-model="loginValid" lazy-validation>
+    <v-container>
+      <v-row class="pt-16">
+        <v-col>
+          <v-img
+            src="@/assets/everyteamLogo.png"
+            max-heigth="600"
+            max-width="600"
+          ></v-img>
+        </v-col>
+        <v-col>
+          <div style="padding: 30px; padding-top: 300px">
+            <v-form ref="form" v-model="loginValid" lazy-validation>
+              <v-text-field
+                v-model="loginId"
+                :rules="idRules"
+                label="Id"
+                outlined
+                required
+              ></v-text-field>
+
+              <v-text-field
+                v-model="loginPw"
+                :append-icon="loginPwShow ? 'mdi-eye' : 'mdi-eye-off'"
+                :rules="pwRules"
+                :type="loginPwShow ? 'text' : 'password'"
+                name="input-10-2"
+                label="PW"
+                class="input-group--focused"
+                @click:append="loginPwShow = !loginPwShow"
+                outlined
+                required
+              ></v-text-field>
+            </v-form>
+
+            <v-btn
+              :disabled="!loginValid"
+              color="success"
+              class="mr-4"
+              @click="loginValidateCheck"
+            >
+              로그인
+            </v-btn>
+
+            <v-btn color="error" class="mr-4" @click="openSignup">
+              회원가입
+            </v-btn>
+          </div>
+        </v-col>
+      </v-row>
+      <v-overlay :opacity="opacity" :value="overlay">
+        <div
+          style="position: absolute; position: fixed; top: 200px; right: 100px"
+        >
+          <v-btn fab color="green" @click="overlay = false">
+            <v-icon>mdi-close</v-icon>
+          </v-btn>
+        </div>
+        <v-form ref="signupFrom" v-model="signupValid" lazy-validation>
           <v-text-field
-            v-model="loginId"
+            v-model="signupId"
             :rules="idRules"
-            label="Id"
+            label="signupId"
             outlined
             required
           ></v-text-field>
 
           <v-text-field
-            v-model="loginPw"
-            :append-icon="loginPwShow ? 'mdi-eye' : 'mdi-eye-off'"
+            v-model="signupPw"
+            :append-icon="signupPwShow ? 'mdi-eye' : 'mdi-eye-off'"
             :rules="pwRules"
-            :type="loginPwShow ? 'text' : 'password'"
+            :type="signupPwShow ? 'text' : 'password'"
             name="input-10-2"
-            label="PW"
+            label="signupPw"
             class="input-group--focused"
-            @click:append="loginPwShow = !loginPwShow"
+            @click:append="signupPwShow = !signupPwShow"
             outlined
             required
           ></v-text-field>
         </v-form>
-
-        <v-btn
-          :disabled="!loginValid"
-          color="success"
-          class="mr-4"
-          @click="loginValidateCheck"
-        >
-          로그인
+        <v-btn color="error" class="mr-4" @click="signupValidateCheck">
+          회원가입
         </v-btn>
-
-        <v-btn color="error" class="mr-4" @click="openSignup"> 회원가입 </v-btn>
-
-        <v-overlay :opacity="opacity" :value="overlay">
-          <div
-            style="
-              position: absolute;
-              position: fixed;
-              top: 200px;
-              right: 100px;
-            "
-          >
-            <v-btn fab color="green" @click="overlay = false">
-              <v-icon>mdi-close</v-icon>
-            </v-btn>
-          </div>
-          <v-form ref="signupFrom" v-model="signupValid" lazy-validation>
-            <v-text-field
-              v-model="signupId"
-              :rules="idRules"
-              label="signupId"
-              outlined
-              required
-            ></v-text-field>
-
-            <v-text-field
-              v-model="signupPw"
-              :append-icon="signupPwShow ? 'mdi-eye' : 'mdi-eye-off'"
-              :rules="pwRules"
-              :type="signupPwShow ? 'text' : 'password'"
-              name="input-10-2"
-              label="signupPw"
-              class="input-group--focused"
-              @click:append="signupPwShow = !signupPwShow"
-              outlined
-              required
-            ></v-text-field>
-          </v-form>
-          <v-btn color="error" class="mr-4" @click="signupValidateCheck">
-            회원가입
-          </v-btn>
-        </v-overlay>
-      </v-flex>
-    </v-layout>
+      </v-overlay>
+    </v-container>
   </v-app>
 </template>
 

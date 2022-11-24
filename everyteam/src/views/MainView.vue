@@ -124,7 +124,13 @@
               <!-- 그룹 list -->
               <v-menu open-on-hover top offset-x>
                 <template v-slot:activator="{ on, attrs }">
-                  <v-btn color="#1096A4" v-on="on" elevation="0" fab>
+                  <v-btn
+                    color="#1096A4"
+                    v-on="on"
+                    elevation="0"
+                    fab
+                    style="color: whitesmoke"
+                  >
                     {{ teamUserCount }}
                     <v-icon> mdi-account </v-icon>
                   </v-btn>
@@ -149,7 +155,7 @@
                     v-bind="attrs"
                     v-on="on"
                     elevation="0"
-                    style="color: black"
+                    style="color: whitesmoke"
                   >
                     초대하기
                   </v-btn>
@@ -186,7 +192,7 @@
                     v-on="on"
                     elevation="0"
                     class="mt-3"
-                    style="color: black"
+                    style="color: whitesmoke"
                   >
                     작성하기
                   </v-btn>
