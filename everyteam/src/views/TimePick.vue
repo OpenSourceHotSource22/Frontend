@@ -1,17 +1,11 @@
 <template>
     <v-app>
         <v-main>
-<<<<<<< HEAD
-            <div class="TimePick container" >
-                <v-row  >
-                    <v-col style="overflow:auto" class="align-self-center">
-=======
             <div class="TimePick container text-center" >
                 <v-row justify="space-around">
-                     <v-col style="text-align:center; overflow:auto" >
->>>>>>> 608e9f242adfc9619b443f549b8db003b159d51a
-
-                    <table class="align-self-center">
+                     <v-col class="text-center" style="text-align:center; overflow:auto;" >
+                     
+                    <table style="margin-left:auto; margin-right:auto">
                         <th>
                             <td>시간</td>
                             <div class="timeBox" style="font-size:9px; width:65px; height:25px; text-align:right"
@@ -29,8 +23,8 @@
                         
                         </th>
                     </table>
-                   
-                    </v-col>
+               
+                   </v-col>
                 </v-row>
 
                 <v-row  justify="space-around" class="mt-8">
