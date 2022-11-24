@@ -204,6 +204,7 @@
               class="item"
             >
               <v-card
+                :id="post['category']"
                 class="rounded-xl"
                 @click="MeetCardClick(post)"
                 :color="meetContent(post) == `진행중입니다` ? `blue` : `white`"
@@ -233,6 +234,12 @@
                   </v-list-item-content>
                 </v-list-item>
                 <v-card-text>
+                  <!-- <v-row
+                    v-if="post['category'] == `ROLE`"
+                    v-for="role in roleContent(post)"
+                  >
+                    <v-col cols="2" v-for="result in role">{{ result }}</v-col>
+                  </v-row> -->
                   <v-list-item
                     v-if="post['category'] == `ROLE`"
                     v-for="role in roleContent(post)"
@@ -241,6 +248,7 @@
                       result
                     }}</v-list-item-subtitle>
                   </v-list-item>
+
                   <v-card-text v-if="post['category'] == `ROLE_ROULETTE`">
                     {{ roleContent(post) }}
                   </v-card-text>
@@ -384,7 +392,7 @@
                         v-if="post['category'] == `ROLE`"
                         v-for="role in roleContent(post)"
                       >
-                        <v-list-item-subtitle v-for="result in role">{{
+                        <v-list-item-subtitle two-line v-for="result in role">{{
                           result
                         }}</v-list-item-subtitle>
                       </v-list-item>
@@ -600,9 +608,14 @@ export default {
         this.$router.push({
           path: "/WhenWeMeetResult",
         });
-      } else {
-        //마감완료된 카드
+      } else if (post["category"] == "ROLE") {
+        //사다리타기
+        // this.roleCardClick();
       }
+    },
+    roleCardClick() {
+      alert("롤카드");
+      document.getElementById("ROLE").style.width = "700px";
     },
     async updateTeamTopImg() {
       if (this.preview != "") {
