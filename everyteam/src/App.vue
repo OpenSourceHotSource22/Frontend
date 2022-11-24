@@ -23,7 +23,7 @@
       </v-list>
     </v-navigation-drawer>
     <v-app-bar app v-if="showAppBar">
-      <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
+      <v-app-bar-nav-icon @click="clickDrawer"></v-app-bar-nav-icon>
 
       <div @click="$router.push({ path: '/main' })">
         <!-- <v-img src="@/assets/everyteamBar.png" width="100"></v-img> -->
@@ -71,6 +71,10 @@ export default {
     };
   },
   methods: {
+    clickDrawer() {
+      this.drawer = !this.drawer;
+      document.getElementById("start").scrollTo(0, 0);
+    },
     goGithub() {
       window.open("https://github.com/OpenSourceHotSource22", "_blank");
     },
