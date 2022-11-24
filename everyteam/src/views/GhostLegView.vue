@@ -31,25 +31,26 @@
           <v-col></v-col>
           <v-col></v-col>
         </v-row>
-        <div v-if="isStart">
-          <v-row class="mt-3">
-            <div v-for="(n, idx) in count">
-              <v-text-field :id="String(n)" :key="idx" class="mx-3 my-0" label="Name" clearable outlined
-                v-model="textField[n - 1]" no-gutters>
-              </v-text-field>
-            </div>
-          </v-row>
+        <v-form ref="form" lazy-validation>
+          <div v-if="isStart">
+            <v-row class="mt-3">
+              <div v-for="(n, idx) in count">
+                <v-text-field :id="String(n)" :key="idx" class="mx-3 my-0" label="Name" clearable outlined
+                  v-model="textField[n - 1]" no-gutters :rules="user_text_rule">
+                </v-text-field>
+              </div>
+            </v-row>
 
-          <canvas id="canvas" width="3000" height="300"></canvas>
+            <canvas id="canvas" width="3000" height="300"></canvas>
 
-          <v-row class="mt-1">
-            <div v-for="(n, idx) in count">
-              <v-text-field :id="String(-n)" :key="idx" class="mx-3" label="Role" clearable outlined
-                v-model="resultField[n - 1]"></v-text-field>
-            </div>
-          </v-row>
-        </div>
-
+            <v-row class="mt-1">
+              <div v-for="(n, idx) in count">
+                <v-text-field :id="String(-n)" :key="idx" class="mx-3" label="Role" clearable outlined
+                  v-model="resultField[n - 1]" :rules="user_text_rule"></v-text-field>
+              </div>
+            </v-row>
+          </div>
+        </v-form>
         <v-btn @click="confirm" class="check mt-3" v-bind:disabled="buttonDisable">확인하기</v-btn>
         <v-btn color="success" class="mt-3" @click="submit" v-bind:disabled="isStart2">Submit</v-btn>
       </v-card>
@@ -69,6 +70,9 @@ export default {
       buttonDisable2: false,
       buttonDisable3: false,
       buttonDisable4: false,
+      user_text_rule: [
+        v => !(v && v.length >= 10) || '이름은 10자 이상 입력할 수 없습니다.'
+      ],
       datas: [
 
       ],
