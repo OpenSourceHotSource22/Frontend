@@ -2,12 +2,11 @@
     <v-app>
         <v-main>
             <div class="TimePick container" >
-
-                <v-row justify="space-around" >
+                <v-row  >
                     <v-col style="overflow:auto">
 
                     <table>
-                        <th style="font-size:13.4px;">
+                        <th>
                             <td>시간</td>
                             <div class="timeBox" style="font-size:9px; width:65px; height:25px; text-align:right"
                              v-for="t in time" :key="t.name">
