@@ -46,6 +46,20 @@
     </v-app-bar>
 
     <router-view />
+    <v-footer padless>
+      <v-card flat tile width="100%" class="text-center">
+        <v-card-text class="white--text">
+          <strong>EVERYTEAM</strong>
+          <v-btn class="mx-4" icon @click="goGithub">
+            <v-icon size="24px"> mdi-github </v-icon>
+          </v-btn>
+        </v-card-text>
+        <v-divider></v-divider>
+        <v-card-text>
+          {{ new Date().getFullYear() }} — <strong>created by 웅나쓰자</strong>
+        </v-card-text>
+      </v-card>
+    </v-footer>
   </div>
 </template>
 
@@ -66,6 +80,9 @@ export default {
     };
   },
   methods: {
+    goGithub() {
+      window.open("https://github.com/OpenSourceHotSource22", "_blank");
+    },
     logout() {
       //localstoreage에 저장된 값을 삭제해줌
       localStorage.setItem("token", "");
