@@ -52,7 +52,52 @@
         </v-dialog>
       </v-img>
 
-      <v-img v-else :src="teamTopImg" max-height="250"></v-img>
+      <v-img v-else :src="teamTopImg" max-height="250">
+        <!-- teamtopimg 추가 -->
+        <v-dialog v-model="teamTopImgDialog" width="500">
+          <template v-slot:activator="{ on, attrs }">
+            <v-btn
+              elevation="2"
+              color="#3b8686"
+              dark
+              v-bind="attrs"
+              v-on="on"
+              class="mt-5"
+              rounded
+              bottom
+              right
+              absolute
+            >
+              <v-icon>mdi-plus</v-icon>
+            </v-btn>
+          </template>
+
+          <v-card>
+            <v-card-title class="text-h5">
+              그룹배경이미지 추가하기
+            </v-card-title>
+
+            <v-card-text>
+              <v-file-input
+                v-model="teamTopInputImg"
+                show-size
+                label="main페이지의 top이미지를 선택해주세요"
+                @change="previewFile(teamTopInputImg)"
+              ></v-file-input>
+              <img class="inputImg" :src="preview"
+            /></v-card-text>
+            <v-btn @click="updateTeamTopImg"> 체출 </v-btn>
+            <v-divider></v-divider>
+
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn color="primary" text @click="teamTopImgDialog = false">
+                닫기
+              </v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog></v-img
+      >
 
       <v-row>
         <!-- 그룹 정보 -->
