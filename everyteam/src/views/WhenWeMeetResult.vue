@@ -97,6 +97,7 @@ export default{
         userTime:[],
         boxColor:[],
         teamTime:[],
+        boxColor2:[],
         completeUser:[],
         teamUserCount:localStorage.getItem("teamUserCount"),
         time :[
@@ -136,7 +137,7 @@ export default{
                 {
                     "X-AUTH-TOKEN": localStorage.getItem("token"),
                 }
-            })
+            });
 
             console.log("res:",res.data);
             try{
@@ -166,7 +167,7 @@ export default{
                 //선택한 시간의 색을 결정하기 우히ㅐ
                 
                 this.boxColor.push({time:this.resultColorArray(timeSplit) });
-                console.log("boxColor: ", this.boxColor);}
+                console.log("boxColor: ", this.boxColor);} console.log("usertiememem : ", this.userTime);
             }
 
             
@@ -175,7 +176,7 @@ export default{
         },
        async getAllTime(){
        
-            try{ 
+            //모든 유저 정보 가져오기
                 const res = await axios.post(`${BASE_URL}/meet/getResultTime`,
                 {
                     "teamCode" : localStorage.getItem("teamCode"),
@@ -191,6 +192,22 @@ export default{
                 if(this.userId == res.data.result.post.userId){
                     this.isShow = true;
                 }
+
+                if(res.data.result.meetTime.length == 0){
+                    var userArray=["","","","","","","","","","","","","","","","","",""];
+                    var forBoxColor=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+                    for(i in this.userTime){
+
+                    this.teamTime.push({
+                                            time:forBoxColor,
+                                            name:userArray,
+                                        });
+                    }
+                  
+                       console.log("thisteamtiemmmm:",this.teamTime);
+                }
+                else{
+                   
                 //console.log("팀 합친 color : ", this.teamTime);
                 //어떤 유저들이 시간을 체크했는지 유저이름 저장하기
                 for(var i in res.data.result.meetTime){
@@ -219,17 +236,15 @@ export default{
                     console.log(j,"번째 날 유저들의 날짜 합친것 : ",timeSplit);
                     this.teamTime.push({
                         time:this.resultColorArray(timeSplit),
-                        name:userArray
+                        name:userArray,
                     });
                     console.log("userarray:",userArray);
                     console.log("teamTime:",this.teamTime);
                 }
                 
                 
-                
-            }catch(err){
-                console.log(err);
-            }
+                }
+           
         },
 
         resultColorArray(timeSplit){//겹치는 시간 표시
@@ -331,14 +346,21 @@ export default{
         }
     },
     beforeMount(){
-        
        // localStorage.setItem("meetCode",this.$route.params.meetCode);
-        this.meetCode = localStorage.getItem("meetCode");
+       this.meetCode = localStorage.getItem("meetCode");
+        // this.getUserTime();
+        // this.getAllTime();
+      
     },
-    mounted(){
-        
+    mounted(){ 
         this.getUserTime();
-        this.getAllTime();
+       this.getAllTime();
     },
+    beforeDestroy(){
+        
+    },
+    
+  
 }
+
 </script>
