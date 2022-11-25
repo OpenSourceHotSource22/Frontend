@@ -15,7 +15,7 @@
           </v-list-item>
 
           <v-list-item style="background-color: lightblue; margin-top: 10px">
-            <v-list-item-title @click="goMyGroupsPage">
+            <v-list-item-title :style="logoColor" @click="goMyGroupsPage">
               나의 그룹리스트
             </v-list-item-title>
           </v-list-item>
@@ -23,22 +23,12 @@
       </v-list>
     </v-navigation-drawer>
     <v-app-bar app v-if="showAppBar">
-      <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
+      <v-app-bar-nav-icon @click="clickDrawer"></v-app-bar-nav-icon>
 
-      <p @click="$router.push({ path: '/main' })">
-        <v-img src="@/assets/everyteamBar.png" width="100"></v-img>
-      </p>
-      <!-- <nav>
-        <router-link to="/">Intro</router-link> |
-        <router-link to="/login">Login</router-link>|
-        <router-link to="/mygroups">mygroups</router-link> |
-        <router-link to="/createGroup">GreateGroup</router-link>|
-        <router-link to="/main">main</router-link>|
-        <router-link to="/post">post</router-link>|
-        <router-link to="/roles">Roles</router-link>|
-        <router-link to="/whenWeMeet">whenwemeet</router-link>|
-        <router-link to="/example">example</router-link>
-      </nav> -->
+      <div @click="$router.push({ path: '/main' })">
+        <!-- <v-img src="@/assets/everyteamBar.png" width="100"></v-img> -->
+        <h3 :style="logoColor">everyteam</h3>
+      </div>
 
       <div style="position: absolute; position: fixed; top: 10px; right: 50px">
         <v-btn @click="logout">로그아웃</v-btn>
@@ -77,9 +67,14 @@ export default {
       drawer: false,
       group: null,
       userGroupList: [],
+      theme: localStorage.getItem("theme"),
     };
   },
   methods: {
+    clickDrawer() {
+      this.drawer = !this.drawer;
+      document.getElementById("start").scrollTo(0, 0);
+    },
     goGithub() {
       window.open("https://github.com/OpenSourceHotSource22", "_blank");
     },
@@ -120,6 +115,27 @@ export default {
     },
   },
   computed: {
+    ...mapState("themeStore", {
+      basicTheme: "basicTheme",
+      purpleTheme: "purpleTheme",
+      earthTheme: "earthTheme",
+      indigoTheme: "indigoTheme",
+      themeStore: "themeStore",
+    }),
+    logoColor() {
+      if (this.themeStore == "basic") {
+        return this.basicTheme["logoColor"];
+      }
+      if (this.themeStore == "purple") {
+        return this.purpleTheme["logoColor"];
+      }
+      if (this.themeStore == "earth") {
+        return this.earthTheme["logoColor"];
+      }
+      if (this.themeStore == "indigo") {
+        return this.indigoTheme["logoColor"];
+      }
+    },
     routerName() {
       return this.$route.name;
     },
@@ -148,9 +164,6 @@ export default {
     group() {
       this.drawer = false;
     },
-    // drawer() {
-    //   this.getUserGroupList();
-    // },
   },
   mounted() {
     console.log("selectedidx", this.selectedItem);
@@ -181,6 +194,7 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  // background-color: #f5f5f5;
 }
 
 nav {
