@@ -161,7 +161,9 @@ export default {
         console.log("그룹리스트 불러오기 성공!!");
         this.updateUserGroups(res.data["result"]["team"]);
         console.log("res:", res.data["result"]["team"]);
-        console.log("store:", this.userGroups);
+        // 유저의 테마 저장하기
+        console.log("theme: ", res.data["result"]["user"].color);
+        localStorage.setItem("theme", res.data["result"]["user"].color);
       } catch (error) {
         console.log(error);
       }
