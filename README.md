@@ -1,24 +1,31 @@
-# Frontend
+## 오픈소스소프트웨어 팀 프로젝트 Frontend part
 
-#### 오픈소스소프트웨어 팀 프로젝트 Frontend part
+## 프로젝트 주제
 
-#### 프로젝트 초기세팅
+---
+
+프로젝트명 : EveryTeam
+
+팀플 또는 스터디를 위한 일정을 세울 때 일정 관리부터 역할 분담, 자료 모음 등을 서로 다 른 플랫폼을 사용하여 정하는 일이 빈번하다.
+`EveryTeam`은 일정공유, 역할분담, 자료 공유 등을 하나의 플랫폼에서 진행할 수 있는 서비스이다.
+팀프로젝트에 참여하는 인원이 모임이 가능한 날짜를 간편하게 체크하고, 이를 추합하여 모든 사람이 가능한 일정을 선택할 수 있는 기능. 사다리타기와 룰렛으로 간편한 역할분담 기능. 자료 공유를 편하게 할 수 있는 게시판 기능을 제공한다.
+웹페이지로 구현하여 어떤 디바이스에서든 접근이 용이하고, 팀 링크로 누구든 편하게 서비스를 사용할 수 있다.
+`EveryTeam`은 팀플 또는 스터디에 필요한 정보를 하나의 웹에서 결정하고 공유하는 것이 가능하다.
+
+## 프로젝트 초기세팅
+
+---
 
 ```
-git clone ...
-
-//git 사용하는 터미널
-cd FRONTEND
-git checkout "자신의 branch 이름"
-git pull origin main
-
-//다른 터미널 열기
+git clone https://github.com/OpenSourceHotSource22/Frontend.git
 cd everyteam
 npm install
 npm run serve
 ```
 
 ## 커밋 컨벤션
+
+---
 
 ```
 feat : 새로운 기능 추가
@@ -30,84 +37,6 @@ test : 테스트 코드, 리펙토링 테스트 코드 추가
 chore : 빌드 업무 수정, 패키지 매니저 수정
 ```
 
-## 팀원별 수정권한 파일
+## 기본기능
 
-### 지은
-
-everyteam/src/views/WhenWeMeetView.vue  
-everyteam/src/store/modules/whenWeMeetStore.js
-
-### 성호
-
-everyteam/src/views/RolesView.vue  
-everyteam/src/views/RouletteView.vue  
-everyteam/src/views/GhostLegView.vue  
-everyteam/src/store/modules/rolesStore.js
-
-#### +새로운 파일 생성시 아래 경로에서 가능
-
-everyteam/src/views/"새로운파일명"  
-everyteam/src/components/"새로운파일명"
-
-## 코드 사용법 예시
-
-### api 사용
-
-```
-import { BASE_URL } from "@/api";
-...
-//api 호출시 url 예시
-`${BASE_URL}/login`
-```
-
-#### api header, body
-
-```js
-async createGroup() {
-      try {
-        const res = await axios.post(
-          `${BASE_URL}/team`,
-          {
-            name: this.groupName,
-          },
-          {
-            headers: {
-              "X-AUTH-TOKEN": localStorage.getItem("token"),
-            },
-          }
-        );
-        console.log("res:", res);
-      } catch (error) {
-        console.log(error);
-      }
-},
-```
-
-### store파일 설명
-
-state -> 전역에서 사용할 변수  
-getters -> 변수를 불러서 쓸 때  
-mutations -> state를 update할 때 사용
-
-### 다른 파일에서 store사용시
-
-```
-import { mapState, mapMutations } from "vuex";
-...
-computed: {
-    //변수
-    ...mapState("userStore", {
-      userName: "userName",
-    }),
-    ...mapState("groupStore", {
-      groupName: "groupName",
-      groupList: "groupList",
-    }),
-  },
-methods: {
-    //함수
-    ...mapMutations("userStore", {
-      updateUserName: "updateUserName",
-    }),
-}
-```
+---
