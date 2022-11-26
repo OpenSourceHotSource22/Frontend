@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-app :style="BackGroundColor">
     <v-main>
       <div class="title">
         <v-row  justify="space-around">
@@ -46,6 +46,7 @@
 <script>
 import axios from "axios";
 import { BASE_URL } from "@/api";
+import { mapState } from "vuex";
 
 export default {
   
@@ -57,6 +58,29 @@ export default {
     title : "",
    dates:[],
   }),
+  computed:{
+    ...mapState("themeStore", {
+      basicTheme: "basicTheme",
+      purpleTheme: "purpleTheme",
+      earthTheme: "earthTheme",
+      indigoTheme: "indigoTheme",
+      themeStore: "themeStore",
+      }),
+      BackGroupdColor() {
+      if (this.themeStore == "basic") {
+        return this.basicTheme["mainBackColor"];
+      }
+      if (this.themeStore == "purple") {
+        return this.purpleTheme["mainBackColor"];
+      }
+      if (this.themeStore == "earth") {
+        return this.earthTheme["mainBackColor"];
+      }
+      if (this.themeStore == "indigo") {
+        return this.indigoTheme["mainBackColor"];
+      }
+    },
+  },
 
   methods: {
     dayclick(day){
