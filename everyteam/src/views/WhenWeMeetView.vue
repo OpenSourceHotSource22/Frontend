@@ -34,7 +34,7 @@
 
     />
     <v-row align="center" justify="space-around">
-      <v-btn :color="ThemeBtnColor"  @click="nextBtn">선택완료</v-btn>
+      <v-btn :color="ThemeBtnColor"  @click="nextBtn" style="color: whitesmoke">선택완료</v-btn>
     </v-row>
   </div>
 

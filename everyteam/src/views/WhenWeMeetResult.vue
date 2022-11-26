@@ -81,7 +81,7 @@
 
 <script>
 
-import ResultTimeBox from "./ResultTimeBox.vue"
+import ResultTimeBox from "../components/ResultTimeBox.vue"
 import axios from "axios";
 import { BASE_URL } from "@/api";
 import { mapState } from "vuex";
