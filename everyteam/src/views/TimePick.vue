@@ -28,9 +28,9 @@
                 </v-row>
 
                 <v-row  justify="space-around" class="mt-8">
-                    <v-col align="right" cols="7"> <v-btn  rounded color="primary" width="200px" @click="btnSubmit">선택완료</v-btn></v-col>
+                    <v-col align="right" cols="7"> <v-btn  rounded :color="ThemeBtnColor" width="200px" @click="btnSubmit" style="color: whitesmoke">선택완료</v-btn></v-col>
 
-                    <v-col cols="5"> <v-btn color="primary" @click="goPrev" text> <v-icon>mdi-arrow-left</v-icon>결과창으로 가기</v-btn></v-col>
+                    <v-col cols="5"> <v-btn :color="ThemeBtnColor" @click="goPrev" text> <v-icon>mdi-arrow-left</v-icon>결과창으로 가기</v-btn></v-col>
 
                 </v-row>
             </div>
@@ -98,6 +98,20 @@ export default {
       }
       if (this.themeStore == "indigo") {
         return this.indigoTheme["mainBackColor"];
+      }
+    },
+    ThemeBtnColor() {
+      if (this.themeStore == "basic") {
+        return this.basicTheme["groupInfoBtnColor"];
+      }
+      if (this.themeStore == "purple") {
+        return this.purpleTheme["groupInfoBtnColor"];
+      }
+      if (this.themeStore == "earth") {
+        return this.earthTheme["groupInfoBtnColor"];
+      }
+      if (this.themeStore == "indigo") {
+        return this.indigoTheme["groupInfoBtnColor"];
       }
     },
     },
