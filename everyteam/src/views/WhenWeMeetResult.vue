@@ -1,5 +1,5 @@
 <template>
-    <v-app>
+    <v-app :style="BackGroundColor">
         <v-main>
             <div  class="timeResult">
                 <v-row>
@@ -84,7 +84,7 @@
 import ResultTimeBox from "./ResultTimeBox.vue"
 import axios from "axios";
 import { BASE_URL } from "@/api";
-
+import { mapState } from "vuex";
 export default{
     components :{ResultTimeBox},
 
@@ -344,6 +344,30 @@ export default{
             this.whoSelect = name.split(',');
             this.whoSelect = this.whoSelect.slice(0,this.whoSelect.length-1);
         }
+    },
+    computed:{
+         ...mapState("themeStore", {
+      basicTheme: "basicTheme",
+      purpleTheme: "purpleTheme",
+      earthTheme: "earthTheme",
+      indigoTheme: "indigoTheme",
+      themeStore: "themeStore",
+      }),
+      BackGroupdColor() {
+      if (this.themeStore == "basic") {
+        return this.basicTheme["mainBackColor"];
+      }
+      if (this.themeStore == "purple") {
+        return this.purpleTheme["mainBackColor"];
+      }
+      if (this.themeStore == "earth") {
+        return this.earthTheme["mainBackColor"];
+      }
+      if (this.themeStore == "indigo") {
+        return this.indigoTheme["mainBackColor"];
+      }
+    },
+
     },
     beforeMount(){
        // localStorage.setItem("meetCode",this.$route.params.meetCode);
