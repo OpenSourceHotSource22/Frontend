@@ -6,9 +6,10 @@
           <v-btn :disabled="isStart" @click="plus" id="plusBtn" class="mx-4"> + </v-btn>
           {{ count }}
           <v-btn :disabled="isStart" @click="minus" class="mx-4"> - </v-btn>
+          <v-btn class="my-4" @click="start">시작하기</v-btn>
         </v-row>
         <v-row>
-          <v-btn class="my-4" @click="start">시작하기</v-btn>
+
         </v-row>
         <div v-if="isStart">
           <v-row class="my-0">
