@@ -47,22 +47,27 @@ chore : 빌드 업무 수정, 패키지 매니저 수정
 
 <img width="535" alt="스크린샷 2022-11-26 오후 11 24 14" src="https://user-images.githubusercontent.com/65282581/204093664-0adb5ba4-378c-4129-b991-9a5c426cf484.png">
 
- <img width="539" alt="스크린샷 2022-11-26 오후 11 26 56" src="https://user-images.githubusercontent.com/65282581/204093787-ab98d0d4-ec71-414b-9c16-a0ecc5c212ee.png">
  제출버튼은 돌림판을 돌리기전에는 제출할 수 없게 되어있습니다. 그리고 역할작성에 최소 두글자 이상 작성해야 제출할 수 있습니다.
+ <img width="539" alt="스크린샷 2022-11-26 오후 11 26 56" src="https://user-images.githubusercontent.com/65282581/204093787-ab98d0d4-ec71-414b-9c16-a0ecc5c212ee.png">
+
  
  결과는 이런식으로 ROLE_ROULETTE 게시물이란 type으로 메인페이지에 작성됩니다.
  <img width="543" alt="스크린샷 2022-11-26 오후 11 31 22" src="https://user-images.githubusercontent.com/65282581/204094012-e28c0e9c-098c-4d8e-a1ae-3cc6fadc6768.png">
 
 
 
-1.	사랑의 작대기 기능
+2.	사랑의 작대기 기능
 제목작성 부분에 글의 제목을 적고 왼쪽 가운데 +.- 버튼으로 역할을 매칭할 사람 수를 정하고 시작하기 버튼을 누릅니다.
 <img width="538" alt="스크린샷 2022-11-26 오후 11 26 14" src="https://user-images.githubusercontent.com/65282581/204093761-0dceae02-3b0e-47c2-9d2e-faa2900bbac0.png">
 
-name과 롤에 각각 이름과 당첨될 역할을 적은 후 확인하기를 누릅니다.![image](https://user-images.githubusercontent.com/65282581/204094131-3185e48e-a2e1-42bc-8e37-5ff089764099.png)
+
+name과 롤에 각각 이름과 당첨될 역할을 적은 후 확인하기를 누릅니다.
+<img width="509" alt="스크린샷 2022-11-26 오후 11 43 54" src="https://user-images.githubusercontent.com/65282581/204094659-aabb6347-29b1-414c-982f-5b6a446ea9e0.png">
+
   
 결과는 이런식으로 ROLE이란 type으로 메인페이지에 부착됩니다.
 ![image](https://user-images.githubusercontent.com/65282581/204094145-4b0d23db-bae3-4090-b305-3002e3af3111.png)
+
 
 
 
@@ -118,15 +123,16 @@ name과 롤에 각각 이름과 당첨될 역할을 적은 후 확인하기를 �
 <img width="541" alt="스크린샷 2022-11-26 오후 11 37 16" src="https://user-images.githubusercontent.com/65282581/204094276-31e3667e-5c84-48d5-a6dc-e31c32e12371.png">
 
 3. createGroup
+
   <img width="539" alt="스크린샷 2022-11-26 오후 11 37 28" src="https://user-images.githubusercontent.com/65282581/204094292-965e3662-ad35-4804-8de9-ca9ab2703e77.png">
 
-그룹 이름과 설명, 그룹 프로필 이미지를 넣어 그룹을 생성할 수 
+그룹 이름과 설명, 그룹 프로필 이미지를 넣어 그룹을 생성할 수 있습니다
 
 4. main
  4.1. 생성일/항목별
  
 생성일을 기준으로 모든 게시물들을 확인할 수 있습니다. 
-각 게시물에는 title, 생성날짜, 카테고리, 내용, 작성자에 대한 내용이 들어있습니다. 
+각 게시물에는 title, 생성날짜, 카테고리, 내용, 작성자에 대한 내용이 들어있습니다.
  <img width="539" alt="스크린샷 2022-11-26 오후 11 38 01" src="https://user-images.githubusercontent.com/65282581/204094320-5e9729e2-7d69-4f95-aa4c-f3f089c24146.png">
 
 항목별로 게시물을 확인할 수 있습니다. WhenWeMeet게시물이 진행중인 경우 색을 다르게 하여 사용자가 구분할 수 있도록 하였고, 클릭시 진행중인 whenWeMeet페이지로 이동합니다.
@@ -136,7 +142,6 @@ name과 롤에 각각 이름과 당첨될 역할을 적은 후 확인하기를 �
  
  <img width="491" alt="스크린샷 2022-11-26 오후 11 38 31" src="https://user-images.githubusercontent.com/65282581/204094335-8b49411f-56d9-43da-8473-7a067290fd03.png">
 
- 
 이미지 위에 +버튼을 눌러 그룹 배경 이미지를 바꿀 수 있습니다. 
 
  4.3 그룹 정보 확인
@@ -145,16 +150,19 @@ name과 롤에 각각 이름과 당첨될 역할을 적은 후 확인하기를 �
 
 가장 첫번째 버튼은 그룹에 가입되어 있는 user list를 확인할 수 있습니다. 
 초대하기 클릭시 그룹의 고유한 코드가 보이고 옆에 있는 아이콘을 클릭하면 클립보드에 복사되어 다른 이들에게 쉽게 공유할 수 있습니다. 
+
  <img width="186" alt="스크린샷 2022-11-26 오후 11 39 15" src="https://user-images.githubusercontent.com/65282581/204094412-a32d42d4-d631-449e-85ae-abf33f13fe1d.png">
 
 추가하기 버튼 클릭시 post, whenWeMeet, Role 기능을 사용할 수 있습니다.
 
  4.4 테마
+ 
     <img width="538" alt="스크린샷 2022-11-26 오후 11 39 35" src="https://user-images.githubusercontent.com/65282581/204094435-3ff0a004-cf9b-4a63-9478-60dd54e8ab86.png">
 
 Basic, earth, purple, indigo 총 4가지 테마를 제공합니다. 각 유저가 선택한 테마는 저장되어 다시 로그인 시 유저가 선택한 테마로 보여줍니다. 
 
  5. post
+ 
  <img width="404" alt="스크린샷 2022-11-26 오후 11 39 50" src="https://user-images.githubusercontent.com/65282581/204094442-b232578a-802a-44bc-8f1f-bd11a08442c5.png">
 
 제목과 내용을 입력하여 post 게시물을 작성할 수 있습니다
