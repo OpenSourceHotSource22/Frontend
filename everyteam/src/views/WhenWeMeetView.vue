@@ -9,6 +9,7 @@
           md="3"
         >
        <v-text-field
+          :color="ThemeBtnColor"
             v-model="title"
             label="title"
             outlined
@@ -21,7 +22,7 @@
        <!-- 1st page 날짜 정하기 -->
    <div class="Month">
       <v-date-picker
-        
+        :color="ThemeBtnColor"
         v-model="dates"
         year-icon="mdi-calendar-blank"
         width="600"
@@ -33,7 +34,7 @@
 
     />
     <v-row align="center" justify="space-around">
-      <v-btn color="primary"  @click="nextBtn">선택완료</v-btn>
+      <v-btn :color="ThemeBtnColor"  @click="nextBtn">선택완료</v-btn>
     </v-row>
   </div>
 
@@ -80,6 +81,20 @@ export default {
       }
       if (this.themeStore == "indigo") {
         return this.indigoTheme["mainBackColor"];
+      }
+    },
+    ThemeBtnColor() {
+      if (this.themeStore == "basic") {
+        return this.basicTheme["groupInfoBtnColor"];
+      }
+      if (this.themeStore == "purple") {
+        return this.purpleTheme["groupInfoBtnColor"];
+      }
+      if (this.themeStore == "earth") {
+        return this.earthTheme["groupInfoBtnColor"];
+      }
+      if (this.themeStore == "indigo") {
+        return this.indigoTheme["groupInfoBtnColor"];
       }
     },
   },

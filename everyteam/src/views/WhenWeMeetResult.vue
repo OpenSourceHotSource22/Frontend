@@ -44,31 +44,31 @@
                         <div class="mb-5 container">
                             <p>선택 완료한 유저들 {{completeUser.length}}/{{teamUserCount}}</p>
                             <div v-for="user in completeUser" :key="user">
-                                <v-icon color="primary">mdi-checkbox-marked-circle</v-icon> {{user}}
+                                <v-icon :color="ThemeBtnColor">mdi-checkbox-marked-circle</v-icon> {{user}}
                             </div>
                         </div>
                         
                         
-                        <div style="border:solid 3px green;border-radius: 10% / 50%;" class="container mt-5 pb-5 px-5 py-5">
+                        <div style="border:solid 3px black;border-radius: 10% / 50%;" class="container mt-5 pb-5 px-5 py-5">
                             <p style="color:blue; font-size:5px">팀원시간 클릭!</p>
                             <p>가능 유저들</p>
                             <div v-for="name in whoSelect" :key="name">
-                                <v-icon>mdi-account-circle</v-icon>{{name}}
+                                <v-icon :color="ThemeBtnColor">mdi-account-circle</v-icon>{{name}}
                             </div>
                         </div>
                        
                     </v-col>
                 </v-row>
                 <v-row class="btn">
-                    <v-col cols="6"  class="prevBtn"> <v-btn rounded color="primary" @click="goPrev"> <v-icon>mdi-alarm</v-icon>  가능시간 선택하기</v-btn> </v-col>
-                   <v-col class="goToMain"><v-btn color="primary" @click="goMain" text> <v-icon>mdi-arrow-left</v-icon>  메인으로 돌아가기</v-btn></v-col>
+                    <v-col cols="6"  class="prevBtn"> <v-btn rounded :color="ThemeBtnColor" @click="goPrev" style="color: whitesmoke"> <v-icon >mdi-alarm</v-icon>  가능시간 선택하기</v-btn> </v-col>
+                   <v-col class="goToMain"><v-btn :color="ThemeBtnColor" @click="goMain" text> <v-icon>mdi-arrow-left</v-icon>  메인으로 돌아가기</v-btn></v-col>
                 </v-row>
 
                 <v-row class="submit mt-5" justify="space-around">
                     <v-form v-show="isShow">
-                        <v-row>
-                            <v-col><v-text-field style="width:400px" v-model="content" label="최종날짜를 입력하시오" outlined ></v-text-field></v-col>
-                            <v-col> <v-btn color="primary" @click="submit"> <v-icon>mdi-pencil</v-icon>  마감</v-btn></v-col>
+                        <v-row >
+                            <v-col><v-text-field  :color="ThemeBtnColor" style="width:400px" v-model="content" label="최종날짜를 입력하시오" outlined ></v-text-field></v-col>
+                            <v-col> <v-btn class="align-self-center" :color="ThemeBtnColor" @click="submit" style="color: whitesmoke"> <v-icon>mdi-pencil</v-icon>  마감</v-btn></v-col>
                         </v-row>
                         
                        
@@ -367,6 +367,20 @@ export default{
       }
       if (this.themeStore == "indigo") {
         return this.indigoTheme["mainBackColor"];
+      }
+    },
+    ThemeBtnColor() {
+      if (this.themeStore == "basic") {
+        return this.basicTheme["groupInfoBtnColor"];
+      }
+      if (this.themeStore == "purple") {
+        return this.purpleTheme["groupInfoBtnColor"];
+      }
+      if (this.themeStore == "earth") {
+        return this.earthTheme["groupInfoBtnColor"];
+      }
+      if (this.themeStore == "indigo") {
+        return this.indigoTheme["groupInfoBtnColor"];
       }
     },
 
