@@ -1,7 +1,7 @@
 const themeStore = {
   namespaced: true,
   state: {
-    themeStore: "basic",
+    themeStore: localStorage.getItem("theme"),
     basicTheme: {
       groupInfoBackColor: "#80C0CC",
       groupInfoBtnColor: "#1096A4",
