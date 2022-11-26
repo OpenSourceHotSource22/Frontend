@@ -41,7 +41,7 @@
 <script>
 import axios from "axios";
 import { BASE_URL } from "@/api";
-import TimeBox from './TimeBox.vue';
+import TimeBox from '../components/TimeBox.vue';
 import { mapState } from "vuex";
 //import DragSelect from 'drag-select-vue';
 
