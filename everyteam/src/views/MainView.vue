@@ -1,27 +1,12 @@
 <template>
   <v-app>
     <v-main :style="mainBackColor">
-      <v-img
-        v-if="teamTopImg == null"
-        src="@/assets/groupBack.png"
-        max-height="250"
-      >
+      <v-img v-if="teamTopImg == null" src="@/assets/groupBack.png" max-height="250">
         <!-- teamtopimg 추가 -->
         <v-dialog v-model="teamTopImgDialog" width="500">
           <template v-slot:activator="{ on, attrs }">
-            <v-btn
-              elevation="1"
-              color="#A3BBBC"
-              dark
-              small
-              v-bind="attrs"
-              v-on="on"
-              class="mt-5"
-              rounded
-              bottom
-              right
-              absolute
-            >
+            <v-btn elevation="1" color="#A3BBBC" dark small v-bind="attrs" v-on="on" class="mt-5" rounded bottom right
+              absolute>
               <v-icon>mdi-plus</v-icon>
             </v-btn>
           </template>
@@ -32,14 +17,10 @@
             </v-card-title>
 
             <v-card-text>
-              <v-file-input
-                v-model="teamTopInputImg"
-                show-size
-                label="main페이지의 top이미지를 선택해주세요"
-                @change="previewFile(teamTopInputImg)"
-              ></v-file-input>
-              <img class="inputImg" :src="preview"
-            /></v-card-text>
+              <v-file-input v-model="teamTopInputImg" show-size label="main페이지의 top이미지를 선택해주세요"
+                @change="previewFile(teamTopInputImg)"></v-file-input>
+              <img class="inputImg" :src="preview" />
+            </v-card-text>
             <v-btn class="mb-5" @click="updateTeamTopImg"> 적용하기 </v-btn>
             <v-divider></v-divider>
 
@@ -57,19 +38,8 @@
         <!-- teamtopimg 추가 -->
         <v-dialog v-model="teamTopImgDialog" width="500">
           <template v-slot:activator="{ on, attrs }">
-            <v-btn
-              elevation="1"
-              color="#A3BBBC"
-              dark
-              small
-              v-bind="attrs"
-              v-on="on"
-              class="mt-5"
-              rounded
-              bottom
-              right
-              absolute
-            >
+            <v-btn elevation="1" color="#A3BBBC" dark small v-bind="attrs" v-on="on" class="mt-5" rounded bottom right
+              absolute>
               <v-icon>mdi-plus</v-icon>
             </v-btn>
           </template>
@@ -80,14 +50,10 @@
             </v-card-title>
 
             <v-card-text>
-              <v-file-input
-                v-model="teamTopInputImg"
-                show-size
-                label="main페이지의 top이미지를 선택해주세요"
-                @change="previewFile(teamTopInputImg)"
-              ></v-file-input>
-              <img class="inputImg" :src="preview"
-            /></v-card-text>
+              <v-file-input v-model="teamTopInputImg" show-size label="main페이지의 top이미지를 선택해주세요"
+                @change="previewFile(teamTopInputImg)"></v-file-input>
+              <img class="inputImg" :src="preview" />
+            </v-card-text>
             <v-btn class="mb-5" @click="updateTeamTopImg"> 적용하기 </v-btn>
             <v-divider></v-divider>
 
@@ -98,18 +64,14 @@
               </v-btn>
             </v-card-actions>
           </v-card>
-        </v-dialog></v-img
-      >
+        </v-dialog>
+      </v-img>
 
       <v-row>
         <!-- 그룹 정보 -->
         <v-col cols="2">
-          <v-card
-            :color="groupInfoBackColor"
-            class="group rounded-lg mt-3 mb-10"
-            elevation="0"
-            style="color: whitesmoke"
-          >
+          <v-card :color="groupInfoBackColor" class="group rounded-lg mt-3 mb-10" elevation="0"
+            style="color: whitesmoke">
             <v-avatar size="100px" class="mt-4">
               <img alt="Avatar" :src="teamProfileImg" />
             </v-avatar>
@@ -124,22 +86,13 @@
               <!-- 그룹 list -->
               <v-menu open-on-hover top offset-x>
                 <template v-slot:activator="{ on, attrs }">
-                  <v-btn
-                    :color="groupInfoBtnColor"
-                    v-on="on"
-                    elevation="0"
-                    fab
-                    style="color: whitesmoke"
-                  >
+                  <v-btn :color="groupInfoBtnColor" v-on="on" elevation="0" fab style="color: whitesmoke">
                     {{ teamUserCount }}
                     <v-icon> mdi-account </v-icon>
                   </v-btn>
                 </template>
                 <v-list>
-                  <v-list-item
-                    v-for="(item, index) in teamUserList"
-                    :key="index"
-                  >
+                  <v-list-item v-for="(item, index) in teamUserList" :key="index">
                     <v-list-item-title>{{ item }}</v-list-item-title>
                   </v-list-item>
                 </v-list>
@@ -234,6 +187,7 @@
                       </v-row>
                     </v-card-text>
 
+
                     <v-divider></v-divider>
 
                     <v-card-actions>
@@ -258,37 +212,22 @@
                 </v-row>
               </v-list-item-content>
             </v-list-item>
+
           </v-card>
         </v-col>
         <!-- context 생성일 -->
         <v-col class="cardList" v-if="TeamPostListDate[0] != undefined">
           <!-- <v-select :items="items" label="Standard" v-model="select"></v-select> -->
           <v-row>
-            <v-switch
-              v-model="switch1"
-              flat
-              color="primary"
-              :label="switch1 ? `항목별` : `생성일`"
-            ></v-switch>
+            <v-switch v-model="switch1" flat color="primary" :label="switch1 ? `항목별` : `생성일`"></v-switch>
           </v-row>
           <v-row v-if="!switch1" v-masonry item-selector=".item">
-            <v-col
-              v-for="(post, idx) in TeamPostListDate"
-              :key="idx"
-              cols="3"
-              v-masonry-tile
-              class="item"
-            >
-              <v-card
-                :id="post['category']"
-                class="rounded-xl"
-                @click="MeetCardClick(post)"
-                :color="
-                  meetContent(post) == `진행중입니다`
-                    ? `${meetCardColor}`
-                    : `white`
-                "
-              >
+            <v-col v-for="(post, idx) in TeamPostListDate" :key="idx" cols="3" v-masonry-tile class="item">
+              <v-card :id="post['category']" class="rounded-xl" @click="MeetCardClick(post)" :color="
+                meetContent(post) == `진행중입니다`
+                  ? `${meetCardColor}`
+                  : `white`
+              ">
                 <v-list-item two-line>
                   <v-list-item-content>
                     <v-list-item-title class="text-h5">
@@ -301,12 +240,10 @@
 
                     <v-row>
                       <v-col md="6" offset-md="3">
-                        <v-list-item-subtitle
-                          style="
+                        <v-list-item-subtitle style="
                             background-color: blanchedalmond;
                             border-radius: 5px;
-                          "
-                        >
+                          ">
                           {{ post["category"] }}
                         </v-list-item-subtitle>
                       </v-col>
@@ -320,12 +257,9 @@
                   >
                     <v-col cols="2" v-for="result in role">{{ result }}</v-col>
                   </v-row> -->
-                  <v-list-item
-                    v-if="post['category'] == `ROLE`"
-                    v-for="role in roleContent(post)"
-                  >
+                  <v-list-item v-if="post['category'] == `ROLE`" v-for="role in roleContent(post)">
                     <v-list-item-subtitle v-for="result in role">{{
-                      result
+                        result
                     }}</v-list-item-subtitle>
                   </v-list-item>
 
@@ -340,13 +274,11 @@
                   </v-card-text>
                   <v-list-item class="grow">
                     <v-row justify="end">
-                      <div
-                        style="
+                      <div style="
                           background-color: lightcyan;
                           padding: 10px;
                           border-radius: 50%;
-                        "
-                      >
+                        ">
                         {{ post["userId"] }}
                       </div>
                     </v-row>
@@ -372,7 +304,7 @@
                         </v-list-item-title>
 
                         <v-list-item-subtitle>{{
-                          createdAtSplit(post["createdAt"])
+                            createdAtSplit(post["createdAt"])
                         }}</v-list-item-subtitle>
                       </v-list-item-content>
                     </v-list-item>
@@ -382,13 +314,11 @@
                       </v-card-text>
                       <v-list-item class="grow">
                         <v-row justify="end">
-                          <div
-                            style="
+                          <div style="
                               background-color: lightcyan;
                               padding: 10px;
                               border-radius: 50%;
-                            "
-                          >
+                            ">
                             {{ post["userId"] }}
                           </div>
                         </v-row>
@@ -405,15 +335,11 @@
                   whenWeMeet
                 </p>
                 <v-col v-for="(post, idx) in teamMeetList" :key="idx">
-                  <v-card
-                    class="rounded-xl"
-                    @click="MeetCardClick(post)"
-                    :color="
-                      meetContent(post) == `진행중입니다`
-                        ? `${meetCardColor}`
-                        : `white`
-                    "
-                  >
+                  <v-card class="rounded-xl" @click="MeetCardClick(post)" :color="
+                    meetContent(post) == `진행중입니다`
+                      ? `${meetCardColor}`
+                      : `white`
+                  ">
                     <v-list-item two-line>
                       <v-list-item-content>
                         <v-list-item-title class="text-h5">
@@ -421,7 +347,7 @@
                         </v-list-item-title>
 
                         <v-list-item-subtitle>{{
-                          createdAtSplit(post["createdAt"])
+                            createdAtSplit(post["createdAt"])
                         }}</v-list-item-subtitle>
                       </v-list-item-content>
                     </v-list-item>
@@ -431,13 +357,11 @@
                       </v-card-text>
                       <v-list-item class="grow">
                         <v-row justify="end">
-                          <div
-                            style="
+                          <div style="
                               background-color: lightcyan;
                               padding: 10px;
                               border-radius: 50%;
-                            "
-                          >
+                            ">
                             {{ post["userId"] }}
                           </div>
                         </v-row>
@@ -462,7 +386,7 @@
                         </v-list-item-title>
 
                         <v-list-item-subtitle>{{
-                          createdAtSplit(post["createdAt"])
+                            createdAtSplit(post["createdAt"])
                         }}</v-list-item-subtitle>
                       </v-list-item-content>
                     </v-list-item>
@@ -470,12 +394,9 @@
                       <!-- <v-card-text>
                         {{ roleContent(post) }}
                       </v-card-text> -->
-                      <v-list-item
-                        v-if="post['category'] == `ROLE`"
-                        v-for="role in roleContent(post)"
-                      >
+                      <v-list-item v-if="post['category'] == `ROLE`" v-for="role in roleContent(post)">
                         <v-list-item-subtitle two-line v-for="result in role">{{
-                          result
+                            result
                         }}</v-list-item-subtitle>
                       </v-list-item>
 
@@ -485,13 +406,11 @@
 
                       <v-list-item class="grow">
                         <v-row justify="end">
-                          <div
-                            style="
+                          <div style="
                               background-color: lightcyan;
                               padding: 10px;
                               border-radius: 50%;
-                            "
-                          >
+                            ">
                             {{ post["userId"] }}
                           </div>
                         </v-row>
@@ -628,6 +547,7 @@ export default {
     // ...mapActions("themeStore", {
     //   actionTheme: "actionTheme",
     // }),
+
     async themeColorUpdate() {
       try {
         const res = await axios.put(`${BASE_URL}/user/color/${this.theme}`, {
@@ -839,17 +759,36 @@ export default {
 .main {
   background-color: #f5f5f5;
 }
+
+.btn_gotop {
+  display: none;
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  z-index: 999;
+  border: 1px solid #ccc;
+  outline: none;
+  background-color: white;
+  color: #333;
+  cursor: pointer;
+  padding: 15px 20px;
+  border-radius: 100%;
+}
+
 .cardList {
   margin: 30px;
 }
+
 .group {
   padding: 20px;
   margin-top: 20px;
   margin-left: 20px;
 }
+
 .card {
   border-radius: 10%;
 }
+
 .inputImg {
   width: auto;
   height: auto;
