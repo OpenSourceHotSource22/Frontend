@@ -31,26 +31,29 @@
           <v-col></v-col>
           <v-col></v-col>
         </v-row>
-        <v-form ref="form" lazy-validation>
-          <div v-if="isStart">
-            <v-row class="mt-3">
-              <div v-for="(n, idx) in count">
-                <v-text-field :id="String(n)" :key="idx" class="mx-3 my-0" label="Name" clearable outlined
-                  v-model="textField[n - 1]" no-gutters :rules="user_text_rule">
-                </v-text-field>
-              </div>
-            </v-row>
 
-            <canvas id="canvas" width="3000" height="300"></canvas>
+        <v-container>
+          <v-form ref="form" lazy-validation>
+            <div v-if="isStart">
+              <v-row style="width:1200px; display:flex; flex-wrap: nowrap;">
+                <div v-for="(n, idx) in count">
+                  <v-text-field :id="String(n)" :key="idx" class="mx-3 my-0" label="Name" clearable outlined
+                    v-model="textField[n - 1]" no-gutters :rules="user_text_rule">
+                  </v-text-field>
+                </div>
+              </v-row>
 
-            <v-row class="mt-1">
-              <div v-for="(n, idx) in count">
-                <v-text-field :id="String(-n)" :key="idx" class="mx-3" label="Role" clearable outlined
-                  v-model="resultField[n - 1]" :rules="user_text_rule"></v-text-field>
-              </div>
-            </v-row>
-          </div>
-        </v-form>
+              <canvas id="canvas" width="1200" height="300"></canvas>
+
+              <v-row class="mt-1" style="width:1200px; display:flex; flex-wrap: nowrap;">
+                <div v-for="(n, idx) in count">
+                  <v-text-field :id="String(-n)" :key="idx" class="mx-3" label="Role" clearable outlined
+                    v-model="resultField[n - 1]" :rules="user_text_rule"></v-text-field>
+                </div>
+              </v-row>
+            </div>
+          </v-form>
+        </v-container>
         <v-btn @click="confirm" class="check mt-3" v-bind:disabled="buttonDisable">확인하기</v-btn>
         <v-btn color="success" class="mt-3" @click="submit" v-bind:disabled="isStart2">Submit</v-btn>
       </v-card>
@@ -77,6 +80,9 @@ export default {
 
       ],
       position: [
+
+      ],
+      minusPosition: [
 
       ],
       textField: [
@@ -185,15 +191,21 @@ export default {
       this.shuffle(this.datas);
       for (var i = 0; i < this.count; i++) {
         this.position[i] = document.getElementById(String(i + 1)).getBoundingClientRect();
+        this.minusPosition[i] = document.getElementById(String(-(i + 1))).getBoundingClientRect();
       }
+
       const canvas = document.getElementById("canvas");
       const ctx = canvas.getContext("2d");
 
       ctx.beginPath();
       ctx.strokeStyle = "black";
       for (let i = 0; i < this.count; i++) {
-        ctx.moveTo(this.position[i].x + 90, this.position[i].y + 100);
-        ctx.lineTo(this.position[this.datas[i]].x + 90, -100);
+
+        console.log(this.position[i]);
+        console.log(this.minusPosition[this.datas[i]]);
+
+        ctx.moveTo(this.position[i].x - 239 / 2, this.position[i].y - 107);
+        ctx.lineTo(this.minusPosition[this.datas[i]].x - 239 / 2, this.minusPosition[this.datas[i]].y - 107);
       }
       ctx.stroke();
       for (let i = 0; i < this.count; i++) {
@@ -259,5 +271,11 @@ export default {
 
 .check {
   margin-right: 30px;
+}
+
+.v-text-field.v-text-field--enclosed:not(.v-text-field--rounded)>.v-input__control>.v-input__slot,
+.v-text-field.v-text-field--enclosed .v-text-field__details {
+  padding: 0 12px;
+  margin: 0px;
 }
 </style>
