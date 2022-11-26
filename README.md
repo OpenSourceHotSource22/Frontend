@@ -35,6 +35,7 @@ chore : 빌드 업무 수정, 패키지 매니저 수정
 ## 기본기능
 
 [손성호](https://github.com/Hosung99)
+-------
 
 ### 역할정하기 
  <img width="534" alt="스크린샷 2022-11-26 오후 11 23 30" src="https://user-images.githubusercontent.com/65282581/204093617-b85992fd-17f8-4bb5-94ca-503c1ba3fa02.png">
@@ -55,14 +56,18 @@ chore : 빌드 업무 수정, 패키지 매니저 수정
 
 
 1.	사랑의 작대기 기능
+제목작성 부분에 글의 제목을 적고 왼쪽 가운데 +.- 버튼으로 역할을 매칭할 사람 수를 정하고 시작하기 버튼을 누릅니다.
 <img width="538" alt="스크린샷 2022-11-26 오후 11 26 14" src="https://user-images.githubusercontent.com/65282581/204093761-0dceae02-3b0e-47c2-9d2e-faa2900bbac0.png">
 
-  <img width="534" alt="스크린샷 2022-11-26 오후 11 26 04" src="https://user-images.githubusercontent.com/65282581/204093755-eb2dd39b-0371-4549-aeec-f9e067c763d3.png">
+name과 롤에 각각 이름과 당첨될 역할을 적은 후 확인하기를 누릅니다.![image](https://user-images.githubusercontent.com/65282581/204094131-3185e48e-a2e1-42bc-8e37-5ff089764099.png)
   
-<img width="538" alt="스크린샷 2022-11-26 오후 11 26 39" src="https://user-images.githubusercontent.com/65282581/204093772-1db13223-18cf-4453-8f54-43a5c57e2496.png">
+결과는 이런식으로 ROLE이란 type으로 메인페이지에 부착됩니다.
+![image](https://user-images.githubusercontent.com/65282581/204094145-4b0d23db-bae3-4090-b305-3002e3af3111.png)
+
 
 
 [손지은](https://github.com/Ji-Ag)
+---------
 
 ### WhenWeMeet(웬위밋)
 
@@ -74,19 +79,18 @@ chore : 빌드 업무 수정, 패키지 매니저 수정
 처음 게시물을 생성하는 사람이 제목과 날짜를 정한다. 캘린더에서 날짜를 선택하고 선택완료를 클릭한다.
 <img width="642" alt="스크린샷 2022-11-26 오후 11 27 45" src="https://user-images.githubusercontent.com/65282581/204093822-74772482-8df2-4326-91c2-b20a89b5725b.png">
 
+
 <img width="565" alt="스크린샷 2022-11-26 오후 11 27 58" src="https://user-images.githubusercontent.com/65282581/204093836-1c8a5105-455b-4386-ab2b-caa8abe66077.png">
 
-선택한 날짜를 오름차순으로 정렬하여 보여준다.
+선택한 날짜를 오름차순으로 정렬하여 보여준다
 <img width="564" alt="스크린샷 2022-11-26 오후 11 28 12" src="https://user-images.githubusercontent.com/65282581/204093854-de310096-d279-442a-9e3f-f21205ae91aa.png">
 
- 사용자는 해당 날짜에 따른 상세 시간을 지정할 수 있다. 
+
+사용자는 해당 날짜에 따른 상세 시간을 지정할 수 있다. 
 시간을 선택하면 내가 선택한 시간과 팀원과 함께 선택한 시간이 보인다.
 선택한 시간이 겹칠수록 색은 진해져 한눈에 확인하기 쉽다. 
 
 오른쪽 상단에는 몇명 그리고 누가 선택을 완료했는지 확인할 수 있다. 팀원의 가능시간 표에서 박스를 클릭하면 이 시간을 누가 선택했는지 오른쪽에 ‘기능유저들’칸에서 확인할 수 있다.
-예시로 현재 화면은 2022년 11월 25일의 오전 8시 칸을 클릭한 것이며 이 시간을 선택한 유저 3명을 확인할 수 있다.
-
-
 
 하단의 최종날짜 입력창과 마감버튼은 게시물을 생성한 사람에게만 제공한다. 마감버튼을 누르기 전까지 팀원들은 시간을 자유롭게 수정할 수 있다. 생성자가 최종 날짜를 정하고 마감을 한다면 더 이상 팀원들은 시간을 수정할 수 없다. 
 <img width="537" alt="스크린샷 2022-11-26 오후 11 30 26" src="https://user-images.githubusercontent.com/65282581/204093957-f7bd1df1-2c45-4ffc-a65e-e65a3cab85e8.png">
@@ -97,58 +101,62 @@ chore : 빌드 업무 수정, 패키지 매니저 수정
 
 
 [정지선](https://github.com/jisunchung)
+----------
 
-3.1.3 나머지 기능 
- 저는 초기 파일 구조 세팅과 라우팅을 포함하여 아래의 기능 구현을 맡았습니다. 
-https://everyteam.netlify.app/ 로 들어올 시 localstorage에 user token이 있는 경우는 mygroups 페이지로 redirect해줍니다. Token이 없는 경우는 로그인 페이지로 redirect 해줍니다
+## 나머지 기능 
 
+ 1. 로그인/회원가입
+  <img width="536" alt="스크린샷 2022-11-26 오후 11 36 33" src="https://user-images.githubusercontent.com/65282581/204094241-a5b79dd5-bb90-4f63-9068-d80c56354287.png">
 
- 1. 로그인/회원가입 
    
-로그인 페이지에 <v-overlay>를 사용하여 회원가입 페이지를 구현하였습니다.
-v-text-field prop의 type을 사용하여 password 보호를 해주었습니다.
-  
-아무런 값도 넣지 않고 버튼을 클릭시 Validation 체크를 진행해줍니다. 
-로그인 성공 시 api response로 부터 받은 user token과 id를 localstorage에 저장해줍니다.
-
  2. myGroups
  
 유저가 속해있는 그룹 리스트를 card형식으로 보여줍니다. +버튼 클릭시 그룹 가입과 그룹 생성을 할 수 있습니다. 
+<img width="529" alt="스크린샷 2022-11-26 오후 11 36 58" src="https://user-images.githubusercontent.com/65282581/204094263-731ec0d3-dd96-4261-90b4-b322c6b54762.png">
      
 그룹 코드를 사용하여 그룹에 가입 할 수 있습니다. 해당 그룹이 존재하는 경우 alert창이 뜨고 그룹 리스트에 추가됩니다. 
+<img width="541" alt="스크린샷 2022-11-26 오후 11 37 16" src="https://user-images.githubusercontent.com/65282581/204094276-31e3667e-5c84-48d5-a6dc-e31c32e12371.png">
 
 3. createGroup
-  
-그룹 이름과 설명, 그룹 프로필 이미지를 사용자에게 받아 form-data 형태로 묶어 서버에 전송해주었습니다. 프로필 이미지 선택시 FileReader를 사용하여 사용자에게 선택한 사진을 미리 보여주는 기능을 구현하였습니다 
+  <img width="539" alt="스크린샷 2022-11-26 오후 11 37 28" src="https://user-images.githubusercontent.com/65282581/204094292-965e3662-ad35-4804-8de9-ca9ab2703e77.png">
 
+그룹 이름과 설명, 그룹 프로필 이미지를 넣어 그룹을 생성할 수 
 
 4. main
  4.1. 생성일/항목별
  
 생성일을 기준으로 모든 게시물들을 확인할 수 있습니다. 
 각 게시물에는 title, 생성날짜, 카테고리, 내용, 작성자에 대한 내용이 들어있습니다. 
-Vue-masonry를 플러그인 하여 각 게시물의 높이에 맞춰 카드가 정렬되도록 하였습니다. 
- 
-항목별로 게시물을 확인할 수 있습니다. WhenWeMeet게시물이 진행중인 경우 색을 다르게 하여 사용자가 구분할 수 있도록 하였고, 클릭시 진행중인 whenWeMeet페이지로 이동합니다. 
+ <img width="539" alt="스크린샷 2022-11-26 오후 11 38 01" src="https://user-images.githubusercontent.com/65282581/204094320-5e9729e2-7d69-4f95-aa4c-f3f089c24146.png">
+
+항목별로 게시물을 확인할 수 있습니다. WhenWeMeet게시물이 진행중인 경우 색을 다르게 하여 사용자가 구분할 수 있도록 하였고, 클릭시 진행중인 whenWeMeet페이지로 이동합니다.
+<img width="475" alt="스크린샷 2022-11-26 오후 11 38 19" src="https://user-images.githubusercontent.com/65282581/204094329-9c91f168-4e89-4779-a546-5070c4836c0d.png">
+
  4.2 그룹 배경 이미지
  
- 
+ <img width="491" alt="스크린샷 2022-11-26 오후 11 38 31" src="https://user-images.githubusercontent.com/65282581/204094335-8b49411f-56d9-43da-8473-7a067290fd03.png">
+
  
 이미지 위에 +버튼을 눌러 그룹 배경 이미지를 바꿀 수 있습니다. 
 
  4.3 그룹 정보 확인
-  
+
+<img width="457" alt="스크린샷 2022-11-26 오후 11 38 41" src="https://user-images.githubusercontent.com/65282581/204094349-8e2d1479-1d4a-465a-b408-3e10c9bda4f4.png">
+
 가장 첫번째 버튼은 그룹에 가입되어 있는 user list를 확인할 수 있습니다. 
 초대하기 클릭시 그룹의 고유한 코드가 보이고 옆에 있는 아이콘을 클릭하면 클립보드에 복사되어 다른 이들에게 쉽게 공유할 수 있습니다. 
- 
+ <img width="186" alt="스크린샷 2022-11-26 오후 11 39 15" src="https://user-images.githubusercontent.com/65282581/204094412-a32d42d4-d631-449e-85ae-abf33f13fe1d.png">
+
 추가하기 버튼 클릭시 post, whenWeMeet, Role 기능을 사용할 수 있습니다.
 
  4.4 테마
-    
+    <img width="538" alt="스크린샷 2022-11-26 오후 11 39 35" src="https://user-images.githubusercontent.com/65282581/204094435-3ff0a004-cf9b-4a63-9478-60dd54e8ab86.png">
+
 Basic, earth, purple, indigo 총 4가지 테마를 제공합니다. 각 유저가 선택한 테마는 저장되어 다시 로그인 시 유저가 선택한 테마로 보여줍니다. 
 
  5. post
- 
+ <img width="404" alt="스크린샷 2022-11-26 오후 11 39 50" src="https://user-images.githubusercontent.com/65282581/204094442-b232578a-802a-44bc-8f1f-bd11a08442c5.png">
+
 제목과 내용을 입력하여 post 게시물을 작성할 수 있습니다
-![image](https://user-images.githubusercontent.com/65282581/204093384-2838cabe-680c-4e04-aca1-4b34ff00ace6.png)
+
 
