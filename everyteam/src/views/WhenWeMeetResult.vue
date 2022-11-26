@@ -353,7 +353,9 @@ export default{
       indigoTheme: "indigoTheme",
       themeStore: "themeStore",
       }),
+
       BackGroundColor() {
+
       if (this.themeStore == "basic") {
         return this.basicTheme["mainBackColor"];
       }
