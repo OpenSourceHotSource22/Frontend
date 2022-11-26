@@ -747,7 +747,7 @@ export default {
       //local에 저장
       localStorage.setItem("theme", this.theme);
       //api호출
-      // this.themeColorUpdate();
+      this.themeColorUpdate();
       //store에 저장
       this.updateTheme(this.theme);
       console.log("store theme", this.themeStore);
