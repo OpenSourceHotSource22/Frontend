@@ -45,13 +45,10 @@ chore : 빌드 업무 수정, 패키지 매니저 수정
 1.	룰렛 기능
 
 룰렛기능은 한사람을 랜덤으로 뽑을 때, 사용하는 기능입니다. 
-
-<img width="535" alt="스크린샷 2022-11-26 오후 11 24 14" src="https://user-images.githubusercontent.com/65282581/204093664-0adb5ba4-378c-4129-b991-9a5c426cf484.png">
-
  제출버튼은 돌림판을 돌리기전에는 제출할 수 없게 되어있습니다. 그리고 역할작성에 최소 두글자 이상 작성해야 제출할 수 있습니다.
  
- <img width="539" alt="스크린샷 2022-11-26 오후 11 26 56" src="https://user-images.githubusercontent.com/65282581/204093787-ab98d0d4-ec71-414b-9c16-a0ecc5c212ee.png">
 
+<img width="535" alt="스크린샷 2022-11-26 오후 11 24 14" src="https://user-images.githubusercontent.com/65282581/204093664-0adb5ba4-378c-4129-b991-9a5c426cf484.png">
  
  결과는 이런식으로 ROLE_ROULETTE 게시물이란 type으로 메인페이지에 작성됩니다.
  
