@@ -1,5 +1,5 @@
 <template>
-    <v-app>
+    <v-app :style="BackGroundColor">
         <v-main>
             <div class="TimePick container text-center" >
                 <v-row justify="space-around">
@@ -42,6 +42,7 @@
 import axios from "axios";
 import { BASE_URL } from "@/api";
 import TimeBox from './TimeBox.vue';
+import { mapState } from "vuex";
 //import DragSelect from 'drag-select-vue';
 
 export default {
@@ -77,7 +78,31 @@ export default {
             {name:'12:00 AM'}
             ],
     }),
-    
+    computed:{
+        ...mapState("themeStore", {
+      basicTheme: "basicTheme",
+      purpleTheme: "purpleTheme",
+      earthTheme: "earthTheme",
+      indigoTheme: "indigoTheme",
+      themeStore: "themeStore",
+      }),
+
+      BackGroundColor() {
+
+      if (this.themeStore == "basic") {
+        return this.basicTheme["mainBackColor"];
+      }
+      if (this.themeStore == "purple") {
+        return this.purpleTheme["mainBackColor"];
+      }
+      if (this.themeStore == "earth") {
+        return this.earthTheme["mainBackColor"];
+      }
+      if (this.themeStore == "indigo") {
+        return this.indigoTheme["mainBackColor"];
+      }
+    },
+    },
     methods :{
        async btnSubmit(){
             for(var j=0; j<this.dateLength; j++){

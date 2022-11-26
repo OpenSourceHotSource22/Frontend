@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-app :style="BackGroundColor">
     <v-main>
       <div class="post">
         <h1 class="mt-10">post</h1>
@@ -31,6 +31,7 @@
 <script>
 import axios from "axios";
 import { BASE_URL } from "@/api";
+import { mapState } from "vuex";
 export default {
   data() {
     return {
@@ -69,6 +70,29 @@ export default {
         });
       } else {
         alert("내용/제목을 입력해주세요!");
+      }
+    },
+  },
+  computed: {
+    ...mapState("themeStore", {
+      basicTheme: "basicTheme",
+      purpleTheme: "purpleTheme",
+      earthTheme: "earthTheme",
+      indigoTheme: "indigoTheme",
+      themeStore: "themeStore",
+    }),
+    BackGroundColor() {
+      if (this.themeStore == "basic") {
+        return this.basicTheme["mainBackColor"];
+      }
+      if (this.themeStore == "purple") {
+        return this.purpleTheme["mainBackColor"];
+      }
+      if (this.themeStore == "earth") {
+        return this.earthTheme["mainBackColor"];
+      }
+      if (this.themeStore == "indigo") {
+        return this.indigoTheme["mainBackColor"];
       }
     },
   },

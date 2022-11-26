@@ -98,67 +98,121 @@
                 </v-list>
               </v-menu>
             </v-card-text>
-            <v-list-item-content class="mx-3">
-              <!-- 초대하기 btn -->
-              <v-dialog v-model="inviteDialog" width="500">
-                <template v-slot:activator="{ on, attrs }">
-                  <v-btn :color="groupInfoBtnColor" dark v-bind="attrs" v-on="on" elevation="0"
-                    style="color: whitesmoke">
-                    초대하기
-                  </v-btn>
-                </template>
-
-                <v-card>
-                  <v-card-title class="text-h5"> teamCode </v-card-title>
-
-                  <v-card-text>
-                    {{ teamCode }}
-                    <v-icon @click="copy(teamCode)">mdi-content-copy</v-icon>
-                  </v-card-text>
-
-                  <v-divider></v-divider>
-
-                  <v-card-actions>
-                    <v-spacer></v-spacer>
-                    <v-btn color="primary" text @click="inviteDialog = false">
-                      닫기
+            <v-list-item class="mx-3">
+              <v-list-item-content>
+                <!-- 초대하기 btn -->
+                <v-dialog v-model="inviteDialog" width="500">
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-btn
+                      :color="groupInfoBtnColor"
+                      dark
+                      v-bind="attrs"
+                      v-on="on"
+                      elevation="0"
+                      style="color: whitesmoke"
+                    >
+                      초대하기
                     </v-btn>
-                  </v-card-actions>
-                </v-card>
-              </v-dialog>
+                  </template>
 
-              <!-- +btn -->
-              <v-dialog v-model="plusDialog" width="500">
-                <template v-slot:activator="{ on, attrs }">
-                  <v-btn :color="groupInfoBtnColor" dark v-bind="attrs" v-on="on" elevation="0" class="mt-3"
-                    style="color: whitesmoke">
-                    작성하기
-                  </v-btn>
-                </template>
+                  <v-card>
+                    <v-card-title class="text-h5"> teamCode </v-card-title>
 
-                <v-card>
-                  <v-card-title class="text-h5"> 추가하기 </v-card-title>
+                    <v-card-text>
+                      {{ teamCode }}
+                      <v-icon @click="copy(teamCode)"
+                        >mdi-content-copy</v-icon
+                      ></v-card-text
+                    >
 
-                  <v-card-text>
-                    <v-row class="ma-10" style="justify-content: space-between">
-                      <v-btn rounded large color="primary" @click="$router.push({ path: '/post' })">post</v-btn>
-                      <v-btn rounded large color="primary" @click="$router.push({ path: '/whenWeMeet' })">meet</v-btn>
-                      <v-btn rounded large color="primary" @click="$router.push({ path: '/roles' })">role</v-btn>
-                    </v-row>
-                  </v-card-text>
+                    <v-divider></v-divider>
 
-                  <v-divider></v-divider>
+                    <v-card-actions>
+                      <v-spacer></v-spacer>
+                      <v-btn color="primary" text @click="inviteDialog = false">
+                        닫기
+                      </v-btn>
+                    </v-card-actions>
+                  </v-card>
+                </v-dialog>
 
-                  <v-card-actions>
-                    <v-spacer></v-spacer>
-                    <v-btn color="primary" text @click="plusDialog = false">
-                      닫기
+                <!-- 작성하기 btn -->
+                <v-dialog v-model="plusDialog" width="500">
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-btn
+                      :color="groupInfoBtnColor"
+                      dark
+                      v-bind="attrs"
+                      v-on="on"
+                      elevation="0"
+                      class="mt-3"
+                      style="color: whitesmoke"
+                    >
+                      작성하기
                     </v-btn>
-                  </v-card-actions>
-                </v-card>
-              </v-dialog>
-              <v-select v-model="theme" :items="themeItems" label="theme"></v-select>
-            </v-list-item-content>
+                  </template>
+
+                  <v-card>
+                    <v-card-title class="text-h5"> 추가하기 </v-card-title>
+
+                    <v-card-text>
+                      <v-row
+                        class="ma-10"
+                        style="justify-content: space-between"
+                      >
+                        <v-btn
+                          :color="groupInfoBtnColor"
+                          rounded
+                          large
+                          style="color: whitesmoke"
+                          @click="$router.push({ path: '/post' })"
+                          >post</v-btn
+                        >
+                        <v-btn
+                          :color="groupInfoBtnColor"
+                          rounded
+                          large
+                          style="color: whitesmoke"
+                          @click="$router.push({ path: '/whenWeMeet' })"
+                          >meet</v-btn
+                        >
+                        <v-btn
+                          :color="groupInfoBtnColor"
+                          rounded
+                          large
+                          style="color: whitesmoke"
+                          @click="$router.push({ path: '/roles' })"
+                          >role</v-btn
+                        >
+                      </v-row>
+                    </v-card-text>
+
+
+                    <v-divider></v-divider>
+
+                    <v-card-actions>
+                      <v-spacer></v-spacer>
+                      <v-btn color="primary" text @click="plusDialog = false">
+                        닫기
+                      </v-btn>
+                    </v-card-actions>
+                  </v-card>
+                </v-dialog>
+
+                <!-- 테마 선택 -->
+                <v-row>
+                  <v-col>
+                    <v-select
+                      v-model="theme"
+                      :items="themeItems"
+                      label="theme"
+                    ></v-select>
+                    <!-- <v-btn></v-btn> -->
+                  </v-col>
+                </v-row>
+              </v-list-item-content>
+            </v-list-item>
+
           </v-card>
         </v-col>
         <!-- context 생성일 -->
@@ -371,8 +425,8 @@
         </v-col>
         <v-col v-else>
           <div class="pa-16">
-            <v-alert type="info" dense border="left" prominent>
-              + 버튼을 눌러 기능을 사용해보세요 !!
+            <v-alert type="info" color="grey" dense border="left" prominent>
+              작성하기 버튼을 눌러 기능을 사용해보세요 !!
             </v-alert>
           </div>
         </v-col>
@@ -410,7 +464,7 @@ export default {
       TeamPostListDate: [],
       // color
 
-      theme: "basic",
+      theme: localStorage.getItem("theme"),
       themeItems: ["basic", "earth", "purple", "indigo"],
     };
   },
@@ -494,6 +548,19 @@ export default {
     //   actionTheme: "actionTheme",
     // }),
 
+    async themeColorUpdate() {
+      try {
+        const res = await axios.put(`${BASE_URL}/user/color/${this.theme}`, {
+          headers: {
+            "X-AUTH-TOKEN": localStorage.getItem("token"),
+          },
+        });
+        console.log("theme 저장하기");
+        console.log("themeColorUpdate: ", res.data);
+      } catch (error) {
+        console.log(error);
+      }
+    },
     copy(copyText) {
       navigator.clipboard.writeText(copyText).then(function () {
         alert("클립보드에 복사되었습니다");
@@ -677,13 +744,13 @@ export default {
   },
   watch: {
     theme() {
-      // localStorage.setItem("theme", this.theme);
+      //local에 저장
+      localStorage.setItem("theme", this.theme);
+      //api호출
+      // this.themeColorUpdate();
+      //store에 저장
       this.updateTheme(this.theme);
       console.log("store theme", this.themeStore);
-      // const payload = {
-      //   theme: this.theme,
-      // };
-      // this.actionTheme(payload);
     },
   },
 };
