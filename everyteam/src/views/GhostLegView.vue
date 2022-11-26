@@ -1,6 +1,6 @@
 
 <template>
-  <v-app>
+  <v-app :style="BackGroundColor">
     <v-main>
       <div class="roles">
         <div class="tooltip">
@@ -16,7 +16,8 @@
           <v-col></v-col>
         </v-row>
       </div>
-      <v-card class="container" id="mainVue">
+      <v-card class="container" id="mainVue"
+        style="padding:0px; width:auto; background-color:white; margin-bottom:30px;">
         <v-row class="isValid">
           <v-col class="pt-5">
             <v-btn :disabled="isStart" @click="minus" class="mx-4" v-bind:disabled="buttonDisable2"> - </v-btn>
@@ -31,7 +32,6 @@
           <v-col></v-col>
           <v-col></v-col>
         </v-row>
-
         <v-container>
           <v-form ref="form" lazy-validation>
             <div v-if="isStart">
@@ -54,8 +54,8 @@
             </div>
           </v-form>
         </v-container>
-        <v-btn @click="confirm" class="check mt-3" v-bind:disabled="buttonDisable">확인하기</v-btn>
-        <v-btn color="success" class="mt-3" @click="submit" v-bind:disabled="isStart2">Submit</v-btn>
+        <v-btn @click="confirm" class="check mt-3 mb-3" v-bind:disabled="buttonDisable">확인하기</v-btn>
+        <v-btn color="success" class="mt-3 mb-3" @click="submit" v-bind:disabled="isStart2">Submit</v-btn>
       </v-card>
     </v-main>
   </v-app>
@@ -99,6 +99,28 @@ export default {
     };
   },
   computed: {
+    ...mapState("themeStore", {
+      basicTheme: "basicTheme",
+      purpleTheme: "purpleTheme",
+      earthTheme: "earthTheme",
+      indigoTheme: "indigoTheme",
+      themeStore: "themeStore",
+    }),
+
+    BackGroundColor() {
+      if (this.themeStore == "basic") {
+        return this.basicTheme["mainBackColor"];
+      }
+      if (this.themeStore == "purple") {
+        return this.purpleTheme["mainBackColor"];
+      }
+      if (this.themeStore == "earth") {
+        return this.earthTheme["mainBackColor"];
+      }
+      if (this.themeStore == "indigo") {
+        return this.indigoTheme["mainBackColor"];
+      }
+    },
   },
   watch: {
     warning() {
