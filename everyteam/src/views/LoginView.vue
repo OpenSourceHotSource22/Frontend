@@ -149,6 +149,7 @@ export default {
         this.$router.push({ path: "/myGroups" });
       } catch (error) {
         console.log(error);
+        alert("존재하지 않는 아이디입니다.");
       }
     },
     openSignup() {
