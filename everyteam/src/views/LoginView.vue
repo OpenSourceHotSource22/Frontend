@@ -3,44 +3,20 @@
     <v-container>
       <v-row>
         <v-col>
-          <v-img
-            src="@/assets/everyteamLogo.png"
-            max-heigth="600"
-            max-width="600"
-          ></v-img>
+          <v-img src="@/assets/everyteamLogo.png" max-heigth="600" max-width="600"></v-img>
         </v-col>
         <v-col>
           <div style="padding: 30px; padding-top: 300px">
             <v-form ref="form" v-model="loginValid" lazy-validation>
               <h2>login</h2>
-              <v-text-field
-                v-model="loginId"
-                :rules="idRules"
-                label="Id"
-                outlined
-                required
-              ></v-text-field>
+              <v-text-field v-model="loginId" :rules="idRules" label="Id" outlined required></v-text-field>
 
-              <v-text-field
-                v-model="loginPw"
-                :append-icon="loginPwShow ? 'mdi-eye' : 'mdi-eye-off'"
-                :rules="pwRules"
-                :type="loginPwShow ? 'text' : 'password'"
-                name="input-10-2"
-                label="PW"
-                class="input-group--focused"
-                @click:append="loginPwShow = !loginPwShow"
-                outlined
-                required
-              ></v-text-field>
+              <v-text-field v-model="loginPw" :append-icon="loginPwShow ? 'mdi-eye' : 'mdi-eye-off'" :rules="pwRules"
+                :type="loginPwShow ? 'text' : 'password'" name="input-10-2" label="PW" class="input-group--focused"
+                @click:append="loginPwShow = !loginPwShow" outlined required></v-text-field>
             </v-form>
 
-            <v-btn
-              :disabled="!loginValid"
-              color="success"
-              class="mr-4"
-              @click="loginValidateCheck"
-            >
+            <v-btn :disabled="!loginValid" color="success" class="mr-4" @click="loginValidateCheck">
               로그인
             </v-btn>
 
@@ -51,34 +27,17 @@
         </v-col>
       </v-row>
       <v-overlay :opacity="opacity" :value="overlay">
-        <div
-          style="position: absolute; position: fixed; top: 200px; right: 100px"
-        >
+        <div style="position: absolute; position: fixed; top: 200px; right: 100px">
           <v-btn fab color="green" @click="overlay = false">
             <v-icon>mdi-close</v-icon>
           </v-btn>
         </div>
         <v-form ref="signupFrom" v-model="signupValid" lazy-validation>
-          <v-text-field
-            v-model="signupId"
-            :rules="idRules"
-            label="signupId"
-            outlined
-            required
-          ></v-text-field>
+          <v-text-field v-model="signupId" :rules="idRules" label="signupId" outlined required></v-text-field>
 
-          <v-text-field
-            v-model="signupPw"
-            :append-icon="signupPwShow ? 'mdi-eye' : 'mdi-eye-off'"
-            :rules="pwRules"
-            :type="signupPwShow ? 'text' : 'password'"
-            name="input-10-2"
-            label="signupPw"
-            class="input-group--focused"
-            @click:append="signupPwShow = !signupPwShow"
-            outlined
-            required
-          ></v-text-field>
+          <v-text-field v-model="signupPw" :append-icon="signupPwShow ? 'mdi-eye' : 'mdi-eye-off'" :rules="pwRules"
+            :type="signupPwShow ? 'text' : 'password'" name="input-10-2" label="signupPw" class="input-group--focused"
+            @click:append="signupPwShow = !signupPwShow" outlined required></v-text-field>
         </v-form>
         <v-btn color="error" class="mr-4" @click="signupValidateCheck">
           회원가입
@@ -149,7 +108,7 @@ export default {
         this.$router.push({ path: "/myGroups" });
       } catch (error) {
         console.log(error);
-        alert("존재하지 않는 아이디입니다.");
+        alert("아이디 혹은 비밀번호를 확인해주세요.");
       }
     },
     openSignup() {
