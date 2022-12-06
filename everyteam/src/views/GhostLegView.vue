@@ -222,16 +222,12 @@ export default {
       ctx.beginPath();
       ctx.strokeStyle = "black";
       for (let i = 0; i < this.count; i++) {
-
-        console.log(this.position[i]);
-        console.log(this.minusPosition[this.datas[i]]);
-
         ctx.moveTo(this.position[i].x - 239 / 2, this.position[i].y - 107);
         ctx.lineTo(this.minusPosition[this.datas[i]].x - 239 / 2, this.minusPosition[this.datas[i]].y - 107);
       }
       ctx.stroke();
       for (let i = 0; i < this.count; i++) {
-        this.saved[i] = { user: String([this.textField[i]]), role: String(this.resultField[i]) };
+        this.saved[i] = { user: String([this.textField[i]]), role: String(this.resultField[this.datas[i]]) };
       }
     },
   },
