@@ -112,7 +112,8 @@ export default {
       }
     },
     openSignup() {
-      this.overlay = true;
+      //this.overlay = true;
+      this.$router.push({ path: "/signup" });
     },
     signupValidateCheck() {
       this.$refs.signupFrom.validate();
