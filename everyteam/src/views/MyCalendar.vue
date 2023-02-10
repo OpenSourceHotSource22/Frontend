@@ -31,8 +31,9 @@
 
                 </v-calendar>
 </v-sheet>
+<v-btn color="priimary" @click="goMain" text style="margin-top:20px"> <v-icon>mdi-arrow-left</v-icon>  메인으로 돌아가기</v-btn>
             </v-container>
-        
+
        
         </v-main>
     </v-app>
@@ -57,6 +58,9 @@ export default {
         },
         goNext(){
             this.$refs.calendar.next();
+        },
+        goMain(){
+            this.$router.push({path:"/main"});
         }
     },
     mounted(){
