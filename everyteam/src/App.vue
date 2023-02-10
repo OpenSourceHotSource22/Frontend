@@ -59,10 +59,7 @@
                 jieun@naver.com
               </p>
               <v-divider class="my-3"></v-divider>
-              <v-btn
-                depressed
-                rounded text
-              >
+              <v-btn depressed rounded text @click="profile">
                 프로필 변경
               </v-btn>
               <v-divider class="my-3"></v-divider>
@@ -160,6 +157,9 @@ export default {
     },
     myCalender(){
       this.$router.push({ path: "/mycalendar" });
+    },
+    profile(){
+      this.$router.push({ path: "/profile" });
     },
   },
   computed: {

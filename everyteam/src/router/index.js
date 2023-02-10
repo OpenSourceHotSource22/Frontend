@@ -15,6 +15,7 @@ import TimePick from "@/views/TimePick.vue";
 import WWMResult from "@/views/WhenWeMeetResult.vue";
 import SignUp from "@/views/SignUp.vue";
 import MyCalendar from "@/views/MyCalendar.vue";
+import Profile from "@/views/Profile.vue";
 
 Vue.use(VueRouter);
 
@@ -93,7 +94,12 @@ const routes = [
     path:"/mycalendar",
     name: "mycalendar",
     component:MyCalendar
-  }
+  },
+  {
+    path:"/profile",
+    name: "profike",
+    component:Profile
+  },
 ];
 
 export default new VueRouter({
