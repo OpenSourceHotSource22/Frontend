@@ -14,6 +14,7 @@ import GhostLeg from "@/views/GhostLegView.vue";
 import TimePick from "@/views/TimePick.vue";
 import WWMResult from "@/views/WhenWeMeetResult.vue";
 import SignUp from "@/views/SignUp.vue";
+import MyCalendar from "@/views/MyCalendar.vue";
 
 Vue.use(VueRouter);
 
@@ -88,6 +89,11 @@ const routes = [
     name: "signup",
     component : SignUp,
   },
+  {
+    path:"/mycalendar",
+    name: "mycalendar",
+    component:MyCalendar
+  }
 ];
 
 export default new VueRouter({

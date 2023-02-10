@@ -24,12 +24,57 @@
     </v-navigation-drawer>
     <v-app-bar app v-if="showAppBar">
       <v-app-bar-nav-icon @click="clickDrawer"></v-app-bar-nav-icon>
-
+  
       <div @click="$router.push({ path: '/main' })">
         <!-- <v-img src="@/assets/everyteamBar.png" width="100"></v-img> -->
         <h3 :style="logoColor">everyteam</h3>
       </div>
-
+      <!-- 마이페이지 -->
+      <div style="position: absolute; position: fixed;  right: 160px">
+      <v-menu rounded bottom min-width="200px" offset-y>
+        <template v-slot:activator="{ on }">
+          <v-btn
+            icon
+            x-large
+            v-on="on"
+          >
+            <v-avatar
+              color="brown"
+              size="48"
+            >
+              <span class="white--text text-h5">son</span>
+            </v-avatar>
+          </v-btn>
+        </template>
+        <v-card>
+          <v-list-item-content class="justify-center">
+            <div class="mx-auto text-center">
+              <v-avatar
+                color="brown"
+              >
+                <span class="white--text text-h5">SON</span>
+              </v-avatar>
+              <h3>{{userId}}</h3>
+              <p class="text-caption mt-1">
+                jieun@naver.com
+              </p>
+              <v-divider class="my-3"></v-divider>
+              <v-btn
+                depressed
+                rounded text
+              >
+                프로필 변경
+              </v-btn>
+              <v-divider class="my-3"></v-divider>
+              <v-btn depressed rounded text @click="myCalender()">
+               마이캘린더
+              </v-btn>
+            </div>
+          </v-list-item-content>
+        </v-card>
+      </v-menu>
+  </div>
+ <!-- ///마이페이지 -->
       <div style="position: absolute; position: fixed; top: 10px; right: 50px">
         <v-btn @click="logout">로그아웃</v-btn>
       </div>
@@ -112,6 +157,9 @@ export default {
     },
     goMyGroupsPage() {
       this.$router.push({ path: "/mygroups" });
+    },
+    myCalender(){
+      this.$router.push({ path: "/mycalendar" });
     },
   },
   computed: {
