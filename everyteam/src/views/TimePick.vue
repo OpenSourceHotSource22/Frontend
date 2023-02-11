@@ -18,7 +18,7 @@
                             <td style="width:65px; height:25px;">{{day.date}}</td>
                             
                             <div class="timeBox" v-for="i in 18" :key="i">
-                                <TimeBox :userIdx="day.idx" :userTime="i+5" v-on:timeFromChild="ChildTimeReceived"/>
+                                <TimeBox :userIdx="day.idx" :userTime="i+5" v-on:timeFromChild="ChildTimeReceived" :Color="boxColor[day.idx].time[i-1]"/>
                             </div>
                         
                         </th>
@@ -77,6 +77,8 @@ export default {
             {name:'11:00 PM'},
             {name:'12:00 AM'}
             ],
+            boxColor:[],
+            userTime2:[]
     }),
     computed:{
         ...mapState("themeStore", {
@@ -225,7 +227,85 @@ export default {
        
        goPrev(){
             this.$router.push({path:"/WhenWeMeetResult"})
-       }
+       },
+       async  getUserTime(){
+            
+             
+            const res = await axios.post(`${BASE_URL}/meet/getDate`,
+            {
+                teamCode: localStorage.getItem("teamCode"),
+                meetCode: this.meetCode,
+            }
+            ,{
+                headers:
+                {
+                    "X-AUTH-TOKEN": localStorage.getItem("token"),
+                }
+            });
+
+            console.log("res:",res.data);
+            try{
+            for(var i in res.data.result.date){
+                var timeSplit = res.data.result.date[i].time.split(',');
+                console.log("timesplit : ", timeSplit);
+                this.userTime2.push({
+                    date : res.data.result.date[i].date,
+                    time : timeSplit,
+                    idx : i,
+                });
+                //선택한 시간의 색을 결정하기 우히ㅐ
+                
+                this.boxColor.push({time:this.resultColorArray(timeSplit) });
+                console.log("boxColor: ", this.boxColor);
+            }
+            }catch(err){
+                console.log(err);
+                for(var i in res.data.result.date){
+                var timeSplit = 0;
+                console.log("timesplit : ", timeSplit);
+                this.userTime2.push({
+                    date : res.data.result.date[i].date,
+                    time : timeSplit,
+                    idx : i,
+                });
+                //선택한 시간의 색을 결정하기 우히ㅐ
+                
+                this.boxColor.push({time:this.resultColorArray(timeSplit) });
+                console.log("boxColor: ", this.boxColor);} console.log("usertiememem : ", this.userTime2);
+            }
+
+        },
+         resultColorArray(timeSplit){//겹치는 시간 표시
+            var forBoxColor=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+
+            for(var i =0; i < timeSplit.length; i++){
+                var idx=0;
+               
+                switch(timeSplit[i]){
+                    case '6': { idx = forBoxColor[0]; forBoxColor[0] = ++idx;  break;}
+                    case '7': { idx = forBoxColor[1]; forBoxColor[1] = ++idx;  break;}
+                    case '8': { idx = forBoxColor[2]; forBoxColor[2] = ++idx;  break;}
+                    case '9': { idx = forBoxColor[3]; forBoxColor[3] = ++idx;  break;}
+                    case '10': { idx = forBoxColor[4]; forBoxColor[4] = ++idx;  break;}
+                    case '11': { idx = forBoxColor[5]; forBoxColor[5] = ++idx;  break;}
+                    case '12': { idx = forBoxColor[6]; forBoxColor[6] = ++idx;  break;}
+                    case '13': { idx = forBoxColor[7]; forBoxColor[7] = ++idx;  break;}
+                    case '14': { idx = forBoxColor[8]; forBoxColor[8] = ++idx;  break;}
+                    case '15': { idx = forBoxColor[9]; forBoxColor[9] = ++idx;  break;}
+                    case '16': { idx = forBoxColor[10]; forBoxColor[10] = ++idx;  break;}
+                    case '17': { idx = forBoxColor[11]; forBoxColor[11] = ++idx;  break;}
+                    case '18': { idx = forBoxColor[12]; forBoxColor[12] = ++idx;  break;}
+                    case '19': { idx = forBoxColor[13]; forBoxColor[13] = ++idx;  break;}
+                    case '20': { idx = forBoxColor[14]; forBoxColor[14] = ++idx;  break;}
+                    case '21': { idx = forBoxColor[15]; forBoxColor[15] = ++idx;  break;}
+                    case '22': { idx = forBoxColor[16]; forBoxColor[16] = ++idx;  break;}
+                    case '23': { idx = forBoxColor[17]; forBoxColor[17] = ++idx;  break;}
+
+                }
+            }
+            console.log("forboxcolor:",forBoxColor);
+            return forBoxColor;
+        },
        
     },
     beforeMount(){
@@ -239,6 +319,7 @@ export default {
         console.log("마운트 후 실행");
         this.meetCode = localStorage.getItem("meetCode");
             this.getDate();
+            this.getUserTime();
             
        },
 }
@@ -249,4 +330,6 @@ export default {
 #timeBox{
 font-size : 2px;
 }
+
+
 </style>

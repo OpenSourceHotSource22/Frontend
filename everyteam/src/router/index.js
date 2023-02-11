@@ -13,6 +13,9 @@ import Roulette from "@/views/RouletteView.vue";
 import GhostLeg from "@/views/GhostLegView.vue";
 import TimePick from "@/views/TimePick.vue";
 import WWMResult from "@/views/WhenWeMeetResult.vue";
+import SignUp from "@/views/SignUp.vue";
+import MyCalendar from "@/views/MyCalendar.vue";
+import Profile from "@/views/Profile.vue";
 
 Vue.use(VueRouter);
 
@@ -81,6 +84,21 @@ const routes = [
     path: "/ghostLeg",
     name: "ghostLeg",
     component: GhostLeg,
+  },
+  {
+    path :"/signup",
+    name: "signup",
+    component : SignUp,
+  },
+  {
+    path:"/mycalendar",
+    name: "mycalendar",
+    component:MyCalendar
+  },
+  {
+    path:"/profile",
+    name: "profike",
+    component:Profile
   },
 ];
 
