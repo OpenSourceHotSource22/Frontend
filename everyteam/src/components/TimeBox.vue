@@ -1,6 +1,6 @@
 <template>
     <div class="time">
-<div id="timebox" :style="{ width: width + 'px', height: height + 'px',background:prevColor, }" @click="changeColor"></div>
+<div id="timebox" :style="{ width: width + 'px', height: height + 'px',background:bColor, }" @click="changeColor"></div>
     </div>
 </template>
 
@@ -11,7 +11,7 @@ export default {
     return {
       width: 60, // 넓이
       height: 25, // 높이
-     bColor:0,
+     bColor:"white",
       clicked:false,
       
     };
@@ -35,7 +35,7 @@ export default {
         
       else if(this.Color == 1){
         if(this.bColor == 0)
-        return "rgb(155, 212, 155)"
+        return "white"
       else if(this.bColor == 1)
         return "green"
       }
@@ -56,9 +56,9 @@ export default {
     changeColor(){
       
       if(this.clicked)
-            this.bColor = 0;
+            this.bColor = "white";
         else
-        this.bColor=1
+        this.bColor="green"
 
         this.clicked = !this.clicked
         //console.log(this.userDate,this.userTime, this.bColor)
@@ -70,6 +70,11 @@ export default {
         this.$emit('timeFromChild', this.userTime,this.userIdx)
     }
   },
+  mounted(){
+    if (this.Color == 1){
+      this.changeColor();
+    }
+  }
   
 };
 </script>
