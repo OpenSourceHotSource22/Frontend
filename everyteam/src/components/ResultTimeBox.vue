@@ -21,6 +21,8 @@ export default{
       height: 25, // 높이
       //bColor:"white",
       whoSelect:[],
+      clicked:false,
+      cColor:''
       
     };
   },
@@ -28,15 +30,29 @@ export default{
   props:{
     Color:{},
     name:{},
-    auth:{}
+    auth:{},
+    userIdx:{},
+    userTime:{},
   },
 
   methods:{
-   
+   sendTimeToParent(){
+        console.log("자식이 보냄")
+        this.$emit('timeFromChild', this.userTime,this.userIdx)
+    },
     
     changeColor(){
       if(this.auth)
-        console.log("?");
+        {
+          if(this.clicked)
+            this.cColor = this.bColor;
+          else
+            this.cColor= 10;
+
+          this.clicked = !this.clicked
+          //console.log(this.userDate,this.userTime, this.bColor)
+          this.sendTimeToParent()
+        }
       else
         return;
     }
@@ -46,6 +62,8 @@ export default{
   computed:{
     bColor: function(){
         //console.log("박스에서 ", this.Color)
+        if(this.cColor == 10)
+          return "blue"
         switch(this.Color){
             case 0:return "white";
             case 1: return "rgb(155, 212, 155)";

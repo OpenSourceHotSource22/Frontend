@@ -34,7 +34,8 @@
                             <th v-for="day in userTime" :key="day.idx">
                                 <td style="width:65px; height:25px;">{{day.date}}</td>
                                 <div class="teamresultTimeBox" v-for="i in 18" :key="i">
-                                    <ResultTimeBox :Color="teamTime[day.idx].time[i-1]" :name="teamTime[day.idx].name[i-1].split(',')" :auth="isShow"/>
+                                    <ResultTimeBox :Color="teamTime[day.idx].time[i-1]" :name="teamTime[day.idx].name[i-1].split(',')" :auth="isShow"
+                                    :userIdx="day.idx" :userTime="i+5" v-on:timeFromChild="ChildTimeReceived"/>
                                 </div>
                             </th>
                         </table>
@@ -48,16 +49,14 @@
                             </div>
                         </div>
                         
-                        <!-- <v-card elevation="5">
-                        <div style="border:solid 3px black;border-radius: 10% / 50%;" class="container mt-5 pb-5 px-5 py-5">
-                            <p style="color:blue; font-size:5px">팀원시간에 마우스를 올려놓으세요</p>
-                            <card-title>가능유저들</card-title>
+                        <v-card elevation="5" v-show="isShow">
+                        
+                            <p style="color:black; font-size:20px;">[팀원의 가능시간]</p>
+                            <p style="color:black; font-size:20px;">박스를 클릭하여</p>
+                            <p style="color:black; font-size:20px">최종시간을 결정하세요</p>
                             
-                            <div v-for="name in whoSelect" :key="name">
-                                <v-icon :color="ThemeBtnColor">mdi-account-circle</v-icon>{{name}}
-                            </div>
-                        </div>
-                       </v-card> -->
+                        
+                       </v-card>
                     </v-col>
                 </v-row>
                 <v-row class="btn">
@@ -68,7 +67,7 @@
                 <v-row class="submit mt-5" justify="space-around">
                     <v-form v-show="isShow">
                         <v-row >
-                            <v-col><v-text-field  :color="ThemeBtnColor" style="width:400px" v-model="content" label="최종날짜를 입력하시오" outlined ></v-text-field></v-col>
+                            <v-col><v-text-field  :color="ThemeBtnColor" style="width:400px" v-model="content" label="메모를 입력하시오" outlined ></v-text-field></v-col>
                             <v-col> <v-btn class="align-self-center" :color="ThemeBtnColor" @click="submit" style="color: whitesmoke"> <v-icon>mdi-pencil</v-icon>  마감</v-btn></v-col>
                         </v-row>
                         
@@ -101,7 +100,9 @@ export default{
         boxColor2:[],
         completeUser:[],
         teamUserCount:localStorage.getItem("teamUserCount"),
-        
+        userTime : [ ], //서버에 보낼 날짜와 시간이 담긴 배열
+        times:[], //선택한 시간들 넣는 배열
+        date :[], //받아온 날
         time :[
             {name:'time'},
             {name:'6:00 AM'},
@@ -127,8 +128,6 @@ export default{
     }),
     methods:{
        async  getUserTime(){
-            
-             
             const res = await axios.post(`${BASE_URL}/meet/getDate`,
             {
                 teamCode: localStorage.getItem("teamCode"),
@@ -171,10 +170,6 @@ export default{
                 this.boxColor.push({time:this.resultColorArray(timeSplit) });
                 console.log("boxColor: ", this.boxColor);} console.log("usertiememem : ", this.userTime);
             }
-
-            
-
-
         },
        async getAllTime(){
        
@@ -346,6 +341,109 @@ export default{
         //     this.whoSelect = name.split(',');
         //     this.whoSelect = this.whoSelect.slice(0,this.whoSelect.length-1);
         // }
+        /*마이캘린더에 보내도록 TimePick처럼 날짜 고르기*/
+        async btnSubmit2(){
+            for(var j=0; j<this.dateLength; j++){
+                 var stringTime = "";
+                 
+                 for(var i =0; i<this.times[j].uTime.length;i++){
+                    stringTime+=this.times[j].uTime[i];
+                    if(i<this.times[j].uTime.length-1)
+                       { stringTime+=",";}
+                 }
+                 console.log("스트링으로 변환한 시간",stringTime);
+                 this.timeString.push(stringTime);
+                 console.log("스트링으로 넣은 전체값 : ", this.timeString);
+                 
+            }
+           
+            
+
+            //times 배열 string으로 변환 후 서버에 보내기
+            for(var i=0; i<this.dateLength;i++){
+                this.userTime.push({
+                    date : this.date[i].date,
+                    time : this.timeString[i],
+                })
+            }
+                console.log("선택완료");
+            try{
+            const res = await axios.put(`${BASE_URL}/meet/updateTime`,
+            {
+                "teamCode" : localStorage.getItem("teamCode"),
+                "meetCode" : this.meetCode,
+                "meet" : this.userTime,
+            },
+            {
+            headers:
+                {
+                    "X-AUTH-TOKEN": localStorage.getItem("token"),
+                }
+            });
+            console.log("put성공하고 받은값",res.data);
+            }catch(err){
+                console.log(err);
+            }
+            
+            //result에 반영하기
+           
+            
+            this.$router.push({
+                path: "/WhenWeMeetResult",});
+        },
+        ChildTimeReceived(usertime,useridx){
+            console.log("자식으로부터 받음",usertime,useridx)
+            const idx = this.times[useridx].uTime.findIndex(d => d === usertime);
+            if (idx >= 0) {
+                this.times[useridx].uTime.splice(idx, 1);
+                console.log("겹치는 거 삭제");
+                //this.timeLength--;
+                
+            } else {
+
+                this.times[useridx].uTime.push(usertime);
+                console.log("시간 추가됨",this.times[useridx]);
+                //this.timeLength++;
+            }
+            this.times[useridx].uTime = this.times[useridx].uTime.sort((a,b)=>a-b)
+            // for(var i=0; i<this.daysLength;i++){  
+            //     console.log("days array id ",this.days[i].id)
+            // // console.log("days array date ",this.days[i].date)
+            //     console.log("days array time ",this.days[i].time)
+            //     console.log("days array idx",this.days[i].idx)
+            for(var i =0; i<this.dateLength;i++){
+                console.log("time array ",i,": ",this.times);
+            }
+            },
+            async getDate(){
+       
+            var code = {
+                teamCode : localStorage.getItem("teamCode"),
+                meetCode : this.meetCode,
+            }   
+            console.log("code",code);
+            console.log("달력 받아오자");
+            try{
+            const res = await axios.post(`${BASE_URL}/meet/getDate`, code,{
+                headers:
+                {
+                    "X-AUTH-TOKEN": localStorage.getItem("token"),
+                }
+            })
+            console.log(res.data);
+            //받아온 달력을 배열에 담기
+            for(var i in res.data.result.date){
+                this.times.push({uTime :[]});//findIndex
+                this.date.push({
+                    date : res.data.result.date[i].date,
+                    idx : i,
+            }); this.dateLength++;
+            }
+            }catch(err){
+                console.log(err);
+            }
+        
+       },
     },
     computed:{
          ...mapState("themeStore", {
@@ -397,6 +495,7 @@ export default{
     mounted(){ 
     //     this.getUserTime();
     //    this.getAllTime();
+    this.getDate();
     },
     beforeDestroy(){
         
