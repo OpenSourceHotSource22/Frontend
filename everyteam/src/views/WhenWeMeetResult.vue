@@ -34,7 +34,7 @@
                             <th v-for="day in userTime" :key="day.idx">
                                 <td style="width:65px; height:25px;">{{day.date}}</td>
                                 <div class="teamresultTimeBox" v-for="i in 18" :key="i">
-                                    <ResultTimeBox :Color="teamTime[day.idx].time[i-1]" :name="teamTime[day.idx].name[i-1]" v-on:whoFromChild="whoParentReceived"/>
+                                    <ResultTimeBox :Color="teamTime[day.idx].time[i-1]" :name="teamTime[day.idx].name[i-1].split(',')" :auth="isShow"/>
                                 </div>
                             </th>
                         </table>
@@ -48,15 +48,16 @@
                             </div>
                         </div>
                         
-                        
+                        <!-- <v-card elevation="5">
                         <div style="border:solid 3px black;border-radius: 10% / 50%;" class="container mt-5 pb-5 px-5 py-5">
-                            <p style="color:blue; font-size:5px">팀원시간 클릭!</p>
-                            <p>가능 유저들</p>
+                            <p style="color:blue; font-size:5px">팀원시간에 마우스를 올려놓으세요</p>
+                            <card-title>가능유저들</card-title>
+                            
                             <div v-for="name in whoSelect" :key="name">
                                 <v-icon :color="ThemeBtnColor">mdi-account-circle</v-icon>{{name}}
                             </div>
                         </div>
-                       
+                       </v-card> -->
                     </v-col>
                 </v-row>
                 <v-row class="btn">
@@ -100,6 +101,7 @@ export default{
         boxColor2:[],
         completeUser:[],
         teamUserCount:localStorage.getItem("teamUserCount"),
+        
         time :[
             {name:'time'},
             {name:'6:00 AM'},
@@ -338,12 +340,12 @@ export default{
         goMain(){
             this.$router.push({path:"/main"});
         },
-        whoParentReceived(name){
-            console.log("부모가 받음");
-            console.log(name);
-            this.whoSelect = name.split(',');
-            this.whoSelect = this.whoSelect.slice(0,this.whoSelect.length-1);
-        }
+        // whoParentReceived(name){
+        //     console.log("부모가 받음");
+        //     console.log(name);
+        //     this.whoSelect = name.split(',');
+        //     this.whoSelect = this.whoSelect.slice(0,this.whoSelect.length-1);
+        // }
     },
     computed:{
          ...mapState("themeStore", {
@@ -388,13 +390,13 @@ export default{
     beforeMount(){
        // localStorage.setItem("meetCode",this.$route.params.meetCode);
        this.meetCode = localStorage.getItem("meetCode");
-        // this.getUserTime();
-        // this.getAllTime();
+        this.getUserTime();
+        this.getAllTime();
       
     },
     mounted(){ 
-        this.getUserTime();
-       this.getAllTime();
+    //     this.getUserTime();
+    //    this.getAllTime();
     },
     beforeDestroy(){
         
