@@ -1,6 +1,6 @@
 <template>
     <div class="time">
-<div id="timebox" class="timebox" :style="{ width: width + 'px', height: height + 'px',background:prevColor, }" @click="changeColor"></div>
+<div id="timebox" :style="{ width: width + 'px', height: height + 'px',background:prevColor, }" @click="changeColor"></div>
     </div>
 </template>
 
@@ -79,7 +79,5 @@ export default {
     border : solid 1px black;
 }
 
-.timebox{
-  background-image: url("/Users/jieun/Desktop/Frontend/everyteam/public/weblogo.png");
-}
+
 </style>
