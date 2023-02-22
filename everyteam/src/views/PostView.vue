@@ -40,6 +40,7 @@
         </template> -->
       </div>
       <v-btn @click="submit">제출</v-btn>
+      <div v-html="postValue"></div>
     </v-main>
   </v-app>
 </template>
@@ -59,6 +60,7 @@ export default {
       post_Title: "",
       post_Context: "",
       msg: "hi",
+      postValue: "",
     };
   },
   methods: {
@@ -95,6 +97,7 @@ export default {
     },
     submit() {
       var content = tinymce.activeEditor.getContent();
+      this.postValue = content;
       console.log(content);
     },
   },
