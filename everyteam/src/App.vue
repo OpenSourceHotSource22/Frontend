@@ -192,7 +192,8 @@ export default {
         this.$route.name == "login" ||
         this.$route.name == "intro" ||
         this.$route.name == "myGroups" ||
-        this.$route.name == "createGroup"
+        this.$route.name == "createGroup" ||
+        this.$route.name == "mycalendar"
       ) {
         this.drawer = false;
         this.showAppBar = false;
@@ -214,7 +215,8 @@ export default {
       this.$route.name == "login" ||
       this.$route.name == "intro" ||
       this.$route.name == "myGroups" ||
-      this.$route.name == "createGroup"
+      this.$route.name == "createGroup" ||
+      this.$route.name == "mycalendar"
     ) {
       this.showAppBar = false;
     } else if (this.$route.name == "main") {
