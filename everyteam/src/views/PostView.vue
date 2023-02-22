@@ -3,8 +3,23 @@
     <v-main>
       <div class="post">
         <h1 class="mt-10">post</h1>
-
-        <template>
+        <editor
+          api-key="2a8jyeuhltv0bq3alulb9uzo2tlgbb5q2b827iek63ejo66i"
+          :init="{
+            height: 500,
+            menubar: true,
+            plugins: [
+              'advlist autolink lists link image charmap print preview anchor',
+              'searchreplace visualblocks code fullscreen',
+              'insertdatetime media table paste code help wordcount',
+            ],
+            toolbar:
+              'undo redo | formatselect | bold italic backcolor | \
+           alignleft aligncenter alignright alignjustify | \
+           bullist numlist outdent indent | removeformat | help',
+          }"
+        />
+        <!-- <template>
           <v-container fluid>
             <v-text-field
               v-model="post_Title"
@@ -22,8 +37,9 @@
             ></v-textarea>
           </v-container>
           <v-btn color="primary" @click="makePost">제출</v-btn>
-        </template>
+        </template> -->
       </div>
+      <v-btn @click="submit">제출</v-btn>
     </v-main>
   </v-app>
 </template>
@@ -32,7 +48,12 @@
 import axios from "axios";
 import { BASE_URL } from "@/api";
 import { mapState } from "vuex";
+import Editor from "@tinymce/tinymce-vue";
+
 export default {
+  components: {
+    editor: Editor,
+  },
   data() {
     return {
       post_Title: "",
@@ -71,6 +92,10 @@ export default {
       } else {
         alert("내용/제목을 입력해주세요!");
       }
+    },
+    submit() {
+      var content = tinymce.activeEditor.getContent();
+      console.log(content);
     },
   },
   computed: {
